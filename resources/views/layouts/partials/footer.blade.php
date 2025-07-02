@@ -1,0 +1,1 @@
+<strong>{!! config('app.copyright') ? config('app.copyright') : 'Copyright &copy; 2020.' !!}</strong>

@@ -1,0 +1,39 @@
+<!--<div class="form-group <?php echo e($layout ? 'row' : ''); ?>">
+    <?php if($layout): ?>
+        <label for="" class="col-md-2 col-form-label"><?php echo e($label); ?></label>
+        <div class="col-md-10">
+            <?php echo e(Form::$type($name, $value, $attributes)); ?>
+
+            <?php if(!is_null($help)): ?>
+                <small class="form-text text-muted"><?php echo e($help); ?></small>
+            <?php endif; ?>
+        </div>
+    <?php else: ?>
+        <label for=""><?php echo e($label); ?></label>
+        <?php echo e(Form::$type($name, $value, $attributes)); ?>
+
+        <?php if(!is_null($help)): ?>
+            <small class="form-text text-muted"><?php echo e($help); ?></small>
+        <?php endif; ?>
+    <?php endif; ?>
+</div> -->
+<div class="form-group <?php echo e($layout ? 'row' : ''); ?>">
+    <?php if($layout): ?>
+        <div class="col-md-12">
+            <label for=""><?php echo e($label); ?></label>
+            <?php echo e(Form::$type($name, $value, $attributes)); ?>
+
+            <?php if(!is_null($help)): ?>
+                <small class="form-text text-muted"><?php echo e($help); ?></small>
+            <?php endif; ?>
+        </div>
+    <?php else: ?>
+        <label for="" style="visibility: hidden"><?php echo e($label); ?></label>
+        <?php echo e(Form::$type($name, $value, $attributes)); ?>
+
+        <?php if(!is_null($help)): ?>
+            <small class="form-text text-muted"><?php echo e($help); ?></small>
+        <?php endif; ?>
+    <?php endif; ?>
+</div>
+<?php /**PATH /var/www/html/backoff/resources/views/components/form/text.blade.php ENDPATH**/ ?>

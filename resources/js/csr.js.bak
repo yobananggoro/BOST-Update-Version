@@ -1,0 +1,6 @@
+function get_anggaran(){
+    $('#periode_anggaran').on('change', function(e){
+      var tahun_anggaran = e.target.value;
+      alert('test');
+    });
+  };

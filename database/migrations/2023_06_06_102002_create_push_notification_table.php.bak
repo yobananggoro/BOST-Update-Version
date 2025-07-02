@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreatePushNotificationTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('push_notification', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('notifikasi_category')->nullable();
+            $table->string('message')->nullable();
+            $table->boolean('is_read')->nullable();
+            $table->string('receiver')->nullable();
+            $table->string('sender')->nullable();
+            $table->string('branch_code')->nullable();
+            $table->string('role_name')->nullable();
+            $table->string('url')->nullable();
+            $table->timestamps();
+        });
+        Schema::dropIfExists('notifications');
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('push_notification');
+    }
+}

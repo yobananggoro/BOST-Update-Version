@@ -1,0 +1,210 @@
+[2025-06-25 09:27:57] devel.INFO: Auth UIM Request: {"userId":"H518","appId":"4248","isEncrypted":true}  
+[2025-06-25 09:27:57] devel.INFO: Auth UIM Response: {"succeeded":true,"message":null,"errors":null,"errorCode":null,"data":{"nrp":83271,"nama":"ERNA PRATIWI","nip":"14.90.9341","userId":"H518","kodeCabang":"D440","namaCabang":"DIVISI INFORMATION TECHNOLOGY","kodeInduk":"D440","namaInduk":"DIVISI INFORMATION TECHNOLOGY","kodeKanwil":"0000","namaKanwil":"Kantor Pusat","jabatan":"Staf Quality Assurance Corporate Services","email":"eapratiwi@BANKBJB.CO.ID","idFungsi":"4645","namaFungsi":"SPV","kodePenempatan":"D440","namaPenempatan":"DIVISI INFORMATION TECHNOLOGY","id":"9600","costCentre":"01300","isApproval":false,"kodeUnitKerja":"D440","namaUnitKerja":"DIVISI INFORMATION TECHNOLOGY","kodeJabatan":"J2317"},"statusCode":200}  
+[2025-06-25 09:28:10] devel.INFO: Auth UIM Request: {"userId":"F496","appId":"4248","isEncrypted":true}  
+[2025-06-25 09:28:10] devel.INFO: Auth UIM Response: {"succeeded":true,"message":null,"errors":null,"errorCode":null,"data":{"nrp":12513774,"nama":"AGAM ADIPUTRA","nip":"12.88.4247","userId":"F496","kodeCabang":"0001","namaCabang":"UTAMA BANDUNG","kodeInduk":"0001","namaInduk":"UTAMA BANDUNG","kodeKanwil":"1111","namaKanwil":"KANTOR WILAYAH 1","jabatan":"Staf Administrasi Dana & Jasa","email":"aadiputra@BANKBJB.CO.ID","idFungsi":"4745","namaFungsi":"Administrasi Dana Dan Jasa","kodePenempatan":"0001","namaPenempatan":"UTAMA BANDUNG","id":"15092","costCentre":"00001","isApproval":false,"kodeUnitKerja":"0001","namaUnitKerja":"UTAMA BANDUNG","kodeJabatan":"J2301"},"statusCode":200}  
+[2025-06-25 09:33:57] devel.INFO: Get Token Request: {"clientId":"M6W3-DLL","clientSecret":"kIS-_wQrn9qRXSIgkklixKuB1rtYWxhEb-6XxYtg0Og"}  
+[2025-06-25 09:33:57] devel.INFO: Get Token Response: {"responseCode":"00","responseDesc":"Success","body":{"accessToken":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUVFpYTXkxRVRFdyIsImlhdCI6MTc1MDgxODc4NywiZXhwIjoxNzUwOTA1MTg3fQ.TQRq3qackCXDQF2Y-q8QyfS6nUUyxkdZGrn-76xawS3fPvCWSXAFm98GtpnyRZKBMI7dvevt-GdD40wYdtrZiw","tokenType":"Bearer","expiredInMs":86400000}}  
+[2025-06-25 09:33:57] devel.INFO: GI33 Request: {"accountNumber":null,"branch":"0543","cif":"14T10N","suffix":"100"}  
+[2025-06-25 09:33:57] devel.INFO: GI33 Response: {"responseCode":"00","responseDesc":"Success","data":[{"accountNumberExt":"0081800634100","accountShortName":"ENDANG KUSDINAR","branch":"0543","cif":"14T10N","suffix":"100","accountType":"EA","accountNumber":"0543-14T10N-100","currency":"IDR"}]}  
+[2025-06-25 09:34:32] devel.INFO: Upload BulkFile Request: {"reference":"0001F4960000039","branch":"0001","createdBy":"F496","bulkType":"OTM","isExtAcc":"N","accountNumber":"054314T10N100","amount":"45000000","filename":"template_bulk_agi 240625.xlsx","narrative34":"saldo tidak cukup|","isCheque":"N"}  
+[2025-06-25 09:34:32] devel.INFO: Upload BulkFile Response: Bulk upload started. Processing in background.  
+[2025-06-25 09:34:40] devel.INFO: List Bulk Request: {"userId":"F496","branch":"0001","fileStatus":""}  
+[2025-06-25 09:34:40] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:34:49] devel.INFO: Verify Request: {"userId":"F496","branch":"0001","fileStatus":"","isCancel":"N"}  
+[2025-06-25 09:34:49] devel.INFO: Verify Response: {"responseCode":"00","responseDesc":"VERIFY_IN_PROGRESS"}  
+[2025-06-25 09:34:57] devel.INFO: List Bulk Request: {"userId":"F496","branch":"0001","fileStatus":""}  
+[2025-06-25 09:34:57] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:35:22] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/215?page=0&size=100"  
+[2025-06-25 09:35:22] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 0, FAILED: 0, IN_PROGRESS: 0"}  
+[2025-06-25 09:35:35] devel.INFO: List Bulk Request: {"userId":"F496","branch":"0001","fileStatus":""}  
+[2025-06-25 09:35:35] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:35:57] devel.INFO: Auth UIM Request: {"userId":"B969","appId":"4248","isEncrypted":true}  
+[2025-06-25 09:35:57] devel.INFO: Auth UIM Response: {"succeeded":true,"message":null,"errors":null,"errorCode":null,"data":{"nrp":12515574,"nama":"AMALIA NAFISAH","nip":"08.81.1969","userId":"B969","kodeCabang":"0001","namaCabang":"UTAMA BANDUNG","kodeInduk":"0001","namaInduk":"UTAMA BANDUNG","kodeKanwil":"1111","namaKanwil":"KANTOR WILAYAH 1","jabatan":"Officer Operasional Dana & Jasa","email":"anafisah@bankbjb.co.id","idFungsi":"4744","namaFungsi":"OODJ\/OOK\/OOPS\/OODM","kodePenempatan":"0360","namaPenempatan":"KCP KEBON JATI","id":"16891","costCentre":"00001","isApproval":false,"kodeUnitKerja":"0001","namaUnitKerja":"UTAMA BANDUNG","kodeJabatan":"J0914"},"statusCode":200}  
+[2025-06-25 09:36:13] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":"VERIFIED_AND_WAITING_APPROVAL"}  
+[2025-06-25 09:36:13] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:36:19] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":""}  
+[2025-06-25 09:36:19] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:36:30] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/215?page=0&size=100"  
+[2025-06-25 09:36:30] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 0, FAILED: 0, IN_PROGRESS: 0"}  
+[2025-06-25 09:37:10] devel.INFO: Auth UIM Request: {"userId":"F496","appId":"4248","isEncrypted":true}  
+[2025-06-25 09:37:10] devel.INFO: Auth UIM Response: {"succeeded":true,"message":null,"errors":null,"errorCode":null,"data":{"nrp":12513774,"nama":"AGAM ADIPUTRA","nip":"12.88.4247","userId":"F496","kodeCabang":"0001","namaCabang":"UTAMA BANDUNG","kodeInduk":"0001","namaInduk":"UTAMA BANDUNG","kodeKanwil":"1111","namaKanwil":"KANTOR WILAYAH 1","jabatan":"Staf Administrasi Dana & Jasa","email":"aadiputra@BANKBJB.CO.ID","idFungsi":"4745","namaFungsi":"Administrasi Dana Dan Jasa","kodePenempatan":"0001","namaPenempatan":"UTAMA BANDUNG","id":"15092","costCentre":"00001","isApproval":false,"kodeUnitKerja":"0001","namaUnitKerja":"UTAMA BANDUNG","kodeJabatan":"J2301"},"statusCode":200}  
+[2025-06-25 09:39:04] devel.INFO: List Bulk Request: {"userId":"F496","branch":"0001","fileStatus":""}  
+[2025-06-25 09:39:04] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:39:10] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/215?page=0&size=100"  
+[2025-06-25 09:39:10] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 0, FAILED: 0, IN_PROGRESS: 0"}  
+[2025-06-25 09:39:34] devel.INFO: GI33 Request: {"accountNumber":null,"branch":"0543","cif":"14T10N","suffix":"100"}  
+[2025-06-25 09:39:34] devel.INFO: GI33 Response: {"responseCode":"00","responseDesc":"Success","data":[{"accountNumberExt":"0081800634100","accountShortName":"ENDANG KUSDINAR","branch":"0543","cif":"14T10N","suffix":"100","accountType":"EA","accountNumber":"0543-14T10N-100","currency":"IDR"}]}  
+[2025-06-25 09:40:03] devel.INFO: Upload BulkFile Request: {"reference":"0001F4960000040","branch":"0001","createdBy":"F496","bulkType":"OTM","isExtAcc":"N","accountNumber":"054314T10N100","amount":"3000000","filename":"template_bulk_agi 240625.xlsx","narrative34":"saldo kurang sebagian|bulk","isCheque":"N"}  
+[2025-06-25 09:40:03] devel.INFO: Upload BulkFile Response: Bulk upload started. Processing in background.  
+[2025-06-25 09:40:17] devel.INFO: Auth UIM Request: {"userId":"F496","appId":"4248","isEncrypted":true}  
+[2025-06-25 09:40:17] devel.INFO: Auth UIM Response: {"succeeded":true,"message":null,"errors":null,"errorCode":null,"data":{"nrp":12513774,"nama":"AGAM ADIPUTRA","nip":"12.88.4247","userId":"F496","kodeCabang":"0001","namaCabang":"UTAMA BANDUNG","kodeInduk":"0001","namaInduk":"UTAMA BANDUNG","kodeKanwil":"1111","namaKanwil":"KANTOR WILAYAH 1","jabatan":"Staf Administrasi Dana & Jasa","email":"aadiputra@BANKBJB.CO.ID","idFungsi":"4745","namaFungsi":"Administrasi Dana Dan Jasa","kodePenempatan":"0001","namaPenempatan":"UTAMA BANDUNG","id":"15092","costCentre":"00001","isApproval":false,"kodeUnitKerja":"0001","namaUnitKerja":"UTAMA BANDUNG","kodeJabatan":"J2301"},"statusCode":200}  
+[2025-06-25 09:40:24] devel.INFO: List Bulk Request: {"userId":"F496","branch":"0001","fileStatus":""}  
+[2025-06-25 09:40:24] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:40:33] devel.INFO: Verify Request: {"userId":"F496","branch":"0001","fileStatus":"","isCancel":"N"}  
+[2025-06-25 09:40:33] devel.INFO: Verify Response: {"responseCode":"00","responseDesc":"VERIFY_IN_PROGRESS"}  
+[2025-06-25 09:40:47] devel.INFO: Auth UIM Request: {"userId":"B969","appId":"4248","isEncrypted":true}  
+[2025-06-25 09:40:47] devel.INFO: Auth UIM Response: {"succeeded":true,"message":null,"errors":null,"errorCode":null,"data":{"nrp":12515574,"nama":"AMALIA NAFISAH","nip":"08.81.1969","userId":"B969","kodeCabang":"0001","namaCabang":"UTAMA BANDUNG","kodeInduk":"0001","namaInduk":"UTAMA BANDUNG","kodeKanwil":"1111","namaKanwil":"KANTOR WILAYAH 1","jabatan":"Officer Operasional Dana & Jasa","email":"anafisah@bankbjb.co.id","idFungsi":"4744","namaFungsi":"OODJ\/OOK\/OOPS\/OODM","kodePenempatan":"0360","namaPenempatan":"KCP KEBON JATI","id":"16891","costCentre":"00001","isApproval":false,"kodeUnitKerja":"0001","namaUnitKerja":"UTAMA BANDUNG","kodeJabatan":"J0914"},"statusCode":200}  
+[2025-06-25 09:41:36] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":"VERIFIED_AND_WAITING_APPROVAL"}  
+[2025-06-25 09:41:36] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:41:51] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/215?page=0&size=100"  
+[2025-06-25 09:41:51] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 0, FAILED: 0, IN_PROGRESS: 0"}  
+[2025-06-25 09:42:22] devel.INFO: Auth UIM Request: {"userId":"F496","appId":"4248","isEncrypted":true}  
+[2025-06-25 09:42:22] devel.INFO: Auth UIM Response: {"succeeded":true,"message":null,"errors":null,"errorCode":null,"data":{"nrp":12513774,"nama":"AGAM ADIPUTRA","nip":"12.88.4247","userId":"F496","kodeCabang":"0001","namaCabang":"UTAMA BANDUNG","kodeInduk":"0001","namaInduk":"UTAMA BANDUNG","kodeKanwil":"1111","namaKanwil":"KANTOR WILAYAH 1","jabatan":"Staf Administrasi Dana & Jasa","email":"aadiputra@BANKBJB.CO.ID","idFungsi":"4745","namaFungsi":"Administrasi Dana Dan Jasa","kodePenempatan":"0001","namaPenempatan":"UTAMA BANDUNG","id":"15092","costCentre":"00001","isApproval":false,"kodeUnitKerja":"0001","namaUnitKerja":"UTAMA BANDUNG","kodeJabatan":"J2301"},"statusCode":200}  
+[2025-06-25 09:43:16] devel.INFO: Upload BulkFile Request: {"reference":"0001F4960000041","branch":"0001","createdBy":"F496","bulkType":"OTO","filename":"template_bulk_ita (4).xlsx"}  
+[2025-06-25 09:43:16] devel.INFO: Upload BulkFile Response: Bulk upload started. Processing in background.  
+[2025-06-25 09:44:05] devel.INFO: List Bulk Request: {"userId":"F496","branch":"0001","fileStatus":""}  
+[2025-06-25 09:44:05] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:44:13] devel.INFO: Verify Request: {"userId":"F496","branch":"0001","fileStatus":"","isCancel":"N"}  
+[2025-06-25 09:44:13] devel.INFO: Verify Response: {"responseCode":"00","responseDesc":"VERIFY_IN_PROGRESS"}  
+[2025-06-25 09:45:02] devel.INFO: Auth UIM Request: {"userId":"B969","appId":"4248","isEncrypted":true}  
+[2025-06-25 09:45:02] devel.INFO: Auth UIM Response: {"succeeded":true,"message":null,"errors":null,"errorCode":null,"data":{"nrp":12515574,"nama":"AMALIA NAFISAH","nip":"08.81.1969","userId":"B969","kodeCabang":"0001","namaCabang":"UTAMA BANDUNG","kodeInduk":"0001","namaInduk":"UTAMA BANDUNG","kodeKanwil":"1111","namaKanwil":"KANTOR WILAYAH 1","jabatan":"Officer Operasional Dana & Jasa","email":"anafisah@bankbjb.co.id","idFungsi":"4744","namaFungsi":"OODJ\/OOK\/OOPS\/OODM","kodePenempatan":"0360","namaPenempatan":"KCP KEBON JATI","id":"16891","costCentre":"00001","isApproval":false,"kodeUnitKerja":"0001","namaUnitKerja":"UTAMA BANDUNG","kodeJabatan":"J0914"},"statusCode":200}  
+[2025-06-25 09:45:16] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":"VERIFIED_AND_WAITING_APPROVAL"}  
+[2025-06-25 09:45:16] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:45:25] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/217?page=0&size=100"  
+[2025-06-25 09:45:25] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 0, FAILED: 0, IN_PROGRESS: 0"}  
+[2025-06-25 09:45:32] devel.INFO: Approval Request: {"userId":"","headUser":"B969","branch":"0001","fileStatus":"","isApprove":"Y"}  
+[2025-06-25 09:45:32] devel.INFO: Approval Response: {"responseCode":"00","responseDesc":"APPROVED_AND_IN_PROGRESS"}  
+[2025-06-25 09:45:45] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":"VERIFIED_AND_WAITING_APPROVAL"}  
+[2025-06-25 09:45:45] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:46:03] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":""}  
+[2025-06-25 09:46:03] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:46:26] devel.INFO: Auth UIM Request: {"userId":"L108","appId":"4248","isEncrypted":true}  
+[2025-06-25 09:46:26] devel.INFO: Auth UIM Response: {"succeeded":true,"message":null,"errors":null,"errorCode":null,"data":{"nrp":85015,"nama":"NAJIB NUGROHO","nip":"19.94.0165","userId":"L108","kodeCabang":"D440","namaCabang":"DIVISI INFORMATION TECHNOLOGY","kodeInduk":"D440","namaInduk":"DIVISI INFORMATION TECHNOLOGY","kodeKanwil":"0000","namaKanwil":"Kantor Pusat","jabatan":"Staf Middleware","email":"nnugroho@BANKBJB.CO.ID","idFungsi":"4643","namaFungsi":"SUPER ADMIN","kodePenempatan":"D440","namaPenempatan":"DIVISI INFORMATION TECHNOLOGY","id":"11344","costCentre":"01300","isApproval":false,"kodeUnitKerja":"D440","namaUnitKerja":"DIVISI INFORMATION TECHNOLOGY","kodeJabatan":"J2332"},"statusCode":200}  
+[2025-06-25 09:46:34] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":"VERIFIED_AND_WAITING_APPROVAL"}  
+[2025-06-25 09:46:34] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:46:37] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":""}  
+[2025-06-25 09:46:37] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:46:42] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/215?page=0&size=100"  
+[2025-06-25 09:46:42] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 0, FAILED: 0, IN_PROGRESS: 0"}  
+[2025-06-25 09:46:49] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/217?page=0&size=100"  
+[2025-06-25 09:46:49] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 0, FAILED: 0, IN_PROGRESS: 1"}  
+[2025-06-25 09:47:32] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/217?page=0&size=100"  
+[2025-06-25 09:47:32] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 0, FAILED: 0, IN_PROGRESS: 1"}  
+[2025-06-25 09:47:35] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/217?page=0&size=100"  
+[2025-06-25 09:47:35] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 0, FAILED: 0, IN_PROGRESS: 1"}  
+[2025-06-25 09:47:47] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":""}  
+[2025-06-25 09:47:47] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:47:51] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":""}  
+[2025-06-25 09:47:51] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:47:58] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/217?page=0&size=100"  
+[2025-06-25 09:47:58] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 1, FAILED: 0, IN_PROGRESS: 0"}  
+[2025-06-25 09:47:58] devel.INFO: Approval Request: {"userId":"","headUser":"B969","branch":"0001","fileStatus":"","isApprove":"Y"}  
+[2025-06-25 09:47:58] devel.INFO: Approval Response: {"responseCode":"00","responseDesc":"APPROVED_AND_IN_PROGRESS"}  
+[2025-06-25 09:48:16] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":""}  
+[2025-06-25 09:48:16] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:48:21] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":""}  
+[2025-06-25 09:48:21] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:48:24] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/217?page=0&size=100"  
+[2025-06-25 09:48:24] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 1, FAILED: 0, IN_PROGRESS: 0"}  
+[2025-06-25 09:48:34] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/215?page=0&size=100"  
+[2025-06-25 09:48:34] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 0, FAILED: 0, IN_PROGRESS: 4"}  
+[2025-06-25 09:48:44] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/215?page=0&size=100"  
+[2025-06-25 09:48:44] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 0, FAILED: 0, IN_PROGRESS: 4"}  
+[2025-06-25 09:50:15] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":""}  
+[2025-06-25 09:50:15] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:50:33] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/215?page=0&size=100"  
+[2025-06-25 09:50:33] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 3, FAILED: 1, IN_PROGRESS: 0"}  
+[2025-06-25 09:51:50] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":""}  
+[2025-06-25 09:51:50] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:51:57] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/215?page=0&size=100"  
+[2025-06-25 09:51:57] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 3, FAILED: 1, IN_PROGRESS: 0"}  
+[2025-06-25 09:52:17] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":""}  
+[2025-06-25 09:52:17] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:55:15] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":""}  
+[2025-06-25 09:55:15] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:55:51] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":""}  
+[2025-06-25 09:55:51] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:55:59] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":""}  
+[2025-06-25 09:55:59] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:56:05] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/217?page=0&size=100"  
+[2025-06-25 09:56:05] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 1, FAILED: 0, IN_PROGRESS: 0"}  
+[2025-06-25 09:56:05] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/216?page=0&size=100"  
+[2025-06-25 09:56:05] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 0, FAILED: 0, IN_PROGRESS: 0"}  
+[2025-06-25 09:58:08] devel.INFO: AB Request: {"accountNumber":"0091028824100","branch":null,"cif":null,"suffix":null}  
+[2025-06-25 09:58:08] devel.INFO: AB Response: {"responseCode":"00","responseDesc":"Success","data":{"acctNumber":"0091028824100","acctType":"EA","acctTypeDesc":"Tabungan Tandamata","balance":"4,172,767","availableBalance":"4,172,767","branch":"0010","cif":"149NBJ","suffix":"100","currency":"IDR","custFullName":"NAJIB NUGROHO","custShortName":"NAJIB NUGROHO","ledgerBalance":"80,047","shadowDebits":"3,068,782-","shadowCredits":"7,186,502","statusBalance":"4,197,767"}}  
+[2025-06-25 09:59:13] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":"VERIFIED_AND_WAITING_APPROVAL"}  
+[2025-06-25 09:59:13] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 09:59:19] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/216?page=0&size=100"  
+[2025-06-25 09:59:19] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 0, FAILED: 0, IN_PROGRESS: 0"}  
+[2025-06-25 09:59:26] devel.INFO: Approval Request: {"userId":"","headUser":"B969","branch":"0001","fileStatus":"","isApprove":"Y"}  
+[2025-06-25 09:59:26] devel.INFO: Approval Response: {"responseCode":"00","responseDesc":"APPROVED_AND_IN_PROGRESS"}  
+[2025-06-25 10:01:33] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":""}  
+[2025-06-25 10:01:33] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 10:01:48] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/216?page=0&size=100"  
+[2025-06-25 10:01:48] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 3, FAILED: 1, IN_PROGRESS: 0"}  
+[2025-06-25 10:14:34] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":""}  
+[2025-06-25 10:14:34] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 10:14:42] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/216?page=0&size=100"  
+[2025-06-25 10:14:42] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 3, FAILED: 1, IN_PROGRESS: 0"}  
+[2025-06-25 10:20:22] devel.INFO: Auth UIM Request: {"userId":"F496","appId":"4248","isEncrypted":true}  
+[2025-06-25 10:20:22] devel.INFO: Auth UIM Response: {"succeeded":true,"message":null,"errors":null,"errorCode":null,"data":{"nrp":12513774,"nama":"AGAM ADIPUTRA","nip":"12.88.4247","userId":"F496","kodeCabang":"0001","namaCabang":"UTAMA BANDUNG","kodeInduk":"0001","namaInduk":"UTAMA BANDUNG","kodeKanwil":"1111","namaKanwil":"KANTOR WILAYAH 1","jabatan":"Staf Administrasi Dana & Jasa","email":"aadiputra@BANKBJB.CO.ID","idFungsi":"4745","namaFungsi":"Administrasi Dana Dan Jasa","kodePenempatan":"0001","namaPenempatan":"UTAMA BANDUNG","id":"15092","costCentre":"00001","isApproval":false,"kodeUnitKerja":"0001","namaUnitKerja":"UTAMA BANDUNG","kodeJabatan":"J2301"},"statusCode":200}  
+[2025-06-25 10:21:07] devel.INFO: Upload BulkFile Request: {"reference":"0001F4960000042","branch":"0001","createdBy":"F496","bulkType":"OTO","filename":"template_bulk_ita (4).xlsx"}  
+[2025-06-25 10:21:07] devel.INFO: Upload BulkFile Response: Bulk upload started. Processing in background.  
+[2025-06-25 10:22:34] devel.INFO: Upload BulkFile Request: {"reference":"0001F4960000043","branch":"0001","createdBy":"F496","bulkType":"OTO","filename":"template_bulk_ita (4).xlsx"}  
+[2025-06-25 10:22:34] devel.INFO: Upload BulkFile Response: Bulk upload started. Processing in background.  
+[2025-06-25 10:22:51] devel.INFO: List Bulk Request: {"userId":"F496","branch":"0001","fileStatus":""}  
+[2025-06-25 10:22:51] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 10:22:59] devel.INFO: Verify Request: {"userId":"F496","branch":"0001","fileStatus":"","isCancel":"N"}  
+[2025-06-25 10:22:59] devel.INFO: Verify Response: {"responseCode":"00","responseDesc":"VERIFY_IN_PROGRESS"}  
+[2025-06-25 10:23:03] devel.INFO: List Bulk Request: {"userId":"F496","branch":"0001","fileStatus":""}  
+[2025-06-25 10:23:03] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 10:23:09] devel.INFO: Verify Request: {"userId":"F496","branch":"0001","fileStatus":"","isCancel":"N"}  
+[2025-06-25 10:23:09] devel.INFO: Verify Response: {"responseCode":"00","responseDesc":"VERIFY_IN_PROGRESS"}  
+[2025-06-25 10:23:12] devel.INFO: List Bulk Request: {"userId":"F496","branch":"0001","fileStatus":""}  
+[2025-06-25 10:23:12] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 10:23:27] devel.INFO: Auth UIM Request: {"userId":"B969","appId":"4248","isEncrypted":true}  
+[2025-06-25 10:23:27] devel.INFO: Auth UIM Response: {"succeeded":true,"message":null,"errors":null,"errorCode":null,"data":{"nrp":12515574,"nama":"AMALIA NAFISAH","nip":"08.81.1969","userId":"B969","kodeCabang":"0001","namaCabang":"UTAMA BANDUNG","kodeInduk":"0001","namaInduk":"UTAMA BANDUNG","kodeKanwil":"1111","namaKanwil":"KANTOR WILAYAH 1","jabatan":"Officer Operasional Dana & Jasa","email":"anafisah@bankbjb.co.id","idFungsi":"4744","namaFungsi":"OODJ\/OOK\/OOPS\/OODM","kodePenempatan":"0360","namaPenempatan":"KCP KEBON JATI","id":"16891","costCentre":"00001","isApproval":false,"kodeUnitKerja":"0001","namaUnitKerja":"UTAMA BANDUNG","kodeJabatan":"J0914"},"statusCode":200}  
+[2025-06-25 10:23:47] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":"VERIFIED_AND_WAITING_APPROVAL"}  
+[2025-06-25 10:23:47] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 10:23:52] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/219?page=0&size=100"  
+[2025-06-25 10:23:52] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 0, FAILED: 0, IN_PROGRESS: 0"}  
+[2025-06-25 10:24:38] devel.INFO: Approval Request: {"userId":"","headUser":"B969","branch":"0001","fileStatus":"","isApprove":"Y"}  
+[2025-06-25 10:24:38] devel.INFO: Approval Response: {"responseCode":"00","responseDesc":"APPROVED_AND_IN_PROGRESS"}  
+[2025-06-25 10:24:44] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":"VERIFIED_AND_WAITING_APPROVAL"}  
+[2025-06-25 10:24:44] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 10:24:51] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/218?page=0&size=100"  
+[2025-06-25 10:24:51] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 0, FAILED: 0, IN_PROGRESS: 0"}  
+[2025-06-25 10:25:09] devel.INFO: Approval Request: {"userId":"","headUser":"B969","branch":"0001","fileStatus":"","isApprove":"Y"}  
+[2025-06-25 10:25:09] devel.INFO: Approval Response: {"responseCode":"00","responseDesc":"APPROVED_AND_IN_PROGRESS"}  
+[2025-06-25 10:26:48] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":""}  
+[2025-06-25 10:26:48] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 10:26:57] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/219?page=0&size=100"  
+[2025-06-25 10:26:57] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 0, FAILED: 1, IN_PROGRESS: 0"}  
+[2025-06-25 10:27:34] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":""}  
+[2025-06-25 10:27:34] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 10:27:39] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/218?page=0&size=100"  
+[2025-06-25 10:27:39] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 0, FAILED: 0, IN_PROGRESS: 1"}  
+[2025-06-25 10:27:51] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":""}  
+[2025-06-25 10:27:51] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 10:27:58] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/218?page=0&size=100"  
+[2025-06-25 10:27:58] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 0, FAILED: 1, IN_PROGRESS: 0"}  
+[2025-06-25 10:29:26] devel.INFO: Auth UIM Request: {"userId":"L108","appId":"4248","isEncrypted":true}  
+[2025-06-25 10:29:26] devel.INFO: Auth UIM Response: {"succeeded":true,"message":null,"errors":null,"errorCode":null,"data":{"nrp":85015,"nama":"NAJIB NUGROHO","nip":"19.94.0165","userId":"L108","kodeCabang":"D440","namaCabang":"DIVISI INFORMATION TECHNOLOGY","kodeInduk":"D440","namaInduk":"DIVISI INFORMATION TECHNOLOGY","kodeKanwil":"0000","namaKanwil":"Kantor Pusat","jabatan":"Staf Middleware","email":"nnugroho@BANKBJB.CO.ID","idFungsi":"4643","namaFungsi":"SUPER ADMIN","kodePenempatan":"D440","namaPenempatan":"DIVISI INFORMATION TECHNOLOGY","id":"11344","costCentre":"01300","isApproval":false,"kodeUnitKerja":"D440","namaUnitKerja":"DIVISI INFORMATION TECHNOLOGY","kodeJabatan":"J2332"},"statusCode":200}  
+[2025-06-25 10:29:36] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":""}  
+[2025-06-25 10:29:36] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 10:30:03] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/219?page=0&size=100"  
+[2025-06-25 10:30:03] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 0, FAILED: 1, IN_PROGRESS: 0"}  
+[2025-06-25 10:30:16] devel.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":""}  
+[2025-06-25 10:30:16] devel.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2025-06-25 10:30:24] devel.INFO: List Detail Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/219?page=0&size=100"  
+[2025-06-25 10:30:24] devel.INFO: List Detail Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 0, FAILED: 1, IN_PROGRESS: 0"}  
+[2025-06-25 14:54:38] devel.INFO: Auth UIM Request: {"userId":"L108","appId":"4248","isEncrypted":true}  
+[2025-06-25 14:54:38] devel.INFO: Auth UIM Response: {"succeeded":true,"message":null,"errors":null,"errorCode":null,"data":{"nrp":85015,"nama":"NAJIB NUGROHO","nip":"19.94.0165","userId":"L108","kodeCabang":"D440","namaCabang":"DIVISI INFORMATION TECHNOLOGY","kodeInduk":"D440","namaInduk":"DIVISI INFORMATION TECHNOLOGY","kodeKanwil":"0000","namaKanwil":"Kantor Pusat","jabatan":"Staf Middleware","email":"nnugroho@BANKBJB.CO.ID","idFungsi":"4643","namaFungsi":"SUPER ADMIN","kodePenempatan":"D440","namaPenempatan":"DIVISI INFORMATION TECHNOLOGY","id":"11344","costCentre":"01300","isApproval":false,"kodeUnitKerja":"D440","namaUnitKerja":"DIVISI INFORMATION TECHNOLOGY","kodeJabatan":"J2332"},"statusCode":200}  
+[2025-06-25 15:37:01] devel.INFO: Auth UIM Request: {"userId":"L108","appId":"4248","isEncrypted":true}  
+[2025-06-25 15:37:01] devel.INFO: Auth UIM Response: {"succeeded":true,"message":null,"errors":null,"errorCode":null,"data":{"nrp":85015,"nama":"NAJIB NUGROHO","nip":"19.94.0165","userId":"L108","kodeCabang":"D440","namaCabang":"DIVISI INFORMATION TECHNOLOGY","kodeInduk":"D440","namaInduk":"DIVISI INFORMATION TECHNOLOGY","kodeKanwil":"0000","namaKanwil":"Kantor Pusat","jabatan":"Staf Middleware","email":"nnugroho@BANKBJB.CO.ID","idFungsi":"4643","namaFungsi":"SUPER ADMIN","kodePenempatan":"D440","namaPenempatan":"DIVISI INFORMATION TECHNOLOGY","id":"11344","costCentre":"01300","isApproval":false,"kodeUnitKerja":"D440","namaUnitKerja":"DIVISI INFORMATION TECHNOLOGY","kodeJabatan":"J2332"},"statusCode":200}  
+[2025-06-25 15:37:23] devel.INFO: Auth UIM Request: {"userId":"B969","appId":"4248","isEncrypted":true}  
+[2025-06-25 15:37:23] devel.INFO: Auth UIM Response: {"succeeded":true,"message":null,"errors":null,"errorCode":null,"data":{"nrp":12515574,"nama":"AMALIA NAFISAH","nip":"08.81.1969","userId":"B969","kodeCabang":"0001","namaCabang":"UTAMA BANDUNG","kodeInduk":"0001","namaInduk":"UTAMA BANDUNG","kodeKanwil":"1111","namaKanwil":"KANTOR WILAYAH 1","jabatan":"Officer Operasional Dana & Jasa","email":"anafisah@bankbjb.co.id","idFungsi":"4744","namaFungsi":"OODJ\/OOK\/OOPS\/OODM","kodePenempatan":"0360","namaPenempatan":"KCP KEBON JATI","id":"16891","costCentre":"00001","isApproval":false,"kodeUnitKerja":"0001","namaUnitKerja":"UTAMA BANDUNG","kodeJabatan":"J0914"},"statusCode":200}  
+[2025-06-25 15:38:08] devel.INFO: Auth UIM Request: {"userId":"F469","appId":"4248","isEncrypted":true}  
+[2025-06-25 15:38:08] devel.INFO: Auth UIM Response: {"succeeded":false,"message":"User tidak ditemukan","errors":null,"errorCode":null,"data":null,"statusCode":500}  
+[2025-06-25 15:38:17] devel.INFO: Auth UIM Request: {"userId":"F496","appId":"4248","isEncrypted":true}  
+[2025-06-25 15:38:17] devel.INFO: Auth UIM Response: {"succeeded":true,"message":null,"errors":null,"errorCode":null,"data":{"nrp":12513774,"nama":"AGAM ADIPUTRA","nip":"12.88.4247","userId":"F496","kodeCabang":"0001","namaCabang":"UTAMA BANDUNG","kodeInduk":"0001","namaInduk":"UTAMA BANDUNG","kodeKanwil":"1111","namaKanwil":"KANTOR WILAYAH 1","jabatan":"Staf Administrasi Dana & Jasa","email":"aadiputra@BANKBJB.CO.ID","idFungsi":"4745","namaFungsi":"Administrasi Dana Dan Jasa","kodePenempatan":"0001","namaPenempatan":"UTAMA BANDUNG","id":"15092","costCentre":"00001","isApproval":false,"kodeUnitKerja":"0001","namaUnitKerja":"UTAMA BANDUNG","kodeJabatan":"J2301"},"statusCode":200}  
+[2025-06-25 15:38:58] devel.INFO: GI33 Request: {"accountNumber":"1113335557779","branch":null,"cif":null,"suffix":null}  
+[2025-06-25 15:38:58] devel.INFO: GI33 Response: {"responseCode":"99","responseDesc":"Failed","data":[{"messageId":"KSM1009","messageDesc":"KSM1009  No prompt details found to match this request","fieldInError":"KSM1009","message":"KSM1009  No prompt details found to match this request","isOverride":" ","authority":"  ","severityStatus":" ","severity":"00"}]}  
+[2025-06-25 15:39:01] devel.INFO: GI33 Request: {"accountNumber":"1113335557779","branch":null,"cif":null,"suffix":null}  
+[2025-06-25 15:39:01] devel.INFO: GI33 Response: {"responseCode":"99","responseDesc":"Failed","data":[{"messageId":"KSM1009","messageDesc":"KSM1009  No prompt details found to match this request","fieldInError":"KSM1009","message":"KSM1009  No prompt details found to match this request","isOverride":" ","authority":"  ","severityStatus":" ","severity":"00"}]}  
+[2025-06-25 15:39:04] devel.INFO: GI33 Request: {"accountNumber":"1113335557779","branch":null,"cif":null,"suffix":null}  
+[2025-06-25 15:39:04] devel.INFO: GI33 Response: {"responseCode":"99","responseDesc":"Failed","data":[{"messageId":"KSM1009","messageDesc":"KSM1009  No prompt details found to match this request","fieldInError":"KSM1009","message":"KSM1009  No prompt details found to match this request","isOverride":" ","authority":"  ","severityStatus":" ","severity":"00"}]}  
+[2025-06-25 15:39:07] devel.INFO: GI33 Request: {"accountNumber":"1113335557779","branch":null,"cif":null,"suffix":null}  
+[2025-06-25 15:39:07] devel.INFO: GI33 Response: {"responseCode":"99","responseDesc":"Failed","data":[{"messageId":"KSM1009","messageDesc":"KSM1009  No prompt details found to match this request","fieldInError":"KSM1009","message":"KSM1009  No prompt details found to match this request","isOverride":" ","authority":"  ","severityStatus":" ","severity":"00"}]}  
+[2025-06-25 15:39:29] devel.INFO: GI33 Request: {"accountNumber":"8908908908908","branch":null,"cif":null,"suffix":null}  
+[2025-06-25 15:39:29] devel.INFO: GI33 Response: {"responseCode":"99","responseDesc":"Failed","data":[{"messageId":"KSM1009","messageDesc":"KSM1009  No prompt details found to match this request","fieldInError":"KSM1009","message":"KSM1009  No prompt details found to match this request","isOverride":" ","authority":"  ","severityStatus":" ","severity":"00"}]}  

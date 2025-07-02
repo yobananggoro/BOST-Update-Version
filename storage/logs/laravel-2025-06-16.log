@@ -1,0 +1,18 @@
+[2025-06-16 11:14:15] devel.INFO: Auth UIM Request: {"userId":"I831","appId":"4248","isEncrypted":true}  
+[2025-06-16 11:14:15] devel.INFO: Auth UIM Response: {"succeeded":false,"message":"User tidak ditemukan","errors":null,"errorCode":null,"data":null,"statusCode":500}  
+[2025-06-16 11:14:29] devel.INFO: Auth UIM Request: {"userId":"N243","appId":"4248","isEncrypted":true}  
+[2025-06-16 11:14:29] devel.INFO: Auth UIM Response: {"succeeded":false,"message":"User tidak terdaftar untuk aplikasi Aplikasi Bost","errors":null,"errorCode":null,"data":null,"statusCode":500}  
+[2025-06-16 11:14:31] devel.INFO: Auth UIM Request: {"userId":"I831","appId":"4248","isEncrypted":true}  
+[2025-06-16 11:14:31] devel.INFO: Auth UIM Response: {"succeeded":false,"message":"User tidak ditemukan","errors":null,"errorCode":null,"data":null,"statusCode":500}  
+[2025-06-16 11:20:59] devel.INFO: Get Token Request: {"clientId":"M6W3-DLL","clientSecret":"kIS-_wQrn9qRXSIgkklixKuB1rtYWxhEb-6XxYtg0Og"}  
+[2025-06-16 11:20:59] devel.INFO: Get Token Response: {"responseCode":"00","responseDesc":"Success","body":{"accessToken":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJUVFpYTXkxRVRFdyIsImlhdCI6MTc1MDA0NzYwOSwiZXhwIjoxNzUwMTM0MDA5fQ.HTrpacuQX5-19EbEKZHXreW3Ii0eesSMQe0NGUZb_8myzQCCzjyCQUnbTU_Ybnwdax55tGhf1g-fQHmQO8C73A","tokenType":"Bearer","expiredInMs":86400000}}  
+[2025-06-16 11:20:59] devel.INFO: Get List Email Request: http://192.168.229.22:9191/simba/list_email  
+[2025-06-16 11:20:59] devel.INFO: Get List Email Response: {"totalItems":4,"data":[{"createdAt":"2025-01-10T18:51:41","updatedAt":"2025-04-30T17:08:10","createdBy":"L108","updatedBy":"L108","uuid":"917705d5-fc93-463c-a9e3-5e05aabc7e5d","branchCode":"0001","email":"tbakbar@bankbjb.co.id"},{"createdAt":"2025-05-07T10:29:52","updatedAt":"2025-05-07T10:29:52","createdBy":"BOST","updatedBy":null,"uuid":"fded794f-cbd0-41e4-a623-b7a9e405d72a","branchCode":"0001","email":"faburizal@bankbjb.co.id"},{"createdAt":"2025-05-15T09:23:06","updatedAt":"2025-05-15T09:23:06","createdBy":"L108","updatedBy":null,"uuid":"1ab5f52c-a6fe-4097-b4a0-b5f3fa0f94b2","branchCode":"0012","email":"aaura@bankbjb.co.id"},{"createdAt":null,"updatedAt":"2025-05-28T13:24:23","createdBy":null,"updatedBy":"BOST","uuid":"33e04e69-6afb-4775-a030-409d2849dabf","branchCode":"0001","email":"fhilmansyah@BANKBJB.CO.ID"}],"totalPages":1,"currentPage":0}  
+[2025-06-16 11:30:31] devel.INFO: Auth UIM Request: {"userId":"I831","appId":"4248","isEncrypted":true}  
+[2025-06-16 11:30:31] devel.INFO: Auth UIM Response: {"succeeded":false,"message":"User tidak ditemukan","errors":null,"errorCode":null,"data":null,"statusCode":500}  
+[2025-06-16 11:30:46] devel.INFO: Auth UIM Request: {"userId":"I831","appId":"4248","isEncrypted":true}  
+[2025-06-16 11:30:46] devel.INFO: Auth UIM Response: {"succeeded":false,"message":"User tidak ditemukan","errors":null,"errorCode":null,"data":null,"statusCode":500}  
+[2025-06-16 11:30:55] devel.INFO: Auth UIM Request: {"userId":"I831","appId":"4248","isEncrypted":true}  
+[2025-06-16 11:30:55] devel.INFO: Auth UIM Response: {"succeeded":false,"message":"User tidak ditemukan","errors":null,"errorCode":null,"data":null,"statusCode":500}  
+[2025-06-16 11:31:35] devel.INFO: Auth UIM Request: {"userId":"N243","appId":"4248","isEncrypted":true}  
+[2025-06-16 11:31:35] devel.INFO: Auth UIM Response: {"succeeded":false,"message":"User tidak terdaftar untuk aplikasi Aplikasi Bost","errors":null,"errorCode":null,"data":null,"statusCode":500}  

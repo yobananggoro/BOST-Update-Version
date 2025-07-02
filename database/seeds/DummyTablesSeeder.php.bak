@@ -1,0 +1,49 @@
+<?php
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
+
+class DummyTablesSeeder extends Seeder
+{
+    /**
+     * @var string
+     */
+    protected $cutoffTable = 'app_cutoff';
+
+    /**
+     * @var string
+     */
+    protected $limitTransaksiTable = 'app_limit_transaksi';
+
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $now = now();
+        $cutoff = option_values('tipe_cutoff');
+        $limit_transaksi = option_values('transaksi');
+        DB::table($this->cutoffTable)->delete();
+        DB::table('app_unit_kerja')->where('kode', '0001')->update(['cabang_rdn' => 't']);
+
+        foreach ($cutoff as $co) {
+            DB::table($this->cutoffTable)->insert([
+                [
+                    'id' => Str::uuid(), 'cutoff' => $co->key, 'start_time' => '12:00', 'end_time' => '13:30',
+                    'status' => 't', 'created_at' => $now, 'updated_at' => $now,
+                ],
+            ]);
+        }
+
+        foreach ($limit_transaksi as $lt) {
+            DB::table($this->limitTransaksiTable)->insert([
+                [
+                    'id' => Str::uuid(), 'transaksi' => $lt->key, 'min_nominal' => 100000000, 'max_nominal' => 500000000,
+                    'status' => 't', 'created_at' => $now, 'updated_at' => $now,
+                ],
+            ]);
+        }
+    }
+}

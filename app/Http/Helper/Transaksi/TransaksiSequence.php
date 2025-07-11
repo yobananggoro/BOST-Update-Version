@@ -38,6 +38,9 @@ class TransaksiSequence
         if (!$user) return null;
         $username = $user->username;
         $branch = optional($user->profile)->unit_kerja_kode ?? '';
+        if (preg_match('/[a-zA-Z]/', $branch)) {
+            $branch = '0000';
+        }
 
         $trx = TransactionSeq::where('userid', $username)->first();
         $seq = $trx ? $trx->sequence : 1;

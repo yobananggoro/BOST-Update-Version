@@ -21,7 +21,7 @@ if ($segment !== 'create' ) { $title = 'edit'; $method = 'put'; $action = ['hak-
                 <div class="row">
                     @foreach($modules as $module)
                     {{-- @php echo $module @endphp --}}
-                    <div @if($module->uri != '#' && !empty($module->parent_id)) class="col-md-12 mb-2 bg-danger ml-auto" @else class="col-md-12 mb-2 bg-primary" @endif>
+                    <div @if($module->uri != '#' && !empty($module->parent_id)) class="col-md-12 mb-2 bg-danger" @else class="col-md-12 mb-2 bg-primary" @endif>
                         <div class="checkbox-inline">
                             <label for="{{ $module->label }}">
                                 @php($checked = $permission->modules && $permission->modules->where('id', $module->id)->count())

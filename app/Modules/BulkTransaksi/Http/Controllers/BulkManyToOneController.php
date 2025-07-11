@@ -19,17 +19,10 @@ class BulkManyToOneController extends \App\Http\Controllers\Controller
      */
     public function index(Request $request)
     {
-        $sqnc = TransactionSeq::findsequence();
-        $uid = auth()->user()->username;
+        $TransaksiSequence = new TransaksiSequence();
+        $reff = $TransaksiSequence::generateReff();
         $branch = auth()->user()->profile->unit_kerja_kode;
         $accuse = 'internal';
-
-        if (count($sqnc) > 0) {
-            $seq = $sqnc->first();
-            $reff = $branch . '' . $uid . '' . sprintf('%07d', $seq->sequence + 1);
-        } else {
-            $reff = $branch . '' . $uid . '' . sprintf('%07d', 1);
-        }
 
         \Assets::addJs('custom/bulktransaksi/bulk_manytoone.js');
         \Assets::addJs('custom/prompt/prompt.js');

@@ -77,7 +77,7 @@ $(function () {
     });
 
     $(".nar").keyup(function (e) {
-        this.value = this.value.replace(/[^a-zA-Z0-9 \t\n\r]/g, "");
+        this.value = this.value.replace(/[\*\?:]/g, "");
     });
 });
 

@@ -26,19 +26,11 @@ class OnetomanyController extends \App\Http\Controllers\Controller
     public function index(Request $request)
     {
         $rek = to_dropdown(Rekening::get(), 'id', 'nama');
-        $sqnc = TransactionSeq::findsequence();
-        $uid = auth()->user()->username;
-        $branch = auth()->user()->profile->unit_kerja_kode;
+        $TransaksiSequence = new TransaksiSequence();
+        $reff = $TransaksiSequence::generateReff();
         $accuseSrc = "internal";
         $accuseDst1 = "internal";
-
-        if (count($sqnc) > 0) {
-            $seq = $sqnc->first();
-            $reff = $branch . '' . $uid . '' . sprintf('%07d', $seq->sequence + 1);
-        } else {
-            $reff = $branch . '' . $uid . '' . sprintf('%07d', 1);
-        }
-
+        
         \Assets::addJs('custom/prompt/prompt_dynamic.js');
         \Assets::addJs('custom/pemindahbukuan/onetomany.js');
         return view('pemindahbukuan::onetomany.default', compact('rek', 'reff', 'accuseSrc', 'accuseDst1'));

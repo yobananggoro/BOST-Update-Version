@@ -49,7 +49,7 @@ class Menu extends Model
         }
 
         $q = $query->select('*')
-            ->orderBy('created_at', 'desc');
+            ->orderByRaw("string_to_array(sequence, '.')::int[] DESC");
 
         if ($request->has('per_page')) {
             return $request->per_page === 'All' ? $q->get() : $q->paginate($request->per_page);

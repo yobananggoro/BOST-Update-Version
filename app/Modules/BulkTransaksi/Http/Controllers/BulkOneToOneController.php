@@ -20,16 +20,8 @@ class BulkOneToOneController extends \App\Http\Controllers\Controller
      */
     public function index(Request $request)
     {
-        $sqnc = TransactionSeq::findsequence();
-        $uid = auth()->user()->username;
-        $branch = auth()->user()->profile->unit_kerja_kode;
-
-        if (count($sqnc) > 0) {
-            $seq = $sqnc->first();
-            $reff = $branch . '' . $uid . '' . sprintf('%07d', $seq->sequence + 1);
-        } else {
-            $reff = $branch . '' . $uid . '' . sprintf('%07d', 1);
-        }
+        $TransaksiSequence = new TransaksiSequence();
+        $reff = $TransaksiSequence::generateReff();
 
         \Assets::addJs('custom/bulktransaksi/bulk_onetoone.js');
         return view('bulktransaksi::onetoone.default', compact('reff'));

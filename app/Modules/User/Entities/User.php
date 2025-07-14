@@ -77,7 +77,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function scopeGetAll($query)
     {
         // dd(auth()->user()->profile->idrole, auth()->user());exit;
-        if (!in_array(auth()->user()->profile->rolename, ['SUPER ADMIN', 'Staf ITS', 'Staf IT'])) {
+        if (!in_array(auth()->user()->profile->rolename, ['SUPER ADMIN', 'Staf ITS ', 'Staf IT'])) {
             $q = $query->select('app_user.*','app_profile.*')
             ->join('app_profile', 'app_user.id', '=', 'app_profile.user_id')
             ->where('app_profile.unit_kerja_kode', '=', auth()->user()->profile->unit_kerja_kode)

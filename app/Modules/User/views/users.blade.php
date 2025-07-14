@@ -46,7 +46,7 @@
                         <td>{{ $d->profile->unitKerja->nama }}</td>
                         <td>{{ $d->profile->rolename }}</td>
                         <td>{{ $d->status == 1 ? 'Opened' : 'Locked' }}</td>
-                        @if(auth()->user()->profile->rolename == "SUPER ADMIN")
+                        @if(in_array(auth()->user()->profile->rolename, ['SUPER ADMIN', 'Staf ITS ', 'Staf IT']))
                         <td><a href="{{ route('users.edit', $d->id) }}" type="button" class="btn btn-sm btn-default"><i class="fa fa-pencil-alt"></i></a></td>
                         @endif
                     </tr>

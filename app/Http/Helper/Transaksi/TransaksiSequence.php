@@ -12,19 +12,20 @@ class TransaksiSequence
     public static function increaseCounter()
     {
         try {
-            $user = auth()->user();
-            if (!$user) return false;
-            $username = $user->username;
-
-            $trx = TransactionSeq::where('userid', $username)->first();
-            if ($trx) {
-                $trx->sequence = $trx->sequence == 999999 ? 0 : $trx->sequence + 1;
+            $sqnc = TransactionSeq::findsequence();
+            $userid = auth()->user()->username;
+            if (count($sqnc) > 0) {
+                $seq = $sqnc->first();
+                $trx = TransactionSeq::where('userid', $userid)->first();
+                $trx->userid = $userid;
+                $trx->sequence = $seq->sequence + 1;
             } else {
                 $trx = new TransactionSeq;
                 $trx->id = Uuid::uuid4();
-                $trx->userid = $username;
+                $trx->userid = $userid;
                 $trx->sequence = 1;
             }
+
             $trx->save();
             return true;
         } catch (Exception $e) {

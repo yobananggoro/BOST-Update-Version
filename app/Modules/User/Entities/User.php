@@ -82,7 +82,7 @@ class User extends Authenticatable implements MustVerifyEmail
             ->join('app_profile', 'app_user.id', '=', 'app_profile.user_id')
             ->where('app_profile.unit_kerja_kode', '=', auth()->user()->profile->unit_kerja_kode)
             ->where('app_user.username', '!=', auth()->user()->username)
-            ->whereIn('app_profile.rolename', ['Administrasi Dana Dan Jasa', 'Administrasi Kredit', 'Administrasi Operasional'])
+            ->whereIn('app_profile.rolename', ['Administrasi Dana Dan Jasa', 'Administrasi Kredit', 'Administrasi Operasional', 'Staff'])
             ->orderby('app_user.status', 'desc');
         } else {
             $q = $query->select('app_user.*','app_profile.*')

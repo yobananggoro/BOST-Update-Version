@@ -1,6 +1,8 @@
 <fieldset style="background-color: #eeeeee; padding: 2px">
-    <legend><h5>Authorization Prompt</h5></legend>
-    <div class="col-sm-12"> 
+    <legend>
+        <h5>Authorization Prompt</h5>
+    </legend>
+    <div class="col-sm-12">
         <table cellspacing="0" cellpadding="0">
             <tbody>
                 <tr>
@@ -23,7 +25,7 @@
                     <td style="font-weight: bold">Fingerprint Data</td>
                     <td> :</td>
                     <td><span id="statusData" style="color: red">Null</span></td>
-                    <input type="hidden" name="b64Finger" id="b64Finger" value="" readonly/>
+                    <input type="hidden" name="b64Finger" id="b64Finger" value="" readonly />
                 </tr>
                 <tr>
                     <td style="font-weight: bold">Username</td>
@@ -45,88 +47,88 @@
 
 <script type="text/javascript">
     getDevice();
-    
-    function getDevice(){
+
+    function getDevice() {
         var xhr = new XMLHttpRequest();
         var data = "";
-        
+
         xhr.open('GET', "http://localhost:8086/bjbhid/deviceList", true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
         xhr.send(data);
-        xhr.onreadystatechange = function(){
+        xhr.onreadystatechange = function() {
+            // console.log(xhr);
             // console.log(xhr.status);
             // console.log(xhr.readyState);
-            if (xhr.readyState == 4 && xhr.status == 200){
+            if (xhr.readyState == 4 && xhr.status == 200) {
                 var response = JSON.parse(xhr.responseText);
                 var data = response['data'];
-                toastr.success(response['message']);
-                // log(xhr.responseText);
+                alert(response['message']);
 
-                $('#status').html("Device Connected").css("color","Green");
+                $("#status").html("Device Connected").css("color", "Green");
                 $("#deviceId").html(data[0]);
-            } else if (xhr.readyState == 4 && xhr.status == 404){
+                toastr.info(response['message']);
+            } else if (xhr.readyState == 4 && xhr.status == 404) {
                 var response = JSON.parse(xhr.responseText);
                 toastr.error(response['message']);
                 // log(xhr.responseText);
 
-                $('#status').html("Device Not Connected").css("color","Red");
+                $("#status").html("Device Not Connected").css("color", "Red");
                 $("#deviceId").html("");
-            } else if (xhr.readyState == 4 && xhr.status == 500){
+            } else if (xhr.readyState == 4 && xhr.status == 500) {
                 var response = JSON.parse(xhr.responseText);
                 toastr.error(response['message']);
                 // log(xhr.responseText);
-                
-                $('#status').html("Device Not Connected").css("color","Red");
+
+                $('#status').html("Device Not Connected").css("color", "Red");
                 $("#deviceId").html("");
             }
         };
     }
-    
-    function ScanFinger(){
+
+    function ScanFinger() {
         alert('Silahkan Scan Jari Anda ...');
         $("#b64Finger").val('');
-        
+
         var xhr = new XMLHttpRequest();
         var data = "";
         var usernameAuth = $("#usernameAuth").val();
-        
-        if(usernameAuth == "" || usernameAuth == null){
+
+        if (usernameAuth == "" || usernameAuth == null) {
             alert("Field Username Tidak Boleh Kosong !!");
         } else {
             $("#modal-finger").modal('show');
-            
-            xhr.open('GET', "http://localhost:8086/bjbhid/scanBase64/"+usernameAuth, true);
+
+            xhr.open('GET', "http://localhost:8086/bjbhid/scanBase64/" + usernameAuth, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
             xhr.send(data);
-            xhr.onreadystatechange = function()
-            {
+            xhr.onreadystatechange = function() {
                 // console.log(xhr.status);
                 $("#modal-finger").modal('hide');
-                if (xhr.readyState == 4 && xhr.status == 200){
+                if (xhr.readyState == 4 && xhr.status == 200) {
                     toastr.success('Proses Scan Selesai ...');
-                    
+
                     var response = JSON.parse(xhr.responseText);
                     var data = response['data'];
-                    toastr.info(response['message']);
+                    toastr.success(response['message']);
                     // response['data'] = "";
                     // log(JSON.stringify(response)); 
-                    
+
                     $("#b64Finger").val(data['image']);
-                    $('#statusData').html("Success").css("color","Green");
-                } else if (xhr.readyState == 4 && xhr.status == 404){
+                    $('#statusData').html("Success").css("color", "Green");
+                } else if (xhr.readyState == 4 && xhr.status == 404) {
                     var response = JSON.parse(xhr.responseText);
                     toastr.error(response['message']);
                     // log(xhr.responseText);
-                    
+
                     $("#b64Finger").val("");
                     $('#statusData').html("Null");
-                } else if (xhr.readyState == 4 && xhr.status == 500){
+                } else if (xhr.readyState == 4 && xhr.status == 500) {
                     var response = JSON.parse(xhr.responseText);
                     toastr.error(response['error']);
                     // log(xhr.responseText);
-                    
+
                     $("#b64Finger").val("");
                     $('#statusData').html("Null");
                 }

@@ -5,16 +5,34 @@ Route::group(['middleware' => ['auth', 'role:' . permitRolesByUri('upload-onetom
     Route::get('upload-onetomany/download/{filename}', 'BulkOneToManyController@downloadTemplate');
 });
 
+Route::group(['middleware' => ['auth', 'role:' . permitRolesByUri('upload-onetomany-ho')]], function () {
+    Route::resource('upload-onetomany-ho', 'BulkOneToManyHOController')->except('create','show','edit','destroy');
+    Route::post('upload-onetomany-ho/validasi', 'BulkOneToManyHOController@validasi');
+    Route::get('upload-onetomany-ho/download/{filename}', 'BulkOneToManyHOController@downloadTemplate');
+});
+
 Route::group(['middleware' => ['auth', 'role:' . permitRolesByUri('upload-manytoone')]], function () {
     Route::resource('upload-manytoone', 'BulkManyToOneController')->except('create','show','edit','destroy');
     Route::post('upload-manytoone/validasi', 'BulkManyToOneController@validasi');
     Route::get('upload-manytoone/download/{filename}', 'BulkManyToOneController@downloadTemplate');
 });
 
+Route::group(['middleware' => ['auth', 'role:' . permitRolesByUri('upload-manytoone-ho')]], function () {
+    Route::resource('upload-manytoone-ho', 'BulkManyToOneHOController')->except('create','show','edit','destroy');
+    Route::post('upload-manytoone-ho/validasi', 'BulkManyToOneHOController@validasi');
+    Route::get('upload-manytoone-ho/download/{filename}', 'BulkManyToOneHOController@downloadTemplate');
+});
+
 Route::group(['middleware' => ['auth', 'role:' . permitRolesByUri('upload-onetoone')]], function () {
     Route::resource('upload-onetoone', 'BulkOneToOneController')->except('create','show','edit','destroy');
     Route::post('upload-onetoone/validasi', 'BulkOneToOneController@validasi');
     Route::get('upload-onetoone/download/{filename}', 'BulkOneToOneController@downloadTemplate');
+});
+
+Route::group(['middleware' => ['auth', 'role:' . permitRolesByUri('upload-onetoone-ho')]], function () {
+    Route::resource('upload-onetoone-ho', 'BulkOneToOneHOController')->except('create','show','edit','destroy');
+    Route::post('upload-onetoone-ho/validasi', 'BulkOneToOneHOController@validasi');
+    Route::get('upload-onetoone-ho/download/{filename}', 'BulkOneToOneHOController@downloadTemplate');
 });
 
 Route::group(['middleware' => ['auth', 'role:' . permitRolesByUri('list-bulkupload')]], function () {

@@ -19,6 +19,7 @@ class UsersController extends \App\Http\Controllers\Controller
         // dd(Session::all(), Session::token());
         $data = User::GetAll();
         \Assets::addJs('custom/user/user.js');
+        \Assets::addJs('data-tables.js');
         
         return view('user::users', compact('data')); 
     }

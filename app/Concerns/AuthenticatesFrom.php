@@ -152,13 +152,15 @@ trait AuthenticatesFrom
         $username = $this->username();
         // $client = new \GuzzleHttp\Client();
         $encrypter = new \Illuminate\Encryption\Encrypter($secretKey, config('app.cipher'));
-        $url = config('auth.api_host');
+        // $url = config('auth.api_host');
+        $url = "http://192.168.229.22:9191/auth/login/uim-ng";
         $role = Role::pluck('name')->all();
         $message = [
             'userId'        => $credentials[$username],
-            'password'      => $encrypter->encrypt($credentials['password']),
-            'appId'         => config('app.id'),
-            'isEncrypted'   => true
+            'password'      => $credentials['password']
+            // 'password'      => $encrypter->encrypt($credentials['password']),
+            // 'appId'         => config('app.id'),
+            // 'isEncrypted'   => true
         ];
         // dd($role);
 

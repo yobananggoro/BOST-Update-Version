@@ -5,7 +5,7 @@
 
 <div class="sidebar">
     <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
                 <a href="{{ url('/home') }}" class="nav-link {{ isHome() }}" rel="page-content">
                     <i class="nav-icon fa fa-home"></i>

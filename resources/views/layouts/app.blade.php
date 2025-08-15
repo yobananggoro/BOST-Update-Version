@@ -9,7 +9,6 @@
     <base href="{{ config('app.url') }}">
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
     <link rel="stylesheet" href="{{ asset('css/app.css', request()->isSecure()) }}">
-    <!-- <link rel="stylesheet" href="{{ asset('css/tempusdominus-bootstrap-4.min.css', request()->isSecure()) }}"> -->
     <!-- {!! Assets::Css() !!} -->
     <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"> -->
 
@@ -53,36 +52,11 @@
                 </div>
             </section>
         </div>
-        <footer class="main-footer">
+        <!-- <footer class="main-footer">
             @include('layouts.partials.footer')
-        </footer>
+        </footer> -->
     </div>
-
-    <script src="{{ asset('js/jquery/jquery.min.js', request()->isSecure()) }}"></script>
-    <!-- <script>
-        $(function() {
-            window.onload = function() {
-                let wrapper = document.querySelector('.content.wrapper');
-                let zoomFactor = 0.8;
-                let originalHeight = 752.047;
-
-                wrapper.style.minHeight = (originalHeight / zoomFactor) + 'px';
-            };
-        });
-    </script> -->
     <script src="{{ asset('js/app.js', request()->isSecure()) }}"></script>
     {!! Assets::js(); !!}
-    <!-- <script src="{{ asset('js/manifest.js', request()->isSecure()) }}"></script>
-    <script src="{{ asset('js/vendor.js', request()->isSecure()) }}"></script>
-    <script src="{{ asset('js/notification.js', request()->isSecure()) }}"></script>
-    <script src="{{ mix('js/link.js', request()->isSecure()) }}"></script>
-    <script src="{{ asset('js/interbank.js', request()->isSecure()) }}"></script>
-    <script src="{{ asset('js/checkDana.js', request()->isSecure()) }}"></script>
-    <script src="{{ asset('js/plugins/bs-custom-file-input.js', request()->isSecure()) }}"></script>
-    <script src="{{ asset('js/chartil.js/Chart.min.js', request()->isSecure()) }}"></script>
-    <script src="{{ asset('js/jquery/jquery.min.js', request()->isSecure()) }}"></script>
-    <script src="{{ asset('js/tempusdominus-bootstrap-4.min.js', request()->isSecure()) }}"></script> -->
-
 </body>
-
 </html>

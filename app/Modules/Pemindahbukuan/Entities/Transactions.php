@@ -91,7 +91,7 @@ class Transactions extends Model
             $q = $query->select('*')
             ->where('branch', auth()->user()->profile->unit_kerja_kode)
             ->where('status_override', 1)
-            // ->where('tanggal', Carbon::now()->format('Y-m-d'))
+            ->where('tanggal', Carbon::now()->format('Y-m-d'))
             ->orderBy('updated_at', 'desc');
         } else{
             $q = $query->select('*')

@@ -15,7 +15,7 @@ class DashboardController extends \App\Http\Controllers\Controller
     public function __invoke()
     {
 
-        \Assets::addJs('custom/dashboard.js');
+        // \Assets::addJs('custom/dashboard.js');
 
         return view('dashboard::default');
     }

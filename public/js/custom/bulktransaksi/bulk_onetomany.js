@@ -70,16 +70,16 @@ function validateForm() {
         return result;
     }
 
-    if (radioSelected.value == "Y") {
-        if ($("#chequeNo").val() == "") {
-            $("#chequeNo").css("background-color", "red");
+    // if (radioSelected.value == "Y") {
+    //     if ($("#chequeNo").val() == "") {
+    //         $("#chequeNo").css("background-color", "red");
 
-            result = "Nomor Cheque Tidak Boleh Kosong";
-            return result;
-        } else {
-            $("#chequeNo").css("background-color", "");
-        }
-    }
+    //         result = "Nomor Cheque Tidak Boleh Kosong";
+    //         return result;
+    //     } else {
+    //         $("#chequeNo").css("background-color", "");
+    //     }
+    // }
 
     if ($("#nominal_").val() == "") {
         $("#nominal_").css("background-color", "red");

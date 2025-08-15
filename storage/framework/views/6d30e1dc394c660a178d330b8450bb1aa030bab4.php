@@ -1,0 +1,1 @@
+<strong><?php echo config('app.copyright') ? config('app.copyright') : 'Copyright &copy; 2020.'; ?></strong><?php /**PATH D:\Data\Kerjaan\Bjb\Aplikasi AMT\Back Office\App\Local\bulk_kosongan\resources\views/layouts/partials/footer.blade.php ENDPATH**/ ?>

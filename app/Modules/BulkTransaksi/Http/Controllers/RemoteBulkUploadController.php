@@ -15,6 +15,11 @@ class RemoteBulkUploadController extends \App\Http\Controllers\Controller
         $branch = UnitKerja::GetAll();
         $data = "";
 
+        if (auth()->user()->profile->rolename != "SUPER ADMIN") {
+            return $this->listBulk($request);
+        }
+
+        \Assets::addJs('data-tables.js');
         \Assets::addJs('custom/bulktransaksi/listbulk.js');
         return view('bulktransaksi::remote-otorsasibulk.default', compact('data', 'branch', 'request'));
     }
@@ -22,10 +27,10 @@ class RemoteBulkUploadController extends \App\Http\Controllers\Controller
     public function listBulk(Request $request)
     {
         \Assets::addJs('custom/bulktransaksi/listbulk.js');
-
+        \Assets::addJs('data-tables.js');
         try {
             $BackEndHelper = new BulkHelper();
-            $resp = $BackEndHelper->getListBulk($request);
+            $resp = $BackEndHelper->getListBulkOto($request);
             $branch = UnitKerja::GetAll();
             // dd($resp, json_decode($resp, true));
 
@@ -64,6 +69,7 @@ class RemoteBulkUploadController extends \App\Http\Controllers\Controller
     public function listDetail(Request $request)
     {
         \Assets::addJs('custom/remoteOto.js');
+        \Assets::addJs('data-tables.js');
         \Assets::addJs('custom/bulktransaksi/listbulk.js');
         
         try {
@@ -103,6 +109,7 @@ class RemoteBulkUploadController extends \App\Http\Controllers\Controller
     public function approval(Request $request)
     {
         // dd($request, auth()->user()->profile->limit_debet);
+        \Assets::addJs('data-tables.js');
 
         if ($request->subject == 'approve') {
             if (auth()->user()->profile->limit_debet >= $request->amount) {

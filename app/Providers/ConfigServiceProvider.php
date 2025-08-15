@@ -23,10 +23,10 @@ class ConfigServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
-        if (\Illuminate\Support\Facades\Schema::connection(config('database.default'))->hasTable('mst_configuration')) { //Ubah disini mst_configuration_local || mst_configuration "Dev or Prod"
+        if (\Illuminate\Support\Facades\Schema::connection(config('database.default'))->hasTable('mst_configuration_local')) { //Ubah disini mst_configuration_local || mst_configuration "Dev or Prod"
             Cache::forget('configurations');
             $configurations = Cache::has('configurations') ? Cache::get('configurations') :
-                Cache::rememberForever('configurations', function () { return \App\Entities\Configuration::all(); }); //Ubah disini ConfigurationLocal || Configuration "Dev or Prod"
+                Cache::rememberForever('configurations', function () { return \App\Entities\ConfigurationLocal::all(); }); //Ubah disini ConfigurationLocal || Configuration "Dev or Prod"
 
             foreach ($configurations as $configuration) {
                 $value = !in_array($configuration->value, ['true', 'false']) ? $configuration->value : $configuration->value === 'true';

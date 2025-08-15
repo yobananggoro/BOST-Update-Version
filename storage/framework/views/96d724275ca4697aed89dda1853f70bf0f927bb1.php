@@ -1,1 +1,0 @@
-<strong><?php echo config('app.copyright') ? config('app.copyright') : 'Copyright &copy; 2020.'; ?></strong><?php /**PATH /var/www/html/backoff/resources/views/layouts/partials/footer.blade.php ENDPATH**/ ?>

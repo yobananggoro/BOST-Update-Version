@@ -70,12 +70,12 @@ mix.scripts(
         "resources/plugins/select2/js/select2.min.js",
         "resources/plugins/summernote/summernote-bs4.min.js",
         "resources/plugins/sweetalert2/sweetalert2.min.js",
-        "resources/plugins/tablesaw/tablesaw.jquery.js",
+        // "resources/plugins/tablesaw/tablesaw.jquery.js",
         "resources/plugins/toastr/toastr.min.js",
         "resources/js/adminlte.min.js",
         "resources/js/app.js"
     ],
-    "public/js/app.js"
+    // "public/js/app.js"
 );
 
 mix.js(

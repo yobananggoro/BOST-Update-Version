@@ -40,7 +40,7 @@ class Navbar
     /**
      * @var string
      */
-    protected $child_format = '<ul class="nav nav-treeview" style="margin-left: 10px">%s</ul>';
+    protected $child_format = '<ul class="nav nav-treeview">%s</ul>';
 
     /**
      * Navbar constructor.

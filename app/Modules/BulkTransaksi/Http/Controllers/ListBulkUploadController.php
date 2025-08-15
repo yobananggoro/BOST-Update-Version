@@ -11,21 +11,27 @@ use Modules\User\Entities\User;
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use ZipArchive;
 
-class ListBulkUploadController extends \App\Http\Controllers\Controller 
+class ListBulkUploadController extends \App\Http\Controllers\Controller
 {
     public function index(Request $request)
     {
         $branch = UnitKerja::GetAll();
         $data = "";
+        
+        if (auth()->user()->profile->rolename != "SUPER ADMIN") {
+            return $this->listBulk($request);
+        }
 
+        \Assets::addJs('jquery.dataTables.min.js');
         \Assets::addJs('custom/bulktransaksi/listbulk.js');
         return view('bulktransaksi::transaksi-list.default', compact('data', 'branch', 'request'));
     }
 
     public function listBulk(Request $request)
     {
+        // dd('q');
         \Assets::addJs('custom/bulktransaksi/listbulk.js');
-
+        \Assets::addJs('jquery.dataTables.min.js');
         try {
             $BackEndHelper = new BulkHelper();
             $resp = $BackEndHelper->getListBulk($request);
@@ -69,6 +75,7 @@ class ListBulkUploadController extends \App\Http\Controllers\Controller
     {
         // dd($request);
         \Assets::addJs('custom/bulktransaksi/listbulk.js');
+        \Assets::addJs('jquery.dataTables.min.js');
         try {
             $BackEndHelper = new BulkHelper();
             $size = config('parameter.size_detail_bulk');
@@ -107,6 +114,7 @@ class ListBulkUploadController extends \App\Http\Controllers\Controller
 
     public function verify(Request $request)
     {
+        \Assets::addJs('jquery.dataTables.min.js');
         try {
             $BackEndHelper = new BulkHelper();
             $resp = $BackEndHelper->verifyBulk($request);
@@ -177,13 +185,13 @@ class ListBulkUploadController extends \App\Http\Controllers\Controller
                     // Menghasilkan PDF dari chunk data
                     $pdf = SnappyPdf::loadView('bulktransaksi::transaksi-list.pdf', [
                         'printDate' => now(),
-                        'user' => User::where('username',$request->usermaker)->first(),  // Sesuaikan dengan pengguna yang sesuai
+                        'user' => User::where('username', $request->usermaker)->first(),  // Sesuaikan dengan pengguna yang sesuai
                         'data' => $chunk,
                     ])
                         ->setOption('page-size', 'A4')  // Ukuran halaman
                         ->setOption('orientation', 'landscape')  // Orientasi halaman
                         ->save($pdfPath);  // Simpan PDF ke path sementara
-                        
+
                     // Menambahkan file PDF ke dalam ZIP
                     $zip->addFile($pdfPath, $pdfName);
                     $pdfFiles[] = $pdfPath;  // Menambahkan path file PDF ke array

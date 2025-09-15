@@ -23,12 +23,13 @@ class BulkOneToManyHOController extends \App\Http\Controllers\Controller
         $reff = $TransaksiSequence::generateReff();
         $branch = auth()->user()->profile->unit_kerja_kode;
         $accuse = 'internal';
+
         \Assets::addJs('custom/bulktransaksi/bulk_onetomany.js');
         \Assets::addJs('custom/prompt/prompt.js');
         return view('bulktransaksi::onetomany-ho.default', compact('reff', 'accuse'));
     }
 
-    public function validasi(BulkUploadRequest $request)
+    public function validasi(Request $request)
     {
         try {
             $import = new TotalImport();
@@ -86,4 +87,5 @@ class BulkOneToManyHOController extends \App\Http\Controllers\Controller
             return redirect('upload-onetomany-ho')->with($status, $response);
         }
     }
+
 }

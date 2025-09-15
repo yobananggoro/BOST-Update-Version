@@ -51,7 +51,7 @@
                         </table><br>
                         <table style="margin-left: 20px">
                             <tr>
-                                <td>Image List</td>
+                                <td><b>[ Image List ]</b></td>
                                 <td></td>
                                 <td id="list"></td>
                             </tr>
@@ -60,6 +60,7 @@
                                 @foreach (@$data as $key => $value)
                                 <td style="margin-bottom: 20px;">
                                     @if (!empty($value['img']))
+                                    <p>Text {{ $key+1 }}: {{ $value['text'] }}</p>
                                     <span style="margin: 0px; padding-right: 2px"><img class="imgThumb" style="border-style:solid;border-width:1px" width="150px" height="100px" data-id="{{ $value['id'] }}" src="data:image/png;base64,{{ $value['img'] }}"></span>
                                     <div id="zoomArea_{{ $value['id'] }}" style="position:absolute;display:none;z-index:10;border-style:solid;border-width:1px"><img id="zoomImg_{{ $value['id'] }}" width="350px" height="300px" src=""></div>
                                     @else

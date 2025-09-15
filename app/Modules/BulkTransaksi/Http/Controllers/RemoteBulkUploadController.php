@@ -15,11 +15,11 @@ class RemoteBulkUploadController extends \App\Http\Controllers\Controller
         $branch = UnitKerja::GetAll();
         $data = "";
 
-        if (auth()->user()->profile->rolename != "SUPER ADMIN") {
+        if (auth()->user()->profile->rolename != "SUPER ADMIN" && !$request->session()->has('from_redirect')) {
             return $this->listBulk($request);
         }
 
-        \Assets::addJs('data-tables.js');
+        \Assets::addJs('dataTables.js');
         \Assets::addJs('custom/bulktransaksi/listbulk.js');
         return view('bulktransaksi::remote-otorsasibulk.default', compact('data', 'branch', 'request'));
     }
@@ -27,7 +27,7 @@ class RemoteBulkUploadController extends \App\Http\Controllers\Controller
     public function listBulk(Request $request)
     {
         \Assets::addJs('custom/bulktransaksi/listbulk.js');
-        \Assets::addJs('data-tables.js');
+        \Assets::addJs('dataTables.js');
         try {
             $BackEndHelper = new BulkHelper();
             $resp = $BackEndHelper->getListBulkOto($request);
@@ -37,6 +37,7 @@ class RemoteBulkUploadController extends \App\Http\Controllers\Controller
             if ($resp->status() == 200) {
                 if ($resp['responseCode'] == '00') {
                     $data = json_decode($resp, true)['data'];
+                    // dd($data);
 
                     return view('bulktransaksi::remote-otorsasibulk.default', compact('data', 'request', 'branch'));
                 } else {
@@ -59,7 +60,7 @@ class RemoteBulkUploadController extends \App\Http\Controllers\Controller
                 $response   = 'Terjadi Gangguan Sistem!<br> Silahkan Coba Kembali.';
             }
 
-            return redirect('remote-otorisasibulk')->with($status, $response);
+            return redirect('remote-otorisasibulk')->with($status, $response)->with('from_redirect', true);
         } catch (\Exception $e) {
             echo $e->getMessage();
             die;
@@ -69,9 +70,9 @@ class RemoteBulkUploadController extends \App\Http\Controllers\Controller
     public function listDetail(Request $request)
     {
         \Assets::addJs('custom/remoteOto.js');
-        \Assets::addJs('data-tables.js');
+        \Assets::addJs('dataTables.js');
         \Assets::addJs('custom/bulktransaksi/listbulk.js');
-        
+
         try {
             $BackEndHelper = new BulkHelper();
             $size = config('parameter.size_detail_bulk');
@@ -99,7 +100,7 @@ class RemoteBulkUploadController extends \App\Http\Controllers\Controller
                 $response   = 'Terjadi Gangguan Sistem!<br> Silahkan Coba Kembali.';
             }
 
-            return redirect('remote-otorisasibulk')->with($status, $response);
+            return redirect('remote-otorisasibulk')->with($status, $response)->with('from_redirect', true);
         } catch (\Exception $e) {
             echo $e->getMessage();
             die;
@@ -109,7 +110,7 @@ class RemoteBulkUploadController extends \App\Http\Controllers\Controller
     public function approval(Request $request)
     {
         // dd($request, auth()->user()->profile->limit_debet);
-        \Assets::addJs('data-tables.js');
+        \Assets::addJs('dataTables.js');
 
         if ($request->subject == 'approve') {
             if (auth()->user()->profile->limit_debet >= $request->amount) {
@@ -126,7 +127,7 @@ class RemoteBulkUploadController extends \App\Http\Controllers\Controller
                         $status = 'error';
                         $response = 'Terjadi Gangguan pada saat verifikasi fingerprint.';
 
-                        return redirect()->back()->with($status, $response);
+                        return redirect()->back()->with($status, $response)->with('from_redirect', true);
                     }
                 }
                 // dd('b');
@@ -151,7 +152,7 @@ class RemoteBulkUploadController extends \App\Http\Controllers\Controller
                         $response   = 'Terjadi Gangguan Sistem!<br> Silahkan Coba Kembali.';
                     }
 
-                    return redirect('remote-otorisasibulk')->with($status, $response);
+                    return redirect('remote-otorisasibulk')->with($status, $response)->with('from_redirect', true);
                 } catch (\Exception $e) {
                     echo $e->getMessage();
                     die;
@@ -182,7 +183,7 @@ class RemoteBulkUploadController extends \App\Http\Controllers\Controller
                     $response   = 'Terjadi Gangguan Sistem!<br> Silahkan Coba Kembali.';
                 }
 
-                return redirect('remote-otorisasibulk')->with($status, $response);
+                return redirect('remote-otorisasibulk')->with($status, $response)->with('from_redirect', true);
             } catch (\Exception $e) {
                 echo $e->getMessage();
                 die;
@@ -193,7 +194,7 @@ class RemoteBulkUploadController extends \App\Http\Controllers\Controller
         }
 
         \Assets::addJs('custom/pemindahbukuan/remoteOto.js');
-        return redirect('remote-otorisasibulk')->with($status, $response);
+        return redirect('remote-otorisasibulk')->with($status, $response)->with('from_redirect', true);
     }
 
     public function checkOtorisasi($data)
@@ -222,7 +223,7 @@ class RemoteBulkUploadController extends \App\Http\Controllers\Controller
             $status = 'warning';
             $response = 'Terjadi kesalahan: ' . $e->getMessage();
 
-            return redirect()->back()->with($status, $response);
+            return redirect()->back()->with($status, $response)->with('from_redirect', true);
         }
     }
 }

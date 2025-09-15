@@ -76,12 +76,32 @@ class BulkHelper extends Controller
             //     'contents'    => $nar,
             // ],
             [
-                'name'        => 'narrative3',
+                'name'        => 'nar1',
+                'contents'    => '',
+            ],
+            [
+                'name'        => 'nar2',
+                'contents'    => '',
+            ],
+            [
+                'name'        => 'nar3',
                 'contents'    => $request->narative3,
             ],
             [
-                'name'        => 'narrative4',
+                'name'        => 'nar4',
                 'contents'    => $request->narative4,
+            ],
+            [
+                'name'        => 'trxName',
+                'contents'    => $request->trxName,
+            ],
+            [
+                'name'        => 'dbCode',
+                'contents'    => $request->dbCode,
+            ],
+            [
+                'name'        => 'crCode',
+                'contents'    => $request->crCode,
             ],
         ];
 
@@ -94,9 +114,14 @@ class BulkHelper extends Controller
             'accountNumber' => $request->accuse == 'external' ? $request->ext : $request->branch . $request->cif . $request->suffix,
             'amount'        => $request->nominal,
             'filename'      => $file_uploaded_name,
-            // 'narrative34'   => $nar
-            'narrative3'    => $request->narative3,
-            'narrative4'    => $request->narative4
+            // 'narrative34'   => $nar,
+            'nar1'          => '',
+            'nar2'          => '',
+            'nar3'          => $request->narative3,
+            'nar4'          => $request->narative4,
+            'trxName'       => $request->trxName,
+            'dbCode'        => $request->dbCode,
+            'crCode'        => $request->crCode
         );
 
         // **Tambahkan elemen hanya jika trxtype adalah 'OTM'**
@@ -212,8 +237,24 @@ class BulkHelper extends Controller
                 'contents'    => $request->narative4,
             ],
             [
+                'name'        => 'trxName',
+                'contents'    => $request->trxName,
+            ],
+            [
+                'name'        => 'dbCode',
+                'contents'    => $request->dbCode,
+            ],
+            [
+                'name'        => 'crCode',
+                'contents'    => $request->crCode,
+            ],
+            [
                 'name'        => 'isCheque',
                 'contents'    => 'N',
+            ],
+            [
+                'name'        => 'chequeNo',
+                'contents'    => null,
             ],
         ];
 
@@ -229,25 +270,11 @@ class BulkHelper extends Controller
             'nar1'          => $request->narative1,
             'nar2'          => $request->narative2,
             'nar3'          => $request->narative3,
-            'nar4'          => $request->narative4
+            'nar4'          => $request->narative4,
+            'trxName'       => $request->trxName,
+            'dbCode'        => $request->dbCode,
+            'crCode'        => $request->crCode
         );
-
-        // **Tambahkan elemen hanya jika trxtype adalah 'OTM'**
-        // if ($request->trxtype == 'OTM') {
-        //     $body[] = [
-        //         'name'      => 'isCheque',
-        //         'contents'  => $request->isCheque,
-        //     ];
-        //     $message['isCheque'] = $request->isCheque;
-
-        //     if ($request->isCheque == 'Y') {
-        //         $body[] = [
-        //             'name'      => 'chequeNo',
-        //             'contents'  => $request->chequeNo,
-        //         ];
-        //         $message['chequeNo'] = $request->chequeNo;
-        //     }
-        // }
 
         // dd($message, $body);
 
@@ -315,7 +342,19 @@ class BulkHelper extends Controller
             [
                 'name'        => 'bulkType',
                 'contents'    => $request->trxtype,
-            ]
+            ],
+            [
+                'name'        => 'trxName',
+                'contents'    => $request->trxName,
+            ],
+            [
+                'name'        => 'dbCode',
+                'contents'    => $request->dbCode,
+            ],
+            [
+                'name'        => 'crCode',
+                'contents'    => $request->crCode,
+            ],
         ];
 
         $message = array(
@@ -323,7 +362,10 @@ class BulkHelper extends Controller
             'branch'        => auth()->user()->profile->unit_kerja_kode,
             'createdBy'     => auth()->user()->username,
             'bulkType'      => $request->trxtype,
-            'filename'      => $file_uploaded_name
+            'filename'      => $file_uploaded_name,
+            'trxName'       => $request->trxName,
+            'dbCode'        => $request->dbCode,
+            'crCode'        => $request->crCode
         );
         // dd($request,$message);
 
@@ -392,7 +434,19 @@ class BulkHelper extends Controller
             [
                 'name'        => 'bulkType',
                 'contents'    => $request->trxtype,
-            ]
+            ],
+            [
+                'name'        => 'trxName',
+                'contents'    => $request->trxName,
+            ],
+            [
+                'name'        => 'dbCode',
+                'contents'    => $request->dbCode,
+            ],
+            [
+                'name'        => 'crCode',
+                'contents'    => $request->crCode,
+            ],
         ];
 
         $message = array(
@@ -400,7 +454,10 @@ class BulkHelper extends Controller
             'branch'        => auth()->user()->profile->unit_kerja_kode,
             'createdBy'     => auth()->user()->username,
             'bulkType'      => $request->trxtype,
-            'filename'      => $file_uploaded_name
+            'filename'      => $file_uploaded_name,
+            'trxName'       => $request->trxName,
+            'dbCode'        => $request->dbCode,
+            'crCode'        => $request->crCode
         );
         // dd($request,$message);
 
@@ -443,10 +500,20 @@ class BulkHelper extends Controller
         $url = config('app.backend_bo') . '/bulk/files';
         $userID = $request->userid == null ? '' : $request->userid;
 
+        // Format tanggal dari dd-MM-yyyy ke yyyy-MM-dd
+        $startDate = \DateTime::createFromFormat('d-m-Y', $request->startDate);
+        $endDate = \DateTime::createFromFormat('d-m-Y', $request->endDate);
+        $formattedStartDate = $startDate ? $startDate->format('Y-m-d') : null;
+        $formattedEndDate = $endDate ? $endDate->format('Y-m-d') : null;
+
+        // dd($formattedStartDate, $formattedEndDate);
+
         $message = array(
-            'userId'        => !in_array(auth()->user()->profile->rolename, ['Administrasi Dana Dan Jasa', 'Administrasi Kredit', 'Administrasi Operasional']) ? $userID : auth()->user()->username,
+            'userId'        => !in_array(auth()->user()->profile->rolename, ['Administrasi Dana Dan Jasa', 'Administrasi Kredit', 'Administrasi Operasional', 'Staf']) ? $userID : auth()->user()->username,
             'branch'        => auth()->user()->profile->rolename != "SUPER ADMIN" ? auth()->user()->profile->unit_kerja_kode : $request->branch,
-            'fileStatus'    => $request->status_bulk == null ? '' : $request->status_bulk
+            'fileStatus'    => $request->status_bulk == null ? '' : $request->status_bulk,
+            'startDate'     => $formattedStartDate,
+			'endDate'       => $formattedEndDate
         );
 
         // dd($message);
@@ -516,7 +583,7 @@ class BulkHelper extends Controller
         try {
             $response = Http::withHeaders(['Authorization' => 'Bearer ' . $tokens, 'Content-Type' => 'application/json',])->get($url);
             Log::info("List Detail Report Request: " . json_encode($url));
-            dd($response, json_decode($response, true));
+            // dd($response, json_decode($response, true));
 
             if ($response->status() == 200) {
                 $respMsg = json_decode($response, true);
@@ -624,4 +691,5 @@ class BulkHelper extends Controller
             die();
         }
     }
+
 }

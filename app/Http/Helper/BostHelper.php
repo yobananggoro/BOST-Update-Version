@@ -44,9 +44,9 @@ class BostHelper extends Controller
 	}
 
 	public function getToken()
-    {
-        return $this->setToken;
-    }
+	{
+		return $this->setToken;
+	}
 
 	public function auth()
 	{
@@ -366,7 +366,7 @@ class BostHelper extends Controller
 	{
 		// dd($request);
 		try {
-			$response = Http::withBasicAuth(config('auth.user_svs'), config('auth.pass_svs'))->get(config('app.url_svs').$request->cif_cust);
+			$response = Http::withBasicAuth(config('auth.user_svs'), config('auth.pass_svs'))->get(config('app.url_svs') . $request->cif_cust);
 			// Log::info("List Signature Request: " . json_encode($message));
 			Log::info("List Signature Response: " . $response);
 			// dd($response, json_decode($response, true));
@@ -375,6 +375,52 @@ class BostHelper extends Controller
 		} catch (\Exception $e) {
 			Log::error("List Signature Error: " . $e->getMessage());
 			throw $e;
+		}
+	}
+
+	public function jenisTransaksi()
+	{
+		$tokens = $this->setToken->accessToken;
+		$url = config('app.backend_bo') . '/transactions/trx-codes';
+
+		try {
+			$response = Http::withHeaders(['Authorization' => 'Bearer ' . $tokens, 'Content-Type' => 'application/json',])->get($url);
+			// dd($response, json_decode($response, true));
+			
+			if ($response->status() == 200) {
+				$respMsg = json_decode($response, true);
+				Log::info("List Jenis Transaksi: " . json_encode(array_diff_key($respMsg, ['data' => ''])));
+			} else {
+				Log::info("List Jenis Transaksi: " . $response);
+			}
+
+			return $response;
+		} catch (\Exception $e) {
+			echo $e->getMessage();
+			die();
+		}
+	}
+
+	public function reloadJenisTransaksi()
+	{
+		$tokens = $this->setToken->accessToken;
+		$url = config('app.backend_bo') . '/transactions/trx-codes/reload';
+
+		try {
+			$response = Http::withHeaders(['Authorization' => 'Bearer ' . $tokens, 'Content-Type' => 'application/json',])->get($url);
+			// dd($response, json_decode($response, true));
+
+			if ($response->status() == 200) {
+				$respMsg = json_decode($response, true);
+				Log::info("Reload Core Jenis Transaksi: " . json_encode(array_diff_key($respMsg, ['data' => ''])));
+			} else {
+				Log::info("Reload Core Jenis Transaksi: " . $response);
+			}
+
+			return $response;
+		} catch (\Exception $e) {
+			echo $e->getMessage();
+			die();
 		}
 	}
 }

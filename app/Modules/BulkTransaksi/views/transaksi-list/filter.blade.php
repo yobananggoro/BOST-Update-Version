@@ -35,7 +35,7 @@
                         <label class="col-sm-3 col-form-label">UserID Maker</label>
                         <div class="col-sm-2">
                             <div class="input-group">
-                                @if(!in_array(auth()->user()->profile->rolename, ['Administrasi Dana Dan Jasa', 'Administrasi Kredit', 'Administrasi Operasional']))
+                                @if(!in_array(auth()->user()->profile->rolename, ['Administrasi Dana Dan Jasa', 'Administrasi Kredit', 'Administrasi Operasional', 'Staf']))
                                 <input type="text" id="userID" name="userid" class="form-control ucase" onchange="getRequest(this)" maxlength="4" value="{{old('userid', @$request->userid)}}">
                                 @else
                                 <input type="text" id="userID" name="userid" class="form-control ucase" onchange="getRequest(this)" maxlength="4" value="{{auth()->user()->username}}" readonly>
@@ -68,6 +68,25 @@
                                     <option value="{{$key}}" {{$key == $request->status_bulk ? 'selected':'' }}>{{$value}}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-12 row">
+                        <label class="col-sm-3 col-form-label">Tanggal Transaksi</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                </div>
+                                <input type="text" id="startDate" name="startDate" value="{{@$request->startDate}}" class="form-control datepick" placeholder="Start Date">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                </div>
+                                <input type="text" id="endDate" name="endDate" value="{{@$request->endDate}}" class="form-control datepick" placeholder="End Date">
                             </div>
                         </div>
                     </div>

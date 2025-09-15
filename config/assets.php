@@ -59,7 +59,7 @@ return [
 		 *
 		 * @var string
 		 */
-		'css_dir' => 'css',
+		// 'css_dir' => 'css',
 
 		/**
 		 * Directory for local JavaScript assets.
@@ -68,7 +68,7 @@ return [
 		 *
 		 * @var string
 		 */
-		'js_dir' => 'js',
+		// 'js_dir' => 'js',
 
 		/**
 		 * Directory for local package assets.

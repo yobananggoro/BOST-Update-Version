@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Helper\BulkUpload\BulkHelper;
 use App\Entities\UnitKerja;
 use Modules\User\Entities\User;
-// use PDF;
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use ZipArchive;
 
@@ -18,29 +17,29 @@ class ListBulkUploadController extends \App\Http\Controllers\Controller
         $branch = UnitKerja::GetAll();
         $data = "";
         
-        if (auth()->user()->profile->rolename != "SUPER ADMIN") {
+        if (auth()->user()->profile->rolename != "SUPER ADMIN" && !$request->session()->has('from_redirect')) {
             return $this->listBulk($request);
         }
 
-        \Assets::addJs('jquery.dataTables.min.js');
+        \Assets::addJs('dataTables.js');
         \Assets::addJs('custom/bulktransaksi/listbulk.js');
         return view('bulktransaksi::transaksi-list.default', compact('data', 'branch', 'request'));
     }
 
     public function listBulk(Request $request)
     {
-        // dd('q');
         \Assets::addJs('custom/bulktransaksi/listbulk.js');
-        \Assets::addJs('jquery.dataTables.min.js');
+        \Assets::addJs('dataTables.js');
         try {
             $BackEndHelper = new BulkHelper();
             $resp = $BackEndHelper->getListBulk($request);
-            $branch = UnitKerja::GetAll();
+            // $branch = UnitKerja::GetAll();
             // dd($resp, json_decode($resp, true));
 
             if ($resp->status() == 200) {
                 if ($resp['responseCode'] == '00') {
                     $data = json_decode($resp, true)['data'];
+                    $branch = UnitKerja::GetAll();
 
                     // dd($data);
                     return view('bulktransaksi::transaksi-list.default', compact('data', 'request', 'branch'));
@@ -64,7 +63,7 @@ class ListBulkUploadController extends \App\Http\Controllers\Controller
                 $response   = 'Terjadi Gangguan Sistem!<br> Silahkan Coba Kembali.';
             }
 
-            return redirect('list-bulkupload')->with($status, $response);
+            return redirect('list-bulkupload')->with($status, $response)->with('from_redirect', true);
         } catch (\Exception $e) {
             echo $e->getMessage();
             die;
@@ -75,7 +74,7 @@ class ListBulkUploadController extends \App\Http\Controllers\Controller
     {
         // dd($request);
         \Assets::addJs('custom/bulktransaksi/listbulk.js');
-        \Assets::addJs('jquery.dataTables.min.js');
+        \Assets::addJs('dataTables.js');
         try {
             $BackEndHelper = new BulkHelper();
             $size = config('parameter.size_detail_bulk');
@@ -105,7 +104,7 @@ class ListBulkUploadController extends \App\Http\Controllers\Controller
                 $response   = 'Terjadi Gangguan Sistem!<br> Silahkan Coba Kembali.';
             }
 
-            return redirect('list-bulkupload')->with($status, $response);
+            return redirect('list-bulkupload')->with($status, $response)->with('from_redirect', true);
         } catch (\Exception $e) {
             echo $e->getMessage();
             die;
@@ -114,7 +113,7 @@ class ListBulkUploadController extends \App\Http\Controllers\Controller
 
     public function verify(Request $request)
     {
-        \Assets::addJs('jquery.dataTables.min.js');
+        \Assets::addJs('dataTables.js');
         try {
             $BackEndHelper = new BulkHelper();
             $resp = $BackEndHelper->verifyBulk($request);
@@ -136,7 +135,7 @@ class ListBulkUploadController extends \App\Http\Controllers\Controller
                 $response   = 'Terjadi Gangguan Sistem!<br> Silahkan Coba Kembali.';
             }
 
-            return redirect('list-bulkupload')->with($status, $response);
+            return redirect('list-bulkupload')->with($status, $response)->with('from_redirect', true);
         } catch (\Exception $e) {
             echo $e->getMessage();
             die;
@@ -145,6 +144,7 @@ class ListBulkUploadController extends \App\Http\Controllers\Controller
 
     public function pdf(Request $request)
     {
+        // dd($request);
         $printDate = now();
         $user = User::where('username', $request->usermaker)->first();
 
@@ -186,6 +186,9 @@ class ListBulkUploadController extends \App\Http\Controllers\Controller
                     $pdf = SnappyPdf::loadView('bulktransaksi::transaksi-list.pdf', [
                         'printDate' => now(),
                         'user' => User::where('username', $request->usermaker)->first(),  // Sesuaikan dengan pengguna yang sesuai
+                        'reff' => $request->reff,
+                        'useroto' => $request->useroto,
+                        'timeoto' => $request->timeoto,
                         'data' => $chunk,
                     ])
                         ->setOption('page-size', 'A4')  // Ukuran halaman

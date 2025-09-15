@@ -27,6 +27,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        
                         @if($data != '')
                         @foreach($data as $key => $d)
                         <tr>

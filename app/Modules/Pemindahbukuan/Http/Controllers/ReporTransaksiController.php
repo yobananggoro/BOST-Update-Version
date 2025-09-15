@@ -14,19 +14,19 @@ class ReporTransaksiController extends \App\Http\Controllers\Controller
 {
     public function index(Request $request)
     {
-        \Assets::addJs('custom/pemindahbukuan/report.js');
         $data = "";
         $data_list = "";
         $branch = UnitKerja::GetAll();
-        \Assets::addJs('data-tables.js');
-        
+
+        \Assets::addJs('custom/pemindahbukuan/report.js');
+        \Assets::addJs('dataTables.js');
         return view('pemindahbukuan::report-transaksi.default', compact('data','data_list','branch','request'));
     }
     
     public function getReport(Request $request) 
     {
         \Assets::addJs('custom/pemindahbukuan/report.js');
-        \Assets::addJs('data-tables.js');
+        \Assets::addJs('dataTables.js');
         try{
             $BackEndHelper = new BostHelper();
             $resp = $BackEndHelper->reportTrx($request);
@@ -69,7 +69,7 @@ class ReporTransaksiController extends \App\Http\Controllers\Controller
     public function pdf(Request $request)
     {
         \Assets::addJs('custom/pemindahbukuan/report.js');
-        \Assets::addJs('data-tables.js');
+        \Assets::addJs('dataTables.js');
         $printDate = now(); 
         $user = User::where('username', $request->userid)->first();
         

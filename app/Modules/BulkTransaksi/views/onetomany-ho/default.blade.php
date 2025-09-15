@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Upload File Data One To Many HeadOffice')
+@section('title', 'Upload File One To Many HeadOffice')
 @section('content')
 <div class="row toastrDefaultInfo"></div>
 <div class="row toastrDefaultError"></div>
@@ -59,26 +59,24 @@
                         </table>
                     </div><br>
                     <div class="col-12">
+                        <label>Jenis Transaksi</label>
+                        <select id="getTrxList" name="trxName" class="form-control select2">
+                        </select><br>
+                        <div class="row">
+                            <div class="col-6">
+                                <label>Trx Debet</label>
+                                <input type="text" name="dbCode" id="dbCode" class="form-control" readonly>
+                            </div>
+                            <div class="col-6">
+                                <label>Trx Credit</label>
+                                <input type="text" name="crCode" id="crCode" class="form-control" readonly>
+                            </div>
+                        </div>
+                    </div><br>
+                    <div class="col-12">
                         <label>Refference</label>
                         <input type="text" name="reff" id="reff" class="form-control" value="{{@$reff}}" readonly>
                     </div><br>
-                    <!-- <div class="col-12">
-                        <label>Transaksi Cheque?</label>
-                        <div class="form-group">
-                            <div class="form-check">
-                                <div class="col-6">
-                                    <div class="col-6">
-                                        <input class="form-check-input" type="radio" name="isCheque" value="N" onclick="valCheque(this.value);" checked>
-                                        <label class="form-check-label">Tidak</label>
-                                    </div>
-                                    <div class="col-6">
-                                        <input class="form-check-input" type="radio" name="isCheque" value="Y" onclick="valCheque(this.value);">
-                                        <label class="form-check-label">Ya</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
                     <div id="numbCheck">
                     </div>
                     <div class="col-12">

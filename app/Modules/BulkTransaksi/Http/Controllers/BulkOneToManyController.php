@@ -28,8 +28,9 @@ class BulkOneToManyController extends \App\Http\Controllers\Controller
         return view('bulktransaksi::onetomany.default', compact('reff', 'accuse'));
     }
 
-    public function validasi(BulkUploadRequest $request)
+    public function validasi(Request $request)
     {
+        // dd($request);
         try {
             $import = new TotalImport();
             Excel::import($import, $request->file('file'));

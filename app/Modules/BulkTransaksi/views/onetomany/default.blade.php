@@ -59,6 +59,21 @@
                         </table>
                     </div><br>
                     <div class="col-12">
+                        <label>Jenis Transaksi</label>
+                        <select id="getTrxList" name="trxName" class="form-control select2">
+                        </select><br>
+                        <div class="row">
+                            <div class="col-6">
+                                <label>Trx Debet</label>
+                                <input type="text" name="dbCode" id="dbCode" class="form-control" readonly>
+                            </div>
+                            <div class="col-6">
+                                <label>Trx Credit</label>
+                                <input type="text" name="crCode" id="crCode" class="form-control" readonly>
+                            </div>
+                        </div>
+                    </div><br>
+                    <div class="col-12">
                         <label>Refference</label>
                         <input type="text" name="reff" id="reff" class="form-control" value="{{@$reff}}" readonly>
                     </div><br>

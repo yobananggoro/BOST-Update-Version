@@ -5,7 +5,7 @@
         .table-bordered {
             border: 1px solid black;
             border-collapse: collapse;
-            font-size: 9px;
+            font-size: 12px;
             font-family: "Times New Roman", Times, serif;
             width: 100%;
         }
@@ -30,7 +30,7 @@
 </head>
 
 <body>
-    <h5 style="text-align: center">LAPORAN TRANSAKSI PER OPERATOR</h5>
+    <h5 style="text-align: center">LAPORAN TRANSAKSI NO {{ $reff }}</h5>
     <table class="table-borderless">
         <tr>
             <td style="width: 80px">Nama Kantor</td>
@@ -45,7 +45,7 @@
         <tr>
             <td>Dicetak</td>
             <td>:</td>
-            <td>Jam {{$printDate->toTimeString()}} Tgl. {{date('d-m-Y', strtotime($printDate->toDateString()))}}</td>
+            <td>Jam {{$printDate->toTimeString()}} Tgl {{date('d-m-Y', strtotime($printDate->toDateString()))}}</td>
         </tr>
     </table><br>
 
@@ -59,6 +59,7 @@
                 <th>Account Name</th>
                 <th>Account Status</th>
                 <th>Amount</th>
+                <th>User Oto</th>
                 <th>Trx Status</th>
                 <th>Posting Date</th>
             </tr>
@@ -86,6 +87,7 @@
                 <td>{{ $d['accountName'] }}</td>
                 <td>{{ $d['accountStatus'] }}</td>
                 <td>{{ number_format($d['trxAmount'],2) }}</td>
+                <td>{{ $useroto }}</td>
                 <td>{{ $d['trxStatus'] }}</td>
                 <td>{{ $postdt ? $postdt->format('d-m-Y H:i:s') : '-' }}</td>
                 @else
@@ -96,6 +98,7 @@
                 <td>{{ $d['accountName'] }}</td>
                 <td>{{ $d['accountStatus'] }}</td>
                 <td>{{ number_format($d['trxAmount'],2) }}</td>
+                <td>{{ $useroto }}</td>
                 <td>{{ $d['trxStatus'] }}</td>
                 <td>{{ $postdt ? $postdt->format('d-m-Y H:i:s') : '-' }}</td>
                 @endif

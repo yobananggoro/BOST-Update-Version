@@ -15,6 +15,21 @@
                     <input type="file" id="myfile" name="file">
                 </div><br>
                 <div class="col-12">
+                    <label>Jenis Transaksi</label>
+                    <select id="getTrxList" name="trxName" class="form-control select2">
+                    </select><br>
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Trx Debet</label>
+                            <input type="text" name="dbCode" id="dbCode" class="form-control" readonly>
+                        </div>
+                        <div class="col-6">
+                            <label>Trx Credit</label>
+                            <input type="text" name="crCode" id="crCode" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div><br>
+                <div class="col-12">
                     <label>Refference</label>
                     <input type="text" name="reff" id="reff" class="form-control" value="{{@$reff}}" readonly>
                 </div>
@@ -38,7 +53,7 @@
                     <a href="{{ url('upload-onetoone-ho') }}" type="button" class="btn btn-sm btn-danger" style="width: 80px"><i class="fa fa-redo"></i> Reload</a>
                 </div>
                 <div class="btn-group">
-                    <a href="{{ url('upload-onetoone-ho/download/template_bulk_ita.xlsx') }}" type="button" class="btn btn-sm btn-success"><i class="fa fa-download"></i> Template Excel</a>
+                    <a href="{{ url('upload-onetoone-ho/download/template_bulk_ita_ho.xlsx') }}" type="button" class="btn btn-sm btn-success"><i class="fa fa-download"></i> Template Excel</a>
                 </div>
                 <!-- <button type="button" id="listRekening" class="btn btn-sm btn-default float-right" data-toggle="modal" data-target="#modal-xl" style="width: 150px; position: right">List Rekening</button> -->
             </div>

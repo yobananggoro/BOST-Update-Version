@@ -156,7 +156,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function scopeFindByUsername($query, $value)
     {
-        return $query->where('username', $value)->first();
+        // return $query->where('username', $value)->first();
+        return $query->whereRaw('LOWER(username) = ?', [strtolower($value)])->first();
     }
 
     /**

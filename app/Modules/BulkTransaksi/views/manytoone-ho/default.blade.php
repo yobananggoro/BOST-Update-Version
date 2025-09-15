@@ -6,7 +6,7 @@
 <div class="col-sm-6">
     <div class="card card-default">
         <div class="card-header"></div>
-        <form action="{{ url('upload-manytoone/validasi') }}" method="post" id="formAccount" role="form" class="form-horizontal" enctype="multipart/form-data">
+        <form action="{{ url('upload-manytoone-ho/validasi') }}" method="post" id="formAccount" role="form" class="form-horizontal" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
                 <div class="col-12">
@@ -60,6 +60,21 @@
                             <td id="tipe_ccy_tujuan" class="detailDst"></td>
                         </tr>
                     </table>
+                </div><br>
+                <div class="col-12">
+                    <label>Jenis Transaksi</label>
+                    <select id="getTrxList" name="trxName" class="form-control select2">
+                    </select><br>
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Trx Debet</label>
+                            <input type="text" name="dbCode" id="dbCode" class="form-control" readonly>
+                        </div>
+                        <div class="col-6">
+                            <label>Trx Credit</label>
+                            <input type="text" name="crCode" id="crCode" class="form-control" readonly>
+                        </div>
+                    </div>
                 </div><br>
                 <div class="col-12">
                     <label>Refference</label>

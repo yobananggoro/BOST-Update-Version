@@ -4,7 +4,7 @@
     <?php echo e(Form::open(['route' => 'login', 'method' => 'post', 'name' => 'form-login', 'autocomplete' => 'off'])); ?>
 
     <div class="input-group mb-3">
-        <?php echo e(Form::text('username', null, ['class' => 'form-control', 'placeholder' => 'User ID', 'maxlength' => '4'])); ?>
+        <?php echo e(Form::text('username', null, ['class' => 'form-control ucase', 'placeholder' => 'User ID', 'maxlength' => '4'])); ?>
 
         <div class="input-group-append">
             <div class="input-group-text">

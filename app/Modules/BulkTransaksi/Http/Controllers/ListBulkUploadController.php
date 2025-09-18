@@ -16,7 +16,7 @@ class ListBulkUploadController extends \App\Http\Controllers\Controller
     {
         $branch = UnitKerja::GetAll();
         $data = "";
-        
+
         if (auth()->user()->profile->rolename != "SUPER ADMIN" && !$request->session()->has('from_redirect')) {
             return $this->listBulk($request);
         }
@@ -40,8 +40,14 @@ class ListBulkUploadController extends \App\Http\Controllers\Controller
                 if ($resp['responseCode'] == '00') {
                     $data = json_decode($resp, true)['data'];
                     $branch = UnitKerja::GetAll();
+                    // $branch = UnitKerja::GetAll()->pluck('nama', 'kode')->toArray();
 
-                    // dd($data);
+                    // $hasil = collect($data)->map(function ($item) use ($branch) {
+                    //     $item['nama_branch'] = $branch[$item['branch']] ?? null;
+                    //     return $item;
+                    // });
+
+                    // dd($hasil,$branch);
                     return view('bulktransaksi::transaksi-list.default', compact('data', 'request', 'branch'));
                 } else {
                     $status     = 'warning';

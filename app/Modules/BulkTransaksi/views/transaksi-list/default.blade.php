@@ -22,7 +22,7 @@
                             <th>Created Date</th>
                             <th>Updated Date</th>
                             @if(auth()->user()->profile->rolename == 'SUPER ADMIN')
-                            <th>Cabang</th>
+                            <th>Kode Kantor</th>
                             @endif
                         </tr>
                     </thead>

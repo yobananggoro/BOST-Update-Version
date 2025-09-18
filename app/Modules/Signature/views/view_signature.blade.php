@@ -62,7 +62,7 @@
                                     @if (!empty($value['img']))
                                     <p>Text {{ $key+1 }}: {{ $value['text'] }}</p>
                                     <span style="margin: 0px; padding-right: 2px"><img class="imgThumb" style="border-style:solid;border-width:1px" width="150px" height="100px" data-id="{{ $value['id'] }}" src="data:image/png;base64,{{ $value['img'] }}"></span>
-                                    <div id="zoomArea_{{ $value['id'] }}" style="position:absolute;display:none;z-index:10;border-style:solid;border-width:1px"><img id="zoomImg_{{ $value['id'] }}" width="350px" height="300px" src=""></div>
+                                    <div id="zoomArea_{{ $value['id'] }}" style="position:absolute;display:none;z-index:5010;border-style:solid;border-width:1px"><img id="zoomImg_{{ $value['id'] }}" width="650px" height="500px" src=""></div>
                                     @else
                                     <p><i>Tidak ada gambar.</i></p>
                                     @endif

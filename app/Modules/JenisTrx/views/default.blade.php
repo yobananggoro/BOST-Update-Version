@@ -18,8 +18,8 @@
                         <tr>
                             <th style="width:10px">No.</th>
                             <th>Nama Transaksi</th>
-                            <th>Trx Debet</th>
-                            <th>Trx Credit</th>
+                            <th>Kode Trx Debet</th>
+                            <th>Kode Trx Credit</th>
                         </tr>
                     </thead>
                     <tbody>

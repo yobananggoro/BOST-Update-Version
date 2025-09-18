@@ -1,15 +1,17 @@
 @extends('layouts.app')
 @section('title', 'User List')
 @section('content')
-{{-- @include('user::filter') --}}
 <div class="card card-default">
     <form method="post" action="{{ url('users/isAction') }}">
-        {{ csrf_field() }}
+        @csrf
         <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="dtTables1" class="table table-striped">
                 <thead>
                     <tr>
                         <th><input type="checkbox" onchange="checkAll(this)"></th>
+                        @if(in_array(auth()->user()->profile->rolename, ['SUPER ADMIN', 'Staf ITS ', 'Staf IT']))
+                        <th>Aksi</th>
+                        @endif
                         <th>No.</th>
                         <th>Login</th>
                         <th>User ID</th>
@@ -18,15 +20,15 @@
                         <th>Unit Kerja</th>
                         <th>Role</th>
                         <th>Status</th>
-                        @if(auth()->user()->profile->rolename == "SUPER ADMIN")
-                        <th>Aksi</th>
-                        @endif
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($data as $d)
                     <tr>
                         <td><input type="checkbox" name='id[]' id="checkItem" value="{{ $d->id }}"></td>
+                        @if(in_array(auth()->user()->profile->rolename, ['SUPER ADMIN', 'Staf ITS ', 'Staf IT']))
+                        <td><a href="{{ route('users.edit', $d->id) }}" type="button" class="btn btn-sm btn-default"><i class="fa fa-pencil-alt"></i></a></td>
+                        @endif
                         <td>{{ $loop->iteration }}.</td>
                         <td class="text-center">
                             {{-- @if(!is_null($d->session_id) && $d->status == 1)
@@ -46,9 +48,6 @@
                         <td>{{ $d->profile->unitKerja->nama }}</td>
                         <td>{{ $d->profile->rolename }}</td>
                         <td>{{ $d->status == 1 ? 'Opened' : 'Locked' }}</td>
-                        @if(in_array(auth()->user()->profile->rolename, ['SUPER ADMIN', 'Staf ITS ', 'Staf IT']))
-                        <td><a href="{{ route('users.edit', $d->id) }}" type="button" class="btn btn-sm btn-default"><i class="fa fa-pencil-alt"></i></a></td>
-                        @endif
                     </tr>
                     @endforeach
                 </tbody>

@@ -23,7 +23,6 @@
                                 <select name="branch" class="form-control select2">
                                     <option value="">- Pilih -</option>
                                     @foreach($branch as $key => $value)
-                                    <!-- <option value="">{{$value['nama']}}</option> -->
                                     <option value="{{$value['kode']}}" {{$value['kode'] == $request->branch ? 'selected':'' }}>{{$value['nama']}}</option>
                                     @endforeach
                                 </select>
@@ -49,7 +48,6 @@
                             <div class="input-group">
                                 <select class="form-control select2" disabled>
                                     @foreach($branch as $key => $value)
-                                    <!-- <option value="">{{$value['nama']}}</option> -->
                                     <option value="{{$value['kode']}}" {{$value['kode'] == auth()->user()->profile->unit_kerja_kode ? 'selected':'' }}>{{$value['nama']}}</option>
                                     @endforeach
                                 </select>

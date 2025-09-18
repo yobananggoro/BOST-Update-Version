@@ -18,9 +18,9 @@ class UsersController extends \App\Http\Controllers\Controller
     {   
         // dd(Session::all(), Session::token());
         $data = User::GetAll();
+
+        \Assets::addJs('dataTables.js');
         \Assets::addJs('custom/user/user.js');
-        \Assets::addJs('data-tables.js');
-        
         return view('user::users', compact('data')); 
     }
     
@@ -53,6 +53,8 @@ class UsersController extends \App\Http\Controllers\Controller
             $response = trans('message.create_success', $message);
         }
         
+        \Assets::addJs('dataTables.js');
+        \Assets::addJs('custom/user/user.js');
         return redirect('users')->with($status, $response);
     }
     
@@ -67,6 +69,8 @@ class UsersController extends \App\Http\Controllers\Controller
         $status = 'success';
         $response = "Berhasil mengubah status user";
         
+        \Assets::addJs('dataTables.js');
+        \Assets::addJs('custom/user/user.js');
         return redirect('users')->with($status, $response);;
     }
     

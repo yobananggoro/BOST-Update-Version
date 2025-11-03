@@ -494,6 +494,142 @@ class BulkHelper extends Controller
         }
     }
 
+    public function bulkUploadCheque($request)
+    {
+        $tokens = $this->setToken->accessToken;
+        $url = config('app.backend_bo') . '/bulk/files/upload';
+
+        $file               = request('file');
+        $file_path          = $file->getPathname();
+        $file_mime          = $file->getMimeType('image');
+        $file_uploaded_name = $file->getClientOriginalName();
+
+        $body = [
+            [
+                'name'        => 'file',
+                'filename'    => $file_uploaded_name,
+                'Mime-type'   => $file_mime,
+                'contents'    => fopen($file_path, 'r'),
+            ],
+            [
+                'name'        => 'reference',
+                'contents'    => $request->reff,
+            ],
+            [
+                'name'        => 'branch',
+                'contents'    => auth()->user()->profile->unit_kerja_kode,
+            ],
+            [
+                'name'        => 'createdBy',
+                'contents'    => auth()->user()->username,
+            ],
+            [
+                'name'        => 'bulkType',
+                'contents'    => $request->trxtype,
+            ],
+            [
+                'name'        => 'isExtAcc',
+                'contents'    => $request->accuse == 'external' ? 'Y' : 'N',
+            ],
+            [
+                'name'        => 'accountNumber',
+                'contents'    => $request->accuse == 'external' ? $request->ext : $request->branch . $request->cif . $request->suffix,
+            ],
+            [
+                'name'        => 'isCheque',
+                'contents'    => 'Y',
+            ],
+            [
+                'name'        => 'chequeNo',
+                'contents'    => $request->chequeNo,
+            ],
+            [
+                'name'        => 'amount',
+                'contents'    => $request->nominal,
+            ],
+            [
+                'name'        => 'nar1',
+                'contents'    => '',
+            ],
+            [
+                'name'        => 'nar2',
+                'contents'    => '',
+            ],
+            [
+                'name'        => 'nar3',
+                'contents'    => $request->narative3,
+            ],
+            [
+                'name'        => 'nar4',
+                'contents'    => $request->narative4,
+            ],
+            [
+                'name'        => 'trxName',
+                'contents'    => $request->trxName,
+            ],
+            [
+                'name'        => 'dbCode',
+                'contents'    => $request->dbCode,
+            ],
+            [
+                'name'        => 'crCode',
+                'contents'    => $request->crCode,
+            ],
+        ];
+
+        $message = array(
+            'reference'     => $request->reff,
+            'branch'        => auth()->user()->profile->unit_kerja_kode,
+            'createdBy'     => auth()->user()->username,
+            'bulkType'      => $request->trxtype,
+            'isExtAcc'      => $request->accuse == 'external' ? 'Y' : 'N',
+            'accountNumber' => $request->accuse == 'external' ? $request->ext : $request->branch . $request->cif . $request->suffix,
+            'chequeNo'      => $request->chequeNo,
+            'amount'        => $request->nominal,
+            'filename'      => $file_uploaded_name,
+            'nar1'          => '',
+            'nar2'          => '',
+            'nar3'          => $request->narative3,
+            'nar4'          => $request->narative4,
+            'trxName'       => $request->trxName,
+            'dbCode'        => $request->dbCode,
+            'crCode'        => $request->crCode,
+        );
+
+        // dd($message, $body);
+
+        try {
+            $client = new \GuzzleHttp\Client();
+            $response = $client->post($url, [
+                'headers'    => ['Authorization' => 'Bearer ' . $tokens],
+                'multipart'    => $body,
+            ]);
+
+            $msgRsp = $response->getBody()->getContents();
+            Log::info("Upload BulkFile Cheque Request: " . json_encode($message));
+            Log::info("Upload BulkFile Cheque Response: " . $msgRsp);
+            // dd($response,$response->getBody(),$response->getBody()->getContents(),json_decode($response->getBody()->getContents(), true));
+
+            return response()->json([
+                'message'       => $msgRsp,
+                'statusCode'    => $response->getStatusCode(),
+            ], $response->getStatusCode());
+        } catch (\Exception $e) {
+            $statusCode = $e->getResponse() ? $e->getResponse()->getStatusCode() : null;
+            // dd($e, $e->getRequest(),$e->getResponse(),$e->getMessage(),$statusCode);
+
+            Log::error("Upload BulkFile Cheque Request: " . json_encode($message));
+            Log::error("Upload BulkFile Cheque Response: " . $statusCode . '|' . $e->getMessage());
+
+            if ($statusCode == 400) {
+                return response()->json([
+                    'message' => $e->getMessage(),
+                    'statusCode' => $statusCode,
+                ], $statusCode);
+            }
+        }
+    }
+
     public function getListBulk($request)
     {
         $tokens = $this->setToken->accessToken;
@@ -691,5 +827,4 @@ class BulkHelper extends Controller
             die();
         }
     }
-
 }

@@ -5,9 +5,11 @@ namespace Modules\BulkTransaksi\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Helper\BulkUpload\BulkHelper;
+use App\Http\Helper\BulkUpload\ExportExcel;
 use App\Entities\UnitKerja;
 use Modules\User\Entities\User;
 use Barryvdh\Snappy\Facades\SnappyPdf;
+use Maatwebsite\Excel\Facades\Excel;
 use ZipArchive;
 
 class ListBulkUploadController extends \App\Http\Controllers\Controller
@@ -47,7 +49,7 @@ class ListBulkUploadController extends \App\Http\Controllers\Controller
                     //     return $item;
                     // });
 
-                    // dd($hasil,$branch);
+                    // dd($data);
                     return view('bulktransaksi::transaksi-list.default', compact('data', 'request', 'branch'));
                 } else {
                     $status     = 'warning';
@@ -154,77 +156,90 @@ class ListBulkUploadController extends \App\Http\Controllers\Controller
         $printDate = now();
         $user = User::where('username', $request->usermaker)->first();
 
-        $BulkHelper = new BulkHelper();
-        $resp = $BulkHelper->getDetailReport($request);
-        // dd($resp, json_decode($resp, true));
+        try {
+            $BulkHelper = new BulkHelper();
+            $resp = $BulkHelper->getDetailReport($request);
+            // dd($resp, json_decode($resp, true));
 
-        if ($resp->status() == 200) {
-            $data = json_decode($resp, true)['data'];
+            if ($resp->status() == 200) {
+                $data = json_decode($resp, true)['data'];
 
-            usort($data, function ($a, $b) {
-                return $a['id'] - $b['id'];
-            });
-
-            $chunks = array_chunk($data, 5000);
-
-            // Menyiapkan folder sementara untuk menyimpan file PDF
-            $tempFolder = storage_path('app/temp/pdfs/' . auth()->user()->username);
-            if (!is_writable($tempFolder)) {
-                // Coba membuat folder jika tidak bisa ditulis
-                if (!file_exists($tempFolder)) {
-                    mkdir($tempFolder, 0777, true);
-                }
-            }
-
-            // Nama file ZIP untuk menyimpan PDF
-            $zipFile = storage_path('app/temp/pdfs/laporan-pdf.zip');
-            $zip = new ZipArchive;
-
-            // Membuka file ZIP untuk penambahan
-            if ($zip->open($zipFile, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
-                $pdfFiles = []; // Array untuk menyimpan path file PDF sementara
-
-                foreach ($chunks as $index => $chunk) {
-                    // Membuat PDF untuk setiap chunk data
-                    $pdfName = "laporan-{$index}.pdf";
-                    $pdfPath = $tempFolder . '/' . $pdfName;
-                    // Menghasilkan PDF dari chunk data
-                    $pdf = SnappyPdf::loadView('bulktransaksi::transaksi-list.pdf', [
-                        'printDate' => now(),
-                        'user' => User::where('username', $request->usermaker)->first(),  // Sesuaikan dengan pengguna yang sesuai
-                        'reff' => $request->reff,
-                        'useroto' => $request->useroto,
-                        'timeoto' => $request->timeoto,
-                        'data' => $chunk,
-                    ])
-                        ->setOption('page-size', 'A4')  // Ukuran halaman
-                        ->setOption('orientation', 'landscape')  // Orientasi halaman
-                        ->save($pdfPath);  // Simpan PDF ke path sementara
-
-                    // Menambahkan file PDF ke dalam ZIP
-                    $zip->addFile($pdfPath, $pdfName);
-                    $pdfFiles[] = $pdfPath;  // Menambahkan path file PDF ke array
-                }
-
-                // Menutup file ZIP setelah semua file PDF ditambahkan
-                $zip->close();
-
-                // Menghapus file sementara setelah pengunduhan
-                register_shutdown_function(function () use ($pdfFiles, $zipFile, $tempFolder) {
-                    foreach ($pdfFiles as $file) {
-                        @unlink($file);  // Menghapus file PDF sementara
-                    }
-                    @unlink($zipFile);  // Menghapus file ZIP setelah unduhan
-                    @rmdir($tempFolder);  // Menghapus folder sementara setelah unduhan
+                usort($data, function ($a, $b) {
+                    return $a['id'] - $b['id'];
                 });
 
-                // Mengunduh file ZIP yang berisi semua file PDF
-                return response()->download($zipFile)->deleteFileAfterSend(true);  // Menghapus file ZIP setelah diunduh
+                $chunks = array_chunk($data, 5000);
+
+                // Menyiapkan folder sementara untuk menyimpan file PDF
+                $tempFolder = storage_path('app/temp/pdfs/' . auth()->user()->username);
+                if (!is_writable($tempFolder)) {
+                    // Coba membuat folder jika tidak bisa ditulis
+                    if (!file_exists($tempFolder)) {
+                        mkdir($tempFolder, 0777, true);
+                    }
+                }
+
+                // Nama file ZIP untuk menyimpan PDF
+                $zipFile = storage_path('app/temp/pdfs/laporan-pdf.zip');
+                $zip = new ZipArchive;
+
+                // Membuka file ZIP untuk penambahan
+                if ($zip->open($zipFile, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+                    $pdfFiles = []; // Array untuk menyimpan path file PDF sementara
+
+                    foreach ($chunks as $index => $chunk) {
+                        // Membuat PDF untuk setiap chunk data
+                        $pdfName = "laporan-{$index}.pdf";
+                        $pdfPath = $tempFolder . '/' . $pdfName;
+                        // Menghasilkan PDF dari chunk data
+                        $pdf = SnappyPdf::loadView('bulktransaksi::transaksi-list.pdf', [
+                            'printDate' => now(),
+                            'user' => User::where('username', $request->usermaker)->first(),  // Sesuaikan dengan pengguna yang sesuai
+                            'useroto' => User::where('username', $request->useroto)->first(),
+                            'reff' => $request->reff,
+                            'trxType' => $request->trxType,
+                            'timecreate' => substr($request->timecreate, 0, -4),
+                            'timeoto' => substr($request->timeoto, 0, -4),
+                            'data' => $chunk,
+                        ])
+                            ->setOption('page-size', 'A4')  // Ukuran halaman
+                            ->setOption('orientation', 'landscape')  // Orientasi halaman
+                            ->save($pdfPath);  // Simpan PDF ke path sementara
+
+                        // Menambahkan file PDF ke dalam ZIP
+                        $zip->addFile($pdfPath, $pdfName);
+                        $pdfFiles[] = $pdfPath;  // Menambahkan path file PDF ke array
+                    }
+
+                    // Menutup file ZIP setelah semua file PDF ditambahkan
+                    $zip->close();
+
+                    // Menghapus file sementara setelah pengunduhan
+                    register_shutdown_function(function () use ($pdfFiles, $zipFile, $tempFolder) {
+                        foreach ($pdfFiles as $file) {
+                            @unlink($file);  // Menghapus file PDF sementara
+                        }
+                        @unlink($zipFile);  // Menghapus file ZIP setelah unduhan
+                        @rmdir($tempFolder);  // Menghapus folder sementara setelah unduhan
+                    });
+
+                    // Mengunduh file ZIP yang berisi semua file PDF
+                    return response()->download($zipFile)->deleteFileAfterSend(true);  // Menghapus file ZIP setelah diunduh
+                } else {
+                    return response()->json(['error' => 'Gagal membuat file ZIP.'], 500);
+                }
             } else {
-                return response()->json(['error' => 'Gagal membuat file ZIP.'], 500);
+                return response()->json(['error' => 'Terjadi kesalahan dalam pengambilan data.'], 500);
             }
-        } else {
-            return response()->json(['error' => 'Terjadi kesalahan dalam pengambilan data.'], 500);
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            die;
         }
+    }
+
+    public function excel(Request $request)
+    {
+        // dd($request);
+        return (new ExportExcel($request))->download("{$request->usermaker}_{$request->reff}_{$request->trxType}.xlsx");
     }
 }

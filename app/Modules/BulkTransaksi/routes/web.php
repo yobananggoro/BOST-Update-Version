@@ -17,6 +17,12 @@ Route::group(['middleware' => ['auth', 'role:' . permitRolesByUri('upload-manyto
     Route::get('upload-manytoone/download/{filename}', 'BulkManyToOneController@downloadTemplate');
 });
 
+Route::group(['middleware' => ['auth', 'role:' . permitRolesByUri('upload-cheque')]], function () {
+    Route::resource('upload-cheque', 'BulkChequeController')->except('create','show','edit','destroy');
+    Route::post('upload-cheque/validasi', 'BulkChequeController@validasi');
+    Route::get('upload-cheque/download/{filename}', 'BulkChequeController@downloadTemplate');
+});
+
 Route::group(['middleware' => ['auth', 'role:' . permitRolesByUri('upload-manytoone-ho')]], function () {
     Route::resource('upload-manytoone-ho', 'BulkManyToOneHOController')->except('create','show','edit','destroy');
     Route::post('upload-manytoone-ho/validasi', 'BulkManyToOneHOController@validasi');
@@ -41,6 +47,7 @@ Route::group(['middleware' => ['auth', 'role:' . permitRolesByUri('list-bulkuplo
     Route::get('list-bulkupload/verify', 'ListBulkUploadController@verify')->name('list-bulkupload.verify');
     Route::get('list-bulkupload/listDetail', 'ListBulkUploadController@listDetail')->name('list-bulkupload.listDetail');
     Route::get('list-bulkupload/pdf', 'ListBulkUploadController@pdf')->name('list-bulkupload.pdf');
+    Route::get('list-bulkupload/excel', 'ListBulkUploadController@excel')->name('list-bulkupload.excel');
 });
 
 Route::group(['middleware' => ['auth', 'role:' . permitRolesByUri('remote-otorisasibulk')]], function () {

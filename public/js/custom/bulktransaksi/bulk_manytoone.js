@@ -161,11 +161,19 @@ function detailTujuan() {
                     $("#ccyDst").val(data.currency);
 
                     $(".toastrDefaultInfo").show(function () {
-                        toastr.info("Data ditemukan!");
+                        if (accuse == "internal") {
+                            toastr.info(data.branch + "-" + data.cif + "-" + data.suffix + " | Data ditemukan!");
+                        } else {
+                            toastr.info(data.externalAccountNumber + " | Data ditemukan!");
+                        }
                     });
                 } else {
                     $(".toastrDefaultError").show(function () {
-                        toastr.error(data.msgdesc);
+                        if (accuse == "internal") {
+                            toastr.error(branch + "-" + cif + "-" + suffix + " <br> " + data.msgdesc);
+                        } else {
+                            toastr.error(ext + " <br> " + data.msgdesc);
+                        }
                     });
                 }
             } else {
@@ -217,16 +225,16 @@ function jenisTrx() {
                 });
 
                 // Set dbCode and crCode to input when dropdown changes
-                dropdown.on('change', function () {
-                    var selected = $(this).find('option:selected');
-                    var dbCode = selected.data('dbcode') || '';
-                    var crCode = selected.data('crcode') || '';
+                dropdown.on("change", function () {
+                    var selected = $(this).find("option:selected");
+                    var dbCode = selected.data("dbcode") || "";
+                    var crCode = selected.data("crcode") || "";
                     // alert(dbCode + ' - ' + crCode);
-                    $('#dbCode').val(dbCode);
-                    $('#crCode').val(crCode);
+                    $("#dbCode").val(dbCode);
+                    $("#crCode").val(crCode);
                 });
 
-                dropdown.trigger('change.select2');
+                dropdown.trigger("change.select2");
             } else {
                 $(".toastrDefaultError").show(function () {
                     toastr.error(data.message);

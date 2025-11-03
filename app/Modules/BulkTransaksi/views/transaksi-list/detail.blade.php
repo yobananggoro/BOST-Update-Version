@@ -123,8 +123,9 @@
                             <td>{{ $d['createdAt'] != null ? date('d M Y H:i:s', strtotime($d['createdAt'])) : '' }}</td>
                             <td>{{ $d['updatedAt'] != null ? date('d M Y H:i:s', strtotime($d['updatedAt'])) : '' }}</td>
                             @else
-                            <td>{{ $key+1 }}.</td>
+                            <!-- <td>{{ $key+1 }}.</td> -->
                             <td>{{ $d['trxCodeDebit'].' (D) '}}<br>{{$d['trxCodeCredit'].' (C) '}}</td>
+                            <td>{{ $d['chequeNumber'] }}</td>
                             <td>{{ $d['srcAccountNumber'] }}<br>{{ $d['dstAccountNumber'] }}</td>
                             <td>{{ $d['accountName'] }}</td>
                             <td>{{ $d['accountStatus'] }}</td>

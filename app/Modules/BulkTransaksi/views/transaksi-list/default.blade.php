@@ -46,7 +46,10 @@
                                             @endif
                                         @endif
                                         @if($d['status'] == 'EXECUTED')
-                                            <a target="_blank" href="{{ route('list-bulkupload.pdf', ['id' => $d['id'], 'usermaker' => $d['createdBy'], 'useroto' => $d['updatedBy'], 'timeoto' => $d['approvedAt'] == null ? '' : $d['approvedAt'], 'reff' => $d['reference']]) }}" class="dropdown-item">PDF | <b>{{ $d['reference'] }}</b></a>
+                                            <a target="_blank" href="{{ route('list-bulkupload.pdf', ['id' => $d['id'], 'usermaker' => $d['createdBy'], 'useroto' => $d['updatedBy'] == null ? '' : $d['updatedBy'], 'timecreate' => $d['createdAt'], 'timeoto' => $d['approvedAt'] == null ? '' : $d['approvedAt'], 'reff' => $d['reference'], 'trxType' => $d['bulkType']]) }}" class="dropdown-item">Export PDF | <b>{{ $d['reference'] }}</b></a>
+                                        @endif
+                                        @if($d['status'] == 'NOT_VERIFIED')
+                                            <a target="_blank" href="{{ route('list-bulkupload.excel', ['id' => $d['id'], 'usermaker' => $d['createdBy'], 'useroto' => $d['updatedBy'] == null ? '' : $d['updatedBy'], 'timecreate' => $d['createdAt'], 'timeoto' => $d['approvedAt'] == null ? '' : $d['approvedAt'], 'reff' => $d['reference'], 'trxType' => $d['bulkType']]) }}" class="dropdown-item">Export Excel | <b>{{ $d['reference'] }}</b></a>
                                         @endif
                                     </div>
                                 </div>
@@ -58,7 +61,7 @@
                             <td class="text-right">{{ number_format($d['totalDebit'], 2) }}</td>
                             <td>{{ $d['createdBy'] }}</td>
                             <td>{{ $d['updatedBy'] }}</td>
-                            <td>{{ $d['status'] }}</td>
+                            <td>{{ str_replace('_', ' ', $d['status']) }}</td>
                             <td>{{ $d['createdAt'] }}</td>
                             <td>{{ $d['updatedAt'] }}</td>
                             @if(auth()->user()->profile->rolename == "SUPER ADMIN")

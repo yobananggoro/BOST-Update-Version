@@ -30,7 +30,7 @@
 </head>
 
 <body>
-    <h5 style="text-align: center">LAPORAN TRANSAKSI NO {{ $reff }}</h5>
+    <h5 style="text-align: center">LAPORAN TRANSAKSI BULK UPLOAD REFF [{{ $reff }}]</h5>
     <table class="table-borderless">
         <tr>
             <td style="width: 80px">Nama Kantor</td>
@@ -38,14 +38,35 @@
             <td>{{$user->profile->unitKerja->nama}}</td>
         </tr>
         <tr>
-            <td>User</td>
+            <td>User Maker</td>
             <td>:</td>
             <td>{{$user->username}} | {{$user->profile->nip}} | {{$user->profile->nama}}</td>
         </tr>
         <tr>
-            <td>Dicetak</td>
+            <td>User Otorisasi</td>
             <td>:</td>
-            <td>Jam {{$printDate->toTimeString()}} Tgl {{date('d-m-Y', strtotime($printDate->toDateString()))}}</td>
+            <td>{{$useroto == null ? '':$useroto->username}} | {{$useroto == null ? '':$useroto->profile->nip}} | {{$useroto == null ? '':$useroto->profile->nama}} </td>
+        </tr>
+        <tr>
+            <td style="width: 80px">Modul Transaksi</td>
+            <td>:</td>
+            <td>{{$trxType}}</td>
+        </tr>
+        <tr>
+            <td style="width: 80px">Tanggal Buat</td>
+            <td>:</td>
+            <td>{{$timecreate}}</td>
+        </tr>
+        <tr>
+            <td style="width: 80px">Tanggal Approve</td>
+            <td>:</td>
+            <td>{{$timeoto}}</td>
+        </tr>
+        <tr>
+            <td>Dokumen Dicetak</td>
+            <td>:</td>
+            <!-- <td>Jam {{$printDate->toTimeString()}} Tgl {{date('d-m-Y', strtotime($printDate->toDateString()))}}</td> -->
+             <td>{{date('d-m-Y', strtotime($printDate->toDateString()))}} {{$printDate->toTimeString()}}</td>
         </tr>
     </table><br>
 
@@ -59,8 +80,7 @@
                 <th>Account Name</th>
                 <th>Account Status</th>
                 <th>Amount</th>
-                <th>User Oto</th>
-                <th>Trx Status</th>
+                <th>Posting Status</th>
                 <th>Posting Date</th>
             </tr>
         </thead>
@@ -87,7 +107,6 @@
                 <td>{{ $d['accountName'] }}</td>
                 <td>{{ $d['accountStatus'] }}</td>
                 <td>{{ number_format($d['trxAmount'],2) }}</td>
-                <td>{{ $useroto }}</td>
                 <td>{{ $d['trxStatus'] }}</td>
                 <td>{{ $postdt ? $postdt->format('d-m-Y H:i:s') : '-' }}</td>
                 @else
@@ -98,7 +117,6 @@
                 <td>{{ $d['accountName'] }}</td>
                 <td>{{ $d['accountStatus'] }}</td>
                 <td>{{ number_format($d['trxAmount'],2) }}</td>
-                <td>{{ $useroto }}</td>
                 <td>{{ $d['trxStatus'] }}</td>
                 <td>{{ $postdt ? $postdt->format('d-m-Y H:i:s') : '-' }}</td>
                 @endif

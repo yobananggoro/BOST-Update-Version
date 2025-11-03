@@ -1,5 +1,5 @@
 {{ Form::open(['url' => '/menu/filter', 'method' => 'post', 'class' => 'form-horizontal form-filter', 'role' => 'form', 'autocomplete' => 'off']) }}
-    <div class="card card-primary collapsed-card">
+    <div class="card card-default">
         <div class="card-header">
             <h3 class="card-title">{{ __('label.filter') }}</h3> 
             {!! Html::cardCollapse() !!}

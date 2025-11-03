@@ -50,7 +50,7 @@
                             <td class="text-right">{{ number_format($d['totalDebit'], 2) }}</td>
                             <td>{{ $d['createdBy'] }}</td>
                             <td>{{ $d['updatedBy'] }}</td>
-                            <td>{{ $d['status'] }}</td>
+                            <td>{{ str_replace('_', ' ', $d['status']) }}</td>
                             <td>{{ $d['createdAt'] }}</td>
                             <td>{{ $d['updatedAt'] }}</td>
                             @if(auth()->user()->profile->rolename == "SUPER ADMIN")

@@ -13,14 +13,13 @@
                             <th style="width:70px">Aksi</th>
                             <th>Refference</th>
                             <th>Trx</th>
-                            <th>Filename</th>
-                            <!-- <th>Total</th> -->
-                            <th>Amount</th>
+                            <th>File</th>
+                            <th>Nominal</th>
                             <th>Maker</th>
                             <th>Approval</th>
                             <th>Status</th>
-                            <th>Created Date</th>
-                            <th>Updated Date</th>
+                            <th>Tanggal Buat</th>
+                            <th>Tanggal Update</th>
                             @if(auth()->user()->profile->rolename == 'SUPER ADMIN')
                             <th>Cabang</th>
                             @endif
@@ -51,8 +50,8 @@
                             <td>{{ $d['createdBy'] }}</td>
                             <td>{{ $d['updatedBy'] }}</td>
                             <td>{{ str_replace('_', ' ', $d['status']) }}</td>
-                            <td>{{ $d['createdAt'] }}</td>
-                            <td>{{ $d['updatedAt'] }}</td>
+                            <td>{{ $d['createdAt'] != null ? date('d M Y H:i:s', strtotime($d['createdAt'])) : '' }}</td>
+                            <td>{{ $d['updatedAt'] != null ? date('d M Y H:i:s', strtotime($d['updatedAt'])) : '' }}</td>
                             @if(auth()->user()->profile->rolename == "SUPER ADMIN")
                             <td>{{ $d['branch'] }}</td>
                             @endif

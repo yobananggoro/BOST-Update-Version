@@ -33,21 +33,19 @@
 					<thead>
 						<tr>
 							<th style="width:10px">No.</th>
-							<th style="width:100px">Trx Code</th>
-							<th>Cheque No</th>
-							<th>Account</th>
-							<th>Account Name</th>
-							<th>Account Status</th>
-							<th>Ccy</th>
-							<th>Amount</th>
+							<th style="width:100px">Kode Trx</th>
+							<th>No Cheque</th>
+                            <th>No Akun</th>
+                            <th>Nama Akun</th>
+                            <th>Status Akun</th>
+                            <th>Ccy</th>
+                            <th>Nominal</th>
 							<th>Nar 1</th>
 							<th>Nar 2</th>
 							<th>Nar 3</th>
 							<th>Nar 4</th>
-							<th>Trx Status</th>
-							<th>Posting Date</th>
-							<th>Created Date</th>
-							<th>Updated Date</th>
+                            <th>Tanggal Buat</th>
+                            <th>Tanggal Update</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -66,8 +64,6 @@
 							<td>{{ $d['trxType'] == 'd' ? $d['nar2'] : $d['nar6'] }}</td>
 							<td>{{ $d['trxType'] == 'd' ? $d['nar3'] : $d['nar7'] }}</td>
 							<td>{{ $d['trxType'] == 'd' ? $d['nar4'] : $d['nar8'] }}</td>
-							<td>{{ $d['trxStatus'] }}</td>
-							<td>{{ $d['postingDt'] }}</td>
 							<td>{{ $d['createdAt'] != null ? date('d M Y H:i:s', strtotime($d['createdAt'])) : '' }}</td>
 							<td>{{ $d['updatedAt'] != null ? date('d M Y H:i:s', strtotime($d['updatedAt'])) : '' }}</td>
 							@else
@@ -82,8 +78,6 @@
 							<td>{!! $d['trxType'] == 'd' ? $d['nar2'] : $d['nar2']."<br>".$d['nar6'] !!}</td>
 							<td>{!! $d['trxType'] == 'd' ? $d['nar3'] : $d['nar3']."<br>".$d['nar7'] !!}</td>
 							<td>{!! $d['trxType'] == 'd' ? $d['nar4'] : $d['nar4']."<br>".$d['nar8'] !!}</td>
-							<td>{{ $d['trxStatus'] }}</td>
-							<td>{{ $d['postingDt'] }}</td>
 							<td>{{ $d['createdAt'] != null ? date('d M Y H:i:s', strtotime($d['createdAt'])) : '' }}</td>
 							<td>{{ $d['updatedAt'] != null ? date('d M Y H:i:s', strtotime($d['updatedAt'])) : '' }}</td>
 							@endif

@@ -33,6 +33,7 @@ trait AuthenticatesFrom
             $this->level = $r->id; //id role
             $this->role = $r->name; //nama role
         }
+        // dd($is_authenticated);
         return $is_authenticated;
     }
 
@@ -147,13 +148,13 @@ trait AuthenticatesFrom
      */
     public function uimNG(array $credentials, $request)
     {
-        // dd($credentials);exit;
+        // dd(env('UIM_URL_CONVERTER'));exit;
         $secretKey = config('app.https') ? config('auth.domain_hash_key') : config('auth.hash_key');
         $username = $this->username();
         // $client = new \GuzzleHttp\Client();
         $encrypter = new \Illuminate\Encryption\Encrypter($secretKey, config('app.cipher'));
         // $url = config('auth.api_host');
-        $url = "http://192.168.229.22:9191/auth/login/uim-ng";
+        $url = env('UIM_URL_CONVERTER');
         $role = Role::pluck('name')->all();
         $message = [
             'userId'        => $credentials[$username],
@@ -270,105 +271,4 @@ trait AuthenticatesFrom
             }
         }
     }
-
-    // public function uimNG(array $credentials, $request)
-    // {
-    //     $secretKey = config('app.https') ? config('auth.domain_hash_key') : config('auth.hash_key');
-    //     $username = $this->username();
-    //     $encrypter = new \Illuminate\Encryption\Encrypter($secretKey, config('app.cipher'));
-    //     $url = config('auth.api_host');
-    //     $roleList = Role::pluck('name')->all();
-
-    //     $message = [
-    //         'userId'      => $credentials[$username],
-    //         'password'    => $encrypter->encrypt($credentials['password']),
-    //         'appId'       => config('app.id'),
-    //         'isEncrypted' => true
-    //     ];
-
-    //     try {
-    //         $response = Http::withHeaders(['Content-Type' => 'application/json'])->post($url, $message);
-    //         unset($message['password']);
-    //         Log::info("Auth UIM Request: " . json_encode($message));
-    //         Log::info("Auth UIM Response: " . $response->body());
-
-    //         if ($response->ok()) {
-    //             $body = $response->json();
-    //             if (($body['statusCode'] ?? null) == 200 && isset($body['data'])) {
-    //                 $res = $body['data'];
-    //                 $user = User::findByUsername($credentials[$username]);
-    //                 $userExists = !is_null($user->first());
-
-    //                 if ($userExists) {
-    //                     $now = now();
-    //                     $idle = $now->diffInMinutes($user->last_activity);
-    //                     if ($user->isLogin && $user->profile->rolename != 'SUPER ADMIN' && $idle <= config('session.lifetime')) {
-    //                         $this->sendMultipleLoggedInNotAllowedResponse($request);
-    //                         return false;
-    //                     }
-    //                 }
-
-    //                 $this->level = $res['idFungsi'];
-    //                 $this->role = trim($res['namaFungsi']);
-
-    //                 $profileData = [
-    //                     'nama'            => to_upper($res['nama']),
-    //                     'nip'             => $res['nip'],
-    //                     'hp'              => null,
-    //                     'unit_kerja_kode' => trim($res['kodeCabang']),
-    //                     'rolename'        => $res['namaFungsi'],
-    //                     'idrole'          => trim($res['idFungsi']),
-    //                     'jabatan'         => $res['jabatan'],
-    //                 ];
-
-    //                 if ($userExists) {
-    //                     $user->update(['password' => $credentials['password']]);
-    //                     $user->profile()->update($profileData);
-    //                 } else {
-    //                     if (in_array(trim($res['namaFungsi']), $roleList)) {
-    //                         if (!in_array($res['namaFungsi'], ['Administrasi Dana Dan Jasa', 'Administrasi Kredit', 'Administrasi Operasional'])) {
-    //                             $user = User::create([
-    //                                 $username => $credentials[$username],
-    //                                 'password' => $credentials['password'],
-    //                                 'email'    => trim($res['email']),
-    //                                 'status'   => 1,
-    //                                 'isLogin'  => false
-    //                             ]);
-    //                             $user->profile()->create(array_merge($profileData, ['isFinger' => true]));
-    //                         } else {
-    //                             $user = User::create([
-    //                                 $username => $credentials[$username],
-    //                                 'password' => $credentials['password'],
-    //                                 'email'    => trim($res['email']),
-    //                                 'status'   => 0,
-    //                                 'isLogin'  => false
-    //                             ]);
-    //                             $user->profile()->create(array_merge($profileData, ['isFinger' => false]));
-    //                         }
-    //                     } else {
-    //                         return false;
-    //                     }
-    //                 }
-
-    //                 $user->syncRoles(trim($res['namaFungsi']));
-    //                 $user->syncPermissions(
-    //                     (\Modules\HakAkses\Entities\Role::where('id', $this->level)->first())
-    //                         ->permissions()->pluck('name')->toArray()
-    //                 );
-
-    //                 return true;
-    //             }
-    //         }
-    //         return false;
-    //     } catch (\GuzzleHttp\Exception\ClientException $e) {
-    //         Log::error("UIMNG ClientException: " . $e->getMessage());
-    //         if ($e->hasResponse() && $e->getResponse()->getStatusCode() == 404) {
-    //             return false;
-    //         }
-    //         throw $e;
-    //     } catch (\Exception $e) {
-    //         Log::error("UIMNG Exception: " . $e->getMessage());
-    //         return false;
-    //     }
-    // }
 }

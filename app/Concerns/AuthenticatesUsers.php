@@ -64,10 +64,10 @@ trait AuthenticatesUsers
 
                 return true;
             }
-
+            
             return true;
         } else {
-
+            
             return false;
         }
     }

@@ -386,7 +386,7 @@ class BostHelper extends Controller
 		try {
 			$response = Http::withHeaders(['Authorization' => 'Bearer ' . $tokens, 'Content-Type' => 'application/json',])->get($url);
 			// dd($response, json_decode($response, true));
-			
+
 			if ($response->status() == 200) {
 				$respMsg = json_decode($response, true);
 				Log::info("List Jenis Transaksi: " . json_encode(array_diff_key($respMsg, ['data' => ''])));
@@ -415,6 +415,73 @@ class BostHelper extends Controller
 				Log::info("Reload Core Jenis Transaksi: " . json_encode(array_diff_key($respMsg, ['data' => ''])));
 			} else {
 				Log::info("Reload Core Jenis Transaksi: " . $response);
+			}
+
+			return $response;
+		} catch (\Exception $e) {
+			echo $e->getMessage();
+			die();
+		}
+	}
+
+	public function getCurrency()
+	{
+		$tokens = $this->setToken->accessToken;
+		$url = config('app.backend_bo') . '/transactions/ccy-codes';
+
+		try {
+			$response = Http::withHeaders(['Authorization' => 'Bearer ' . $tokens, 'Content-Type' => 'application/json',])->get($url);
+			// dd($response, json_decode($response, true));
+
+			if ($response->status() == 200) {
+				$respMsg = json_decode($response, true);
+				Log::info("List Currency: " . json_encode(array_diff_key($respMsg, ['data' => ''])));
+			} else {
+				Log::info("List Currency: " . $response);
+			}
+
+			return $response;
+		} catch (\Exception $e) {
+			echo $e->getMessage();
+			die();
+		}
+	}
+
+	public function getCurrencyRates($request)
+	{
+		$tokens = $this->setToken->accessToken;
+		$url = config('app.backend_bo') . '/transactions/get-rates/' . $request->ccy;
+		$message = array(
+			'currency' => $request->ccy
+		);
+
+		try {
+			$response = Http::withHeaders(['Authorization' => 'Bearer ' . $tokens, 'Content-Type' => 'application/json',])->get($url);
+			// dd($response, json_decode($response, true));
+			Log::info("Currency Rates Request: " . json_encode($message));
+			Log::info("Currency Rates Response: " . $response);
+
+			return $response;
+		} catch (\Exception $e) {
+			echo $e->getMessage();
+			die();
+		}
+	}
+
+	public function reloadCurrency()
+	{
+		$tokens = $this->setToken->accessToken;
+		$url = config('app.backend_bo') . '/transactions/ccy-codes/reload';
+
+		try {
+			$response = Http::withHeaders(['Authorization' => 'Bearer ' . $tokens, 'Content-Type' => 'application/json',])->get($url);
+			// dd($response, json_decode($response, true));
+
+			if ($response->status() == 200) {
+				$respMsg = json_decode($response, true);
+				Log::info("Reload Core Currency: " . json_encode(array_diff_key($respMsg, ['data' => ''])));
+			} else {
+				Log::info("Reload Core Currency: " . $response);
 			}
 
 			return $response;

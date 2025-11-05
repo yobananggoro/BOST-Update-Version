@@ -44,17 +44,17 @@
 
                         <table style="margin-left: 30px; margin-top: 10px">
                             <tr>
-                                <td style="width: 110px; font-weight: bold">Nama Account</td>
+                                <td style="width: 150px; font-weight: bold">Nama Rekening</td>
                                 <td> :&nbsp;&nbsp;</td>
                                 <td id="nama_sumber" class="detailSrc"></td>
                             </tr>
                             <tr>
-                                <td style="width: 110px; font-weight: bold">Tipe Account</td>
+                                <td style="width: 110px; font-weight: bold">Tipe Rekening</td>
                                 <td> :&nbsp;&nbsp;</td>
                                 <td id="tipe_rek_sumber" class="detailSrc"></td>
                             </tr>
                             <tr>
-                                <td style="width: 110px; font-weight: bold">Currency</td>
+                                <td style="width: 110px; font-weight: bold">Mata Uang</td>
                                 <td> :&nbsp;&nbsp;</td>
                                 <td id="tipe_ccy_sumber" class="detailSrc"></td>
                             </tr>
@@ -98,19 +98,19 @@
                         </div>
                         <table style="margin-left: 30px; margin-top: 10px">
                             <tr>
-                                <td style="width: 110px; font-weight: bold">Nama Account</td>
+                                <td style="width: 150px; font-weight: bold">Nama Rekening</td>
                                 <td> :&nbsp;&nbsp;</td>
-                                <td id="nama_tujuan1" class="detailDst1"></td>
+                                <td id="nama_tujuan1" class="detailDst"></td>
                             </tr>
                             <tr>
-                                <td style="width: 110px; font-weight: bold">Tipe Account</td>
+                                <td style="width: 110px; font-weight: bold">Tipe Rekening</td>
                                 <td> :&nbsp;&nbsp;</td>
-                                <td id="tipe_rek_tujuan1" class="detailDst1"></td>
+                                <td id="tipe_rek_tujuan1" class="detailDst"></td>
                             </tr>
                             <tr>
-                                <td style="width: 110px; font-weight: bold">Currency</td>
+                                <td style="width: 110px; font-weight: bold">Mata Uang</td>
                                 <td> :&nbsp;&nbsp;</td>
-                                <td id="tipe_ccy_tujuan1" class="detailDst1"></td>
+                                <td id="tipe_ccy_tujuan1" class="detailDst"></td>
                             </tr>
                         </table>
                     </div><br>

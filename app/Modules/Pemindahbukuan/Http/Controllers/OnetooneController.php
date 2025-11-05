@@ -38,14 +38,16 @@ class OnetooneController extends \App\Http\Controllers\Controller
 
     public function validasi(Request $request)
     {
+        // dd($request);
         try {
             $ITAHelper = new ITAHelper();
             $resp = $ITAHelper->itaval($request);
-            // dd($resp, json_decode($resp, true), $resp->status(), $request);
+            // dd($resp, json_decode($resp, true));
 
             if ($resp->status() == 200) {
                 if ($resp['responseCode'] == '00') {
                     $data = $this->val($request, $resp);
+                    // dd($data);
 
                     return view('pemindahbukuan::onetoone.validate', compact('data'));
                 } else {
@@ -68,10 +70,10 @@ class OnetooneController extends \App\Http\Controllers\Controller
                     if ($resp['responseCode'] == 401) {
                         $status     = 'error';
                         $response   = 'Terjadi Gangguan Sistem!<br>' . $resp['responseCode'] . ' | ' . $resp['responseDesc'];
-                    } else {
-                        $status     = 'error';
-                        $response   = 'Terjadi Gangguan Sistem!<br>' . $resp->status() . ' | ' . $resp->message();
                     }
+                } else {
+                    $status     = 'error';
+                    $response   = $resp->status() . ' | ' . $resp['message'];
                 }
 
                 return redirect('onetoone')->with($status, $response);
@@ -102,6 +104,9 @@ class OnetooneController extends \App\Http\Controllers\Controller
             'ccySrc'                    => array_key_exists("sourceCurrency", @$json_string['data']) ? @$json_string['data']['sourceCurrency'] : "-",
             'tipeSrc'                   => @$request->tipeSrc,
             'accuseSrc'                 => @$request->accuseSrc,
+            'codeSrc'                   => @$json_string['data']['drCode'],
+            // 'amountSrc'                 => @$json_string['data']['drAmount'],
+            'amountSrc'                 => isset($json_string['data']['drAmount']) ? number_format((float) str_replace(',', '', $json_string['data']['drAmount']), 2, '.', ''): '0.00',
 
             'branchDst'                 => @$json_string['data']['branchDst'],
             'cifDst'                    => @$json_string['data']['cifDst'],
@@ -112,9 +117,13 @@ class OnetooneController extends \App\Http\Controllers\Controller
             'ccyDst'                    => array_key_exists("destinationCurrency", @$json_string['data']) ? @$json_string['data']['destinationCurrency'] : "-",
             'tipeDst'                   => @$request->tipeDst,
             'accuseDst'                 => @$request->accuseDst,
+            'codeDst'                   => @$json_string['data']['crCode'],
+            // 'amountDst'                 => @$json_string['data']['crAmount'],
+            'amountDst'                 => isset($json_string['data']['crAmount']) ? number_format((float) str_replace(',', '', $json_string['data']['crAmount']), 2, '.', ''): '0.00',
 
             'nominal_'                  => $request->nominal_,
             'nominal'                   => @$json_string['data']['amount'],
+            'exchangeRate'              => $request->exchangeRate,
             'reff'                      => @$json_string['data']['ref'],
             'narative1'                 => array_key_exists("narrative1", @$json_string['data']) ? @$json_string['data']['narrative1'] : "",
             'narative2'                 => array_key_exists("narrative2", @$json_string['data']) ? @$json_string['data']['narrative2'] : "",
@@ -149,6 +158,8 @@ class OnetooneController extends \App\Http\Controllers\Controller
             'namaSrc'       => $request->namaSrc,
             'ccySrc'        => $request->ccySrc,
             'accuseSrc'     => $request->accuseSrc,
+            'codeSrc'       => $request->codeSrc,
+            'nominalSrc'    => $request->nominalSrc,
         );
 
         $credit[] = array(
@@ -161,11 +172,14 @@ class OnetooneController extends \App\Http\Controllers\Controller
             'namaDst'       => $request->namaDst,
             'ccyDst'        => $request->ccyDst,
             'accuseDst'     => $request->accuseDst,
+            'codeDst'       => $request->codeDst,
+            'nominalDst'    => $request->nominalDst,
         );
 
         $data->additional_info = json_encode([
             'rekening_sumber'   => $debit,
             'rekening_tujuan'   => $credit,
+            'exchangeRate'      => $request->exchangeRate,
             'narative1'         => $request->narative1,
             'narative2'         => $request->narative2,
             'narative3'         => $request->narative3,
@@ -210,19 +224,23 @@ class OnetooneController extends \App\Http\Controllers\Controller
             $data->branchSrc = $value['branchSrc'];
             $data->cifSrc = $value['cifSrc'];
             $data->suffixSrc = $value['suffixSrc'];
+            $data->ccySrc = $value['ccySrc'];
         }
 
         foreach ($additional_info['rekening_tujuan'] as $key => $value) {
             $data->branchDst = $value['branchDst'];
             $data->cifDst = $value['cifDst'];
             $data->suffixDst = $value['suffixDst'];
+            $data->ccyDst = $value['ccyDst'];
         }
 
+        $data->exchangeRate = $additional_info['exchangeRate'];
         $data->narative1 = $additional_info['narative1'];
         $data->narative2 = $additional_info['narative2'];
         $data->narative3 = $additional_info['narative3'];
         $data->narative4 = $additional_info['narative4'];
 
+        // dd($data);
         // Call api posting ITA
         try {
             $reffToken = ReffToken::FindTokenReff(auth()->user()->username . "-" . $request->id)->first();  //cek reference token
@@ -249,6 +267,7 @@ class OnetooneController extends \App\Http\Controllers\Controller
             // Call api posting ITA
             $ITAHelper = new ITAHelper();
             $resp = $ITAHelper->itapost($data);
+            // dd($resp, json_decode($resp, true));
             $del = array(
                 'branchSrc',
                 'cifSrc',
@@ -261,6 +280,7 @@ class OnetooneController extends \App\Http\Controllers\Controller
                 'tipeDst',
                 'ccyDst',
                 'nominalDst',
+                'exchangeRate',
                 'narative1',
                 'narative2',
                 'narative3',

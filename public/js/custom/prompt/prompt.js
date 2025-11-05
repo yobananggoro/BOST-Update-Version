@@ -67,14 +67,14 @@ function getRowData(element){
         $('#suffixSrc').val(zlas);
         $('#extSrc').val(zlean);
         $('#closeModal').click();
-        $('#branchSrc').focus();exit;
+        // $('#branchSrc').focus();exit;
     } else{
         $('#branchDst').val(zlab);
         $('#cifDst').val(zlan);
         $('#suffixDst').val(zlas);
         $('#extDst').val(zlean);
         $('#closeModal').click();
-        $('#branchDst').focus();
+        // $('#branchDst').focus();
     }
 }
 

@@ -249,8 +249,8 @@ trait AuthenticatesFrom
                     }
 
                     $user->syncRoles(trim($res['namaFungsi']));
-                    $user->syncPermissions((\Modules\HakAkses\Entities\Role::where('id', $this->level)->first())
-                        ->permissions()->pluck('name')->toArray());
+                    $user->syncPermissions((\Modules\HakAkses\Entities\Role::where('id', $this->level)->first())->permissions()->pluck('name')->toArray());
+                    // dd($user);
 
                     return true;
                     $r = User::findByUsername($credentials[$this->username()])->roles->first();

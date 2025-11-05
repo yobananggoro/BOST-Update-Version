@@ -351,26 +351,45 @@ if (!function_exists('numberToRoman')) {
 
 if (!function_exists('terbilang')) {
     /**
-     * @param int $number
+     * Konversi angka menjadi teks terbilang (termasuk sen jika ada)
+     *
+     * @param float|int|string $number
      * @param string|null $prefix
      * @param string|null $suffix
      * @param string|null $currencyCode
      * @return string
      */
-    function terbilang(int $number, string $prefix = null, string $suffix = null, string $currencyCode = null)
+    function terbilang($number, string $prefix = null, string $suffix = null, string $currencyCode = null)
     {
-        // Ambil teks terbilang
-        $text = \Illuminate\Support\Str::title(\Riskihajar\Terbilang\Facades\Terbilang::make($number, $prefix, $suffix));
+        // Pastikan angka dalam format float
+        $number = (float) $number;
 
-        // Ambil label currency dari config
-        if ($currencyCode) {
-            $currencyLabel = config('currency.list.' . strtoupper($currencyCode), $currencyCode);
-            return $text . ' ' . $currencyLabel;
+        // Pisahkan bagian utama dan desimal
+        $integerPart = floor($number);
+        $decimalPart = round(($number - $integerPart) * 100); // dua digit sen
+
+        // Buat terbilang untuk bagian utama
+        $text = \Illuminate\Support\Str::title(
+            \Riskihajar\Terbilang\Facades\Terbilang::make($integerPart, $prefix, $suffix)
+        );
+
+        // Ambil label currency dari config (misal: "Rupiah")
+        $currencyLabel = $currencyCode
+            ? config('currency.list.' . strtoupper($currencyCode), $currencyCode)
+            : '';
+
+        // Jika ada bagian sen
+        if ($decimalPart > 0) {
+            $senText = \Illuminate\Support\Str::title(
+                \Riskihajar\Terbilang\Facades\Terbilang::make($decimalPart)
+            );
+            return trim("{$text} {$currencyLabel} dan {$senText} Sen");
         }
 
-        return $text;
+        return trim("{$text} {$currencyLabel}");
     }
 }
+
 
 if (!function_exists('mask_string')) {
     /**

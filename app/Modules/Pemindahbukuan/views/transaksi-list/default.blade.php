@@ -12,12 +12,12 @@
                             <tr>
                                 <th style="width:30px">Aksi</th>
                                 <th style="width:10px">No.</th>
-                                <th style="width:160px">Nomor Refference</th>
-                                <th style="width:250px">Nama Transaksi</th>
+                                <th style="width:160px">Refference</th>
+                                <th style="width:250px">Transaksi</th>
                                 <th style="width:150px;text-align:right">Nominal</th>
                                 <th style="width:130px">User Maker</th>
                                 <th style="width:100px">User Oto</th>
-                                <th style="width:160px">Status Otorisasi</th>
+                                <th style="width:160px">Status Oto</th>
                                 <th style="width:140px">Status Transaksi</th>
                                 <th style="width:180px">Tanggal Transaksi</th>
                                 <th style="width:180px">Tanggal Otorisasi</th>

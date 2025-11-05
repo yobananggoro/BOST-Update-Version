@@ -35,10 +35,12 @@ class ITAHelper extends Controller
             'cifSrc'                => $request->cifSrc,
             'suffixSrc'             => $request->suffixSrc,
             'sourceAccount'         => $request->extSrc,
+            'ccySrc'                => $request->ccySrc, 
             'branchDst'             => $request->branchDst,
             'cifDst'                => $request->cifDst,
             'suffixDst'             => $request->suffixDst,
             'destinationAccount'    => $request->extDst,
+            'ccyDst'                => $request->ccyDst,
             'isSourceExternal'      => $request->accuseSrc == 'external' ? "Y":"N",
             'isDestinationExternal' => $request->accuseDst == 'external' ? "Y":"N",
             'isValidate'            => "Y",
@@ -46,6 +48,7 @@ class ITAHelper extends Controller
             'userId'                => auth()->user()->username,
             'branchUser'            => auth()->user()->profile->unit_kerja_kode,
             'amount'                => $request->nominal,
+            'exchangeRate'          => $request->exchangeRate,
             // 'narrative1'            => $request->narative1,
             // 'narrative2'            => $request->narative2,
             'narrative3'            => $request->narative3,
@@ -57,12 +60,6 @@ class ITAHelper extends Controller
             Log::info("ITA Validation Request: " . json_encode($message));
             Log::info("ITA Validation Response: " . $response);
 
-            // if ($response->status() == 500) {
-            //     Log::info("ITA Validation Response: " . $response->getStatusCode() . "|" . auth()->user()->username . "|" . $response->getReasonPhrase());
-            // } else {
-            //     Log::info("ITA Validation Response: " . $response);
-            // }
-
             return $response;
         } catch (\Exception $e) {
             echo $e->getMessage();
@@ -72,6 +69,7 @@ class ITAHelper extends Controller
     
     public function itapost($request)
     {
+        // dd($request);
         $tokens = $this->setToken->accessToken;
         $url = config('app.backend_bo') . '/transactions/transfer-interbank';
         
@@ -80,10 +78,12 @@ class ITAHelper extends Controller
             'cifSrc'                => $request->cifSrc,
             'suffixSrc'             => $request->suffixSrc,
             'sourceAccount'         => $request->extSrc,
+            'ccySrc'                => $request->ccySrc,
             'branchDst'             => $request->branchDst,
             'cifDst'                => $request->cifDst,
             'suffixDst'             => $request->suffixDst,
             'destinationAccount'    => $request->extDst,
+            'ccyDst'                => $request->ccyDst,
             'isSourceExternal'      => $request->accuseSrc == 'external' ? "Y":"N",
             'isDestinationExternal' => $request->accuseDst == 'external' ? "Y":"N",
             'ref'                   => $request->reff,
@@ -91,12 +91,14 @@ class ITAHelper extends Controller
             'headUser'              => auth()->user()->username,
             'branchUser'            => auth()->user()->profile->unit_kerja_kode,
             'amount'                => $request->nominal,
+            'exchangeRate'          => $request->exchangeRate,
             // 'narrative1'            => $request->narative1,
             // 'narrative2'            => $request->narative2,
             'narrative3'            => $request->narative3,
             'narrative4'            => $request->narative4,
             'isValidate'            => "N"
         );
+        // dd($message);
         
         try {
             $response = Http::withHeaders(['Authorization' => 'Bearer ' . $tokens, 'Content-Type' => 'application/json'])->post($url, $message);

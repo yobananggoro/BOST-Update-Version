@@ -5,8 +5,8 @@
     <div class="card card-default">
         <div class="card-header text-center" style="font-size: 18px; font-weight: bold">Detail Transaksi</div>
         <div class="card-body">
-            <div class="col-sm-12" style="font-size: 18px">
-                <table cellspacing="0" cellpadding="0">
+            <div class="col-sm-12" style="font-size: 17px">
+                <table cellspacing="0" cellpadding="1" style="width: 700px">
                     <tbody>
                         @foreach ($response_data as $keySrc => $value)
                             @if ($value['isDebits'] == true)
@@ -40,7 +40,7 @@
                                 <tr>
                                     <td style="font-weight: bold">Nominal</td>
                                     <td> :</td>
-                                    <td>{{ number_format(@$value['amount']) }}</td>
+                                    <td style="font-weight: bold; text-align: right">{{ number_format(@$value['amount'], 2, '.', ',') }}</td>
                                 </tr>
                                 <tr>
                                     <td style="font-weight: bold">Terbilang</td>
@@ -115,7 +115,7 @@
                         <tr>
                             <td style="font-weight: bold">Nominal</td>
                             <td> :</td>
-                            <td>{{ number_format(@$value['amount']) }}</td>
+                            <td style="font-weight: bold; text-align: right">{{ number_format(@$value['amount'], 2, '.', ',') }}</td>
                         </tr>
                         <tr>
                             <td style="font-weight: bold">Terbilang</td>
@@ -156,13 +156,13 @@
                         <tr>
                             <td style="font-weight: bold">Nominal Total</td>
                             <td> :</td>
-                            <td>{{ number_format(@$data['nominal']) }}</td>
+                            <td style="font-weight: bold; text-align: right">{{ number_format(@$data['nominal'], 2, '.', ',') }}</td>
                         </tr>
-                        <!-- <tr>
+                        <tr>
                             <td style="font-weight: bold">Terbilang</td>
                             <td> :</td>
-                            <td><i>{{ terbilang(@$data['nominal']) }}</i></td>
-                        </tr> -->
+                            <td><i>{{ terbilang(@$data['nominal'], null, null, @$value['currency']) }}</i></td>
+                        </tr>
                         <tr>
                             <td style="font-weight: bold">Keterangan</td>
                             <td> :</td>
@@ -170,17 +170,17 @@
                         </tr>
                         <tr>
                             <td></td>
-                            <td></td>
+                            <td> :</td>
                             <td>{{ @$additional_info['narative2'] }}</td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td></td>
+                            <td> :</td>
                             <td>{{ @$additional_info['narative3'] }}</td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td></td>
+                            <td> :</td>
                             <td>{{ @$additional_info['narative4'] }}</td>
                         </tr>
                         <tr>
@@ -189,26 +189,25 @@
                             <td>{{ $status_validasi_posting[$data->status_transaksi] }}</td>
                         </tr>
                         @if (@$data->status_transaksi == 3)
-                        @if (@$data->response_http == 200)
-                        <tr>
-                            <td style="font-weight: bold">Informasi Transaksi</td>
-                            <td> :</td>
-                            <td>{{ @json_decode(@$data->response_message, true)['responseDesc'] }}</td>
-                        </tr>
+                            @if (@$data->response_http == 200)
+                                <tr>
+                                    <td style="font-weight: bold">Informasi Transaksi</td>
+                                    <td> :</td>
+                                    <td><span class="badge bg-success">{{ @json_decode(@$data->response_message, true)['responseDesc'] }}</span></td>
+                                </tr>
+                            @else
+                                <tr>
+                                    <td style="font-weight: bold">Informasi Transaksi</td>
+                                    <td> :</td>
+                                    <td><span class="badge bg-danger">{{ @json_decode(@$data->response_message, true)['error'] }}</span></td>
+                                </tr>
+                            @endif
                         @else
-                        <tr>
-                            <td style="font-weight: bold">Informasi Transaksi</td>
-                            <td> :</td>
-                            <td>{{ @json_decode(@$data->response_message, true)['error'] }}</td>
-                        </tr>
-                        @endif
-                        @else
-                        <tr>
-                            <td style="font-weight: bold">Informasi Transaksi</td>
-                            <td> :</td>
-                            <td>{{ @$data->response_message != null ? json_decode(@$data->response_message, true)['responseDesc'] : @$data->response_message }}
-                            </td>
-                        </tr>
+                            <tr>
+                                <td style="font-weight: bold">Informasi Transaksi</td>
+                                <td> :</td>
+                                <td><span class="badge bg-success">{{ @$data->response_message != null ? json_decode(@$data->response_message, true)['responseDesc'] : @$data->response_message }}</span></td>
+                            </tr>
                         @endif
                     </tbody>
                 </table>

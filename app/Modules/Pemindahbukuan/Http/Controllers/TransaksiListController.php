@@ -23,6 +23,7 @@ class TransaksiListController extends \App\Http\Controllers\Controller
         $additional_info = json_decode($data->additional_info, true);
         $response_message = json_decode($data->response_message, true);
         // dd($data,$additional_info,$response_message['data']);
+        // dd($data,$additional_info,$additional_info['rekening_sumber'][0]['ccySrc']);
 
         if(is_null($response_message)){
             return view('pemindahbukuan::transaksi-list.detailValidate', compact('data', 'additional_info'));

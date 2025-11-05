@@ -59,4 +59,5 @@
     <script src="{{ asset('js/app.js', request()->isSecure()) }}"></script>
     {!! Assets::js(); !!}
 </body>
+
 </html>

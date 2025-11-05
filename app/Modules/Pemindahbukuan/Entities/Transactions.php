@@ -51,19 +51,21 @@ class Transactions extends Model
             $query->where('branch', '=', $request->branch);
         }
         
-        if(auth()->user()->profile->rolename == "USER"){ 
+        if(in_array(auth()->user()->profile->rolename, ["Staf", "Administrasi Dana Dan Jasa","Administrasi Kredit","Administrasi Operasional"])){ 
             $q = $query->select('*')
             ->where('userid', auth()->user()->username)
             // ->where('tanggal', Carbon::now()->format('Y-m-d'))
             ->orderBy('updated_at', 'desc');
 
-        } else if(auth()->user()->profile->rolename == "SPV" || auth()->user()->profile->rolename == "MO"){
+        } else if(in_array(auth()->user()->profile->rolename,["OODJ/OOK/OOPS/OODM","Officer","Manager Operasional","Manager"])){
+            // dd('a');
             $q = $query->select('*')
             ->where('branch', auth()->user()->profile->unit_kerja_kode)
             // ->where('tanggal', Carbon::now()->format('Y-m-d'))
             ->orderBy('updated_at', 'desc');
             
         } else{
+            // dd('b');
             $q = $query->select('*')
             ->orderBy('updated_at', 'desc');
         }

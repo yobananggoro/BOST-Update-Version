@@ -1,0 +1,314 @@
+<?php
+
+namespace Modules\Pemindahbukuan\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
+use Ramsey\Uuid\Uuid;
+use Carbon\Carbon;
+use App\Entities\Token;
+use App\Entities\ReffToken;
+use App\Entities\TransactionSeq;
+use App\Entities\Log;
+use Modules\Pemindahbukuan\Entities\Transactions;
+use Modules\Rekening\Entities\Rekening;
+use Modules\Account\Entities\TipeRekening;
+use App\Http\Helper\Pemindahbukuan\ITAHelper;
+use App\Http\Helper\Transaksi\TransaksiSequence;
+
+class OnetooneController extends \App\Http\Controllers\Controller
+{
+    public function index(Request $request)
+    {
+        $rek = to_dropdown(Rekening::get(), 'id', 'nama');
+        $TransaksiSequence = new TransaksiSequence();
+        $reff = $TransaksiSequence::generateReff();
+        $accuseSrc = "internal";
+        $accuseDst = "internal";
+        // dd($reff);
+
+        \Assets::addJs('custom/prompt/prompt.js');
+        \Assets::addJs('custom/pemindahbukuan/onetoone.js');
+        return view('pemindahbukuan::onetoone.default', compact('rek', 'reff', 'accuseSrc', 'accuseDst'));
+    }
+
+    public function validasi(Request $request)
+    {
+        try {
+            $ITAHelper = new ITAHelper();
+            $resp = $ITAHelper->itaval($request);
+            dd($resp, json_decode($resp, true), $resp->status(), $request);
+
+            if ($resp->status() == 200) {
+                if ($resp['responseCode'] == '00') {
+                    $data = $this->val($request, $resp);
+
+                    return view('pemindahbukuan::onetoone.validate', compact('data'));
+                } else {
+                    $res        = json_decode($resp, true);
+                    $code       = $res['responseCode'];
+                    $desc       = $res['data'][0]['message'];
+                    // $desc       = $res['data'][0]['messageDesc'];
+                    $status     = 'error';
+                    $response   = $desc . ' | ' . $code;
+
+                    return redirect('onetoone')->with($status, $response);
+                }
+            } else if ($resp->status() == 500) {
+                $status     = 'error';
+                $response   = 'Terjadi Gangguan Sistem!<br>' . $resp->status() . ' | ' . $resp->getReasonPhrase();
+
+                return redirect('onetoone')->with($status, $response);
+            } else if ($resp->status() == 400) {
+                if (isset($resp['responseCode'])) {
+                    if ($resp['responseCode'] == 401) {
+                        $status     = 'error';
+                        $response   = 'Terjadi Gangguan Sistem!<br>' . $resp['responseCode'] . ' | ' . $resp['responseDesc'];
+                    } else {
+                        $status     = 'error';
+                        $response   = 'Terjadi Gangguan Sistem!<br>' . $resp->status() . ' | ' . $resp->message();
+                    }
+                }
+
+                return redirect('onetoone')->with($status, $response);
+            } else {
+                $status     = 'error';
+                $response   = 'Terjadi Gangguan Sistem!<br>' . $resp->status() . ' | ' . $resp->getReasonPhrase();
+
+                return redirect('onetoone')->with($status, $response);
+            }
+            $status     = 'error';
+            $response   = 'Terjadi Gangguan Sistem!<br>' . $resp->status() . ' | ' . $resp->getReasonPhrase();
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            die();
+        }
+    }
+
+    public function val($request, $resp)
+    {
+        $json_string = json_decode($resp, true);
+        $data = array([
+            'branchSrc'                 => @$json_string['data']['branchSrc'],
+            'cifSrc'                    => @$json_string['data']['cifSrc'],
+            'suffixSrc'                 => @$json_string['data']['suffixSrc'],
+            'extSrc'                    => @$json_string['data']['sourceAccount'],
+            'sourceAccount'             => @$request->accuseSrc == 'internal' ? @$json_string['data']['branchSrc'] . " - " . @$json_string['data']['cifSrc'] . " - " . @$json_string['data']['suffixSrc'] : @$json_string['data']['sourceAccount'],
+            'sourceAccountName'         => array_key_exists("sourceAccountName", @$json_string['data']) ? @$json_string['data']['sourceAccountName'] : "-",
+            'ccySrc'                    => array_key_exists("sourceCurrency", @$json_string['data']) ? @$json_string['data']['sourceCurrency'] : "-",
+            'tipeSrc'                   => @$request->tipeSrc,
+            'accuseSrc'                 => @$request->accuseSrc,
+
+            'branchDst'                 => @$json_string['data']['branchDst'],
+            'cifDst'                    => @$json_string['data']['cifDst'],
+            'suffixDst'                 => @$json_string['data']['suffixDst'],
+            'extDst'                    => @$json_string['data']['destinationAccount'],
+            'destinationAccount'        => @$request->accuseDst == 'internal' ? @$json_string['data']['branchDst'] . " - " . @$json_string['data']['cifDst'] . " - " . @$json_string['data']['suffixDst'] : @$json_string['data']['destinationAccount'],
+            'destinationAccountName'    => array_key_exists("destinationAccountName", @$json_string['data']) ? @$json_string['data']['destinationAccountName'] : "-",
+            'ccyDst'                    => array_key_exists("destinationCurrency", @$json_string['data']) ? @$json_string['data']['destinationCurrency'] : "-",
+            'tipeDst'                   => @$request->tipeDst,
+            'accuseDst'                 => @$request->accuseDst,
+
+            'nominal_'                  => $request->nominal_,
+            'nominal'                   => @$json_string['data']['amount'],
+            'reff'                      => @$json_string['data']['ref'],
+            'narative1'                 => array_key_exists("narrative1", @$json_string['data']) ? @$json_string['data']['narrative1'] : "",
+            'narative2'                 => array_key_exists("narrative2", @$json_string['data']) ? @$json_string['data']['narrative2'] : "",
+            'narative3'                 => array_key_exists("narrative3", @$json_string['data']) ? @$json_string['data']['narrative3'] : "",
+            'narative4'                 => array_key_exists("narrative4", @$json_string['data']) ? @$json_string['data']['narrative4'] : "",
+        ]);
+
+        // dd($data);
+        return $data;
+    }
+
+    public function store(Request $request)
+    {
+        // dd($request);
+        $data = new Transactions();
+        $data->id = Str::uuid();
+        $data->tipe_transaksi = 1;
+        $data->reff = $request->reff;
+        $data->tanggal = Carbon::now();
+        $data->nominal = $request->nominal;
+        $data->userid = auth()->user()->username;
+        $data->branch = auth()->user()->profile->unit_kerja_kode;
+        $data->status_override = 1;
+        $data->status_transaksi = 1;
+        $debit[] = array(
+            'seq_debit'     => 0,
+            'branchSrc'     => $request->branchSrc,
+            'cifSrc'        => $request->cifSrc,
+            'suffixSrc'     => $request->suffixSrc,
+            'extSrc'        => $request->extSrc,
+            'tipeSrc'       => $request->tipeSrc,
+            'namaSrc'       => $request->namaSrc,
+            'ccySrc'        => $request->ccySrc,
+            'accuseSrc'     => $request->accuseSrc,
+        );
+
+        $credit[] = array(
+            'seq_credit'    => 0,
+            'branchDst'     => $request->branchDst,
+            'cifDst'        => $request->cifDst,
+            'suffixDst'     => $request->suffixDst,
+            'extDst'        => $request->extDst,
+            'tipeDst'       => $request->tipeDst,
+            'namaDst'       => $request->namaDst,
+            'ccyDst'        => $request->ccyDst,
+            'accuseDst'     => $request->accuseDst,
+        );
+
+        $data->additional_info = json_encode([
+            'rekening_sumber'   => $debit,
+            'rekening_tujuan'   => $credit,
+            'narative1'         => $request->narative1,
+            'narative2'         => $request->narative2,
+            'narative3'         => $request->narative3,
+            'narative4'         => $request->narative4
+        ]);
+
+        $message = ['key' => 'Pemindahbukuan One To One Dengan Nomor Refference', 'value' => $request->reff];
+        $status = 'error';
+        $response = trans('message.create_failed', $message);
+
+        if (auth()->user()->profile->is_transactions == true) {
+            if ($data->save()) {
+                //Increase value sequence
+                $TransaksiSequence = new TransaksiSequence();
+                $incrementSeq = $TransaksiSequence::increaseCounter();
+
+                if ($incrementSeq == true) {
+                    $status = 'success';
+                    $response = trans('message.create_success', $message);
+                } else {
+                    $status = 'error';
+                    $response = 'Terjadi kesalahan pada saat proses generate refference.';
+                }
+            }
+        } else {
+            $status = 'error';
+            $response = 'Anda tidak punya akses untuk melakukan transaksi!';
+
+            return redirect('onetoone')->with($status, $response)->with('request', $request->all());
+        }
+
+        return redirect('onetoone')->with($status, $response);
+    }
+
+    public function posting($request)
+    {
+        // dd($request);
+        $data = Transactions::findOrFail($request->id);
+        $additional_info = json_decode($data->additional_info, true);
+
+        foreach ($additional_info['rekening_sumber'] as $key => $value) {
+            $data->branchSrc = $value['branchSrc'];
+            $data->cifSrc = $value['cifSrc'];
+            $data->suffixSrc = $value['suffixSrc'];
+        }
+
+        foreach ($additional_info['rekening_tujuan'] as $key => $value) {
+            $data->branchDst = $value['branchDst'];
+            $data->cifDst = $value['cifDst'];
+            $data->suffixDst = $value['suffixDst'];
+        }
+
+        $data->narative1 = $additional_info['narative1'];
+        $data->narative2 = $additional_info['narative2'];
+        $data->narative3 = $additional_info['narative3'];
+        $data->narative4 = $additional_info['narative4'];
+
+        // Call api posting ITA
+        try {
+            $reffToken = ReffToken::FindTokenReff(auth()->user()->username . "-" . $request->id)->first();  //cek reference token
+            if (is_null($reffToken)) {
+                try {
+                    $ReffToken = new ReffToken();
+                    $ReffToken->token = auth()->user()->username . "-" . $request->id;
+                    $ReffToken->reference = $request->reff;
+                    $ReffToken->save(); //save reference token
+
+                } catch (\Exception $e) {
+                    $status = 'warning';
+                    $response = 'Terjadi kesalahan pada saat: ' . $e->getMessage();
+
+                    return redirect()->back()->with($status, $response);
+                }
+            } else {
+                $status = 'error';
+                $response = 'Nomor Reference ' . $request->reff . ' sudah pernah ditransaksikan!';
+
+                return redirect()->back()->with($status, $response);
+            }
+
+            // Call api posting ITA
+            $ITAHelper = new ITAHelper();
+            $resp = $ITAHelper->itapost($data);
+            $del = array(
+                'branchSrc',
+                'cifSrc',
+                'suffixSrc',
+                'tipeSrc',
+                'ccySrc',
+                'branchDst',
+                'cifDst',
+                'suffixDst',
+                'tipeDst',
+                'ccyDst',
+                'nominalDst',
+                'narative1',
+                'narative2',
+                'narative3',
+                'narative4'
+            );
+
+            // dd($resp->status(),$resp['responseCode'],$resp['data']['0']['messageDesc']);
+            if ($resp->status() == 200) {
+                foreach ($del as $key => $value) {
+                    unset($data[$value]); //delete key yg tidak digunakan
+                }
+
+                if ($resp['responseCode'] == '00') {
+                    $data->response_http = $resp->status();
+                    $data->response_message = $resp;
+                    // $data->status_transaksi = $resp['responseCode'] == '00' ? 2 : 3;
+                    $data->status_transaksi = 2;
+                    $data->status_override = 2;
+                    $data->user_override = auth()->user()->username;
+                    $data->save();
+
+                    return true;
+                } else {
+                    $status     = 'warning';
+                    $response   =  $resp->status() . ' | ' . $resp['data']['0']['messageDesc'];
+
+                    $data->response_http = $resp->status();
+                    $data->response_message = json_decode($resp, true);
+                    $data->status_transaksi = 3;
+                    $data->status_override = 2;
+                    $data->user_override = auth()->user()->username;
+                    $data->save();
+                }
+            } else if ($resp->status() == 409) {
+                $status     = 'warning';
+                $response   =  $resp->status() . ' | ' . $resp['responseDesc'];
+            } else if ($resp->status() == 400) {
+                $status     = 'warning';
+                $response   =  $resp->status() . ' | ' . $resp['responseDesc'];
+            } else {
+
+                return false;
+            }
+
+            return redirect()->back()->with($status, $response);
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            die();
+        }
+    }
+}

@@ -5,8 +5,8 @@
         <div class="card card-default">
             <div class="card-header text-center" style="font-size: 18px; font-weight: bold">Detail Transaksi</div>
             <div class="card-body">
-                <div class="col-sm-12" style="font-size: 18px">
-                    <table cellspacing="0" cellpadding="0">
+                <div class="col-sm-12" style="font-size: 17px">
+                    <table cellspacing="0" cellpadding="1" style="width: 700px">
                         <tbody>
                             @foreach ($additional_info['rekening_sumber'] as $key => $dbt)
                                 <tr>
@@ -42,7 +42,7 @@
                                     <tr>
                                         <td style="font-weight: bold">Nominal</td>
                                         <td> :</td>
-                                        <td>{{ number_format(@$dbt['nominalSrc']) }}</td>
+                                        <td style="font-weight: bold; text-align: right">{{ number_format(@$dbt['nominalSrc'], 2, '.', ',') }}</td>
                                     </tr>
                                     <tr>
                                         <td style="font-weight: bold">Terbilang</td>
@@ -50,19 +50,13 @@
                                         <td><i>{{ terbilang(@$dbt['nominalSrc'], null, null, @$dbt['ccySrc']) }}</i></td>
                                     </tr>
 
-                                    @if (!is_null($response_message))
+                                    <!-- @if (!is_null($response_message))
                                         <tr>
                                             <td style="font-weight: bold">Status DB</td>
                                             <td> :</td>
                                             <td>{{ @$dbt['status'] }}</td>
                                         </tr>
-                                    @else
-                                        <tr>
-                                            <td style="font-weight: bold">Status DB</td>
-                                            <td> :</td>
-                                            <td>false</td>
-                                        </tr>
-                                    @endif
+                                    @endif -->
                                 @endif
                             @endforeach
                             <tr>
@@ -107,18 +101,20 @@
                                     <tr>
                                         <td style="font-weight: bold">Nominal</td>
                                         <td> :</td>
-                                        <td>{{ number_format(@$cr['nominalDst']) }}</td>
+                                        <td style="font-weight: bold; text-align: right">{{ number_format(@$cr['nominalDst'], 2, '.', ',') }}</td>
                                     </tr>
                                     <tr>
                                         <td style="font-weight: bold">Terbilang</td>
                                         <td> :</td>
                                         <td><i>{{ terbilang(@$cr['nominalDst'], null, null, @$cr['ccyDst']) }}</i></td>
                                     </tr>
-                                    <tr>
-                                        <td style="font-weight: bold">Status KR</td>
-                                        <td> :</td>
-                                        <td>{{ @$cr['status'] }}</td>
-                                    </tr>
+                                    <!-- @if (!is_null($response_message))
+                                        <tr>
+                                            <td style="font-weight: bold">Status KR</td>
+                                            <td> :</td>
+                                            <td>{{ @$cr['status'] }}</td>
+                                        </tr>
+                                    @endif -->
                                 @endif
                                 <tr>
                                     <td>
@@ -140,13 +136,13 @@
                             <tr>
                                 <td style="font-weight: bold">Nominal Total</td>
                                 <td> :</td>
-                                <td>{{ number_format(@$data['nominal']) }}</td>
+                                <td style="font-weight: bold; text-align: right">{{ number_format(@$data['nominal'], 2, '.', ',') }}</td>
                             </tr>
-                            <!-- <tr>
+                            <tr>
                                 <td style="font-weight: bold">Terbilang</td>
                                 <td> :</td>
-                                <td><i>{{ terbilang(@$data['nominal']) }}</i></td>
-                            </tr> -->
+                                <td><i>{{ terbilang(@$data['nominal'], null, null, @$dbt['ccySrc']) }}</i></td>
+                            </tr>
                             <tr>
                                 <td style="font-weight: bold">Keterangan</td>
                                 <td> :</td>
@@ -154,17 +150,17 @@
                             </tr>
                             <tr>
                                 <td></td>
-                                <td></td>
+                                <td> :</td>
                                 <td>{{ @$additional_info['narative2'] }}</td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td></td>
+                                <td> :</td>
                                 <td>{{ @$additional_info['narative3'] }}</td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td></td>
+                                <td> :</td>
                                 <td>{{ @$additional_info['narative4'] }}</td>
                             </tr>
                             <tr>
@@ -178,28 +174,27 @@
                                         <tr>
                                             <td style="font-weight: bold">Informasi Transaksi</td>
                                             <td> :</td>
-                                            <td>{{ @json_decode(@$data->response_message, true)['responseDesc'] }}</td>
+                                            <td><span class="badge bg-success">{{ @json_decode(@$data->response_message, true)['responseDesc'] }}</span></td>
                                         </tr>
                                     @else
                                         <tr>
                                             <td style="font-weight: bold">Informasi Transaksi</td>
                                             <td> :</td>
-                                            <td style="color: red">{{ $response_data['0']['messageDesc'] }}</td>
+                                            <td><span class="badge bg-danger">{{ $response_data['0']['messageDesc'] }}</span></td>
                                         </tr>
                                     @endif
                                 @else
                                     <tr>
                                         <td style="font-weight: bold">Informasi Transaksi</td>
                                         <td> :</td>
-                                        <td>{{ @json_decode(@$data->response_message, true)['error'] }}</td>
+                                        <td><span class="badge bg-danger">{{ @json_decode(@$data->response_message, true)['error'] }}</span></td>
                                     </tr>
                                 @endif
                             @else
                                 <tr>
                                     <td style="font-weight: bold">Informasi Transaksi</td>
                                     <td> :</td>
-                                    <td>{{ @$data->response_message != null ? json_decode(@$data->response_message, true)['responseDesc'] : @$data->response_message }}
-                                    </td>
+                                    <td><span class="badge bg-success">{{ @$data->response_message != null ? json_decode(@$data->response_message, true)['responseDesc'] : @$data->response_message }}</span></td>
                                 </tr>
                             @endif
                         </tbody>

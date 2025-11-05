@@ -7,7 +7,7 @@
             @csrf
             <div class="card-header text-center" style="font-size: 18px; font-weight: bold">Detail Data Transaksi</div>
             <div class="card-body">
-                <div class="col-sm-12" style="font-size: 18px">
+                <div class="col-sm-12" style="font-size: 17px">
                     <div class="form-group" style="display: none">
                         <input type="hidden" name="id" value="{{@$data->id}}" readonly>
                         <input type="hidden" name="reff" value="{{@$data['reff']}}" readonly>
@@ -15,7 +15,7 @@
                         <input type="hidden" name="total_nominal" value="{{@$data['nominal']}}" readonly>
                         
                     </div>
-                    <table cellspacing="0" cellpadding="0">
+                    <table cellspacing="0" cellpadding="1" style="width: 100%">
                         <tbody>
                             @foreach($additional_info['rekening_sumber'] as $key => $dbt)
                             <tr>
@@ -42,7 +42,7 @@
                             <tr>
                                 <td style="font-weight: bold">Nominal</td>
                                 <td> :</td>
-                                <td>{{number_format(@$dbt['nominalSrc'])}}</td>
+                                <td style="font-weight: bold; text-align: right">{{number_format(@$dbt['nominalSrc'], 2, '.', ',')}}</td>
                             </tr>
                             <tr>
                                 <td style="font-weight: bold">Terbilang</td>
@@ -82,7 +82,7 @@
                             <tr>
                                 <td style="font-weight: bold">Nominal</td>
                                 <td> :</td>
-                                <td>{{number_format(@$cr['nominalDst'])}}</td>
+                                <td style="font-weight: bold; text-align: right">{{number_format(@$cr['nominalDst'], 2, '.', ',')}}</td>
                             </tr>
                             <tr>
                                 <td style="font-weight: bold">Terbilang</td>
@@ -97,20 +97,20 @@
                             </tr>
                             @endforeach
                             <tr>
+                                <td style="font-weight: bold">Nominal Total</td>
+                                <td> :</td>
+                                <td style="font-weight: bold; text-align: right">{{number_format(@$data['nominal'], 2, '.', ',')}}</td>
+                            </tr>
+                            <tr>
                                 <td style="font-weight: bold">Refference</td>
                                 <td> :</td>
                                 <td>{{@$data['reff']}}</td>
                             </tr>
                             <tr>
-                                <td style="font-weight: bold">Nominal Total</td>
-                                <td> :</td>
-                                <td>{{number_format(@$data['nominal'])}}</td>
-                            </tr>
-                            <!-- <tr>
                                 <td style="font-weight: bold">Terbilang</td>
                                 <td> :</td>
                                 <td><i>{{terbilang(@$data['nominal'])}}</i></td>
-                            </tr> -->
+                            </tr>
                             <tr>
                                 <td style="font-weight: bold">Keterangan</td>
                                 <td> :</td>

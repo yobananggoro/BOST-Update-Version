@@ -87,7 +87,7 @@ function dynamicField() {
     var max = maxField;
 
     if (i <= max) {
-        $("#dynamicAddRemove").append('<div class="col-12" id="sumber' + i + '">' + '<input type="hidden" name="accuseSrc[]" id="accuseSrc' + i + '" value="internal">' + "<label>Rekening Sumber " + i + ' <span style="color: red">*</span></label>' + '<div class="row">' + '<div class="col-sm-8">' + '<div class="row col-sm-12">' + '<input type="text" name="extSrc[]" id="extSrc' + i + '" class="form-control number rekSumber" maxlength="13" placeholder="External Account">' + "</div>" + '<div class="row">' + '<div class="col-sm-4">' + '<input type="text" name="branchSrc[]" id="branchSrc' + i + '" class="form-control rekSumber number" maxlength="4" placeholder="Branch">' + "</div>" + '<div class="col-sm-4">' + '<input type="text" name="cifSrc[]" id="cifSrc' + i + '" class="form-control rekSumber ucase" maxlength="6" placeholder="CIF">' + "</div>" + '<div class="col-sm-4">' + '<input type="text" name="suffixSrc[]" id="suffixSrc' + i + '" class="form-control rekSumber number" maxlength="3" placeholder="Suffix">' + '<input type="hidden" name="tipeSrc[]" id="tipeSrc' + i + '" class="form-control detailSrc' + i + '" readonly>' + '<input type="hidden" name="namaSrc[]" id="namaSrc' + i + '" class="form-control detailSrc' + i + '" readonly>' + '<input type="hidden" name="ccySrc[]" id="ccySrc' + i + '" class="form-control detailSrc' + i + '" readonly>' + "</div>" + "</div>" + "</div>" + '<div class="col-sm-4">' + '<button type="button" class="btn btn-info" value="' + i + '" onclick="detailSumber(this);"><i class="fa fa-fw fa-info-circle"></i> Detail</button>&nbsp;' + '<button type="button" id="btnToogleSrc' + i + '" class="btn btn-secondary" onclick="toogle(this.id);" title="Toogle Form"><i class="fa fa-recycle"></i></button>' + "</div>" + '<div class="col-7" style="margin-top: 10px">' + '<input type="text" id="nominalSrc' + i + '" class="form-control currency text-right" onkeyup="nomsumber(this)" placeholder="Nominal Sumber ' + i + '">' + '<input type="hidden" id="nominalSrc' + i + '_" name="nominalSrc[]" class="form-control nomsumber text-right" readonly>' + "</div>" + "</div>" + '<table style="margin-left: 30px; margin-top: 10px">' + "<tr>" + '<td style="width: 110px; font-weight: bold">Nama Account</td>' + '<td> :&nbsp;&nbsp;</td><td id="nama_sumber' + i + '" class="detailSrc' + i + '"></td>' + "</tr>" + "<tr>" + '<td style="width: 110px; font-weight: bold">Tipe Account</td><td> :&nbsp;&nbsp;</td>' + '<td id="tipe_rek_sumber' + i + '" class="detailSrc' + i + '"></td>' + "</tr>" + "<tr>" + '<td style="width: 110px; font-weight: bold">Currency</td>' + "<td> :&nbsp;&nbsp;</td>" + '<td id="tipe_ccy_sumber' + i + '" class="detailSrc' + i + '"></td>' + "</tr>" + "</table><br>" + "</div>");
+        $("#dynamicAddRemove").append('<div class="col-12" id="sumber' + i + '">' + '<input type="hidden" name="accuseSrc[]" id="accuseSrc' + i + '" value="internal">' + "<label>Rekening Sumber " + i + ' <span style="color: red">*</span></label>' + '<div class="row">' + '<div class="col-sm-8">' + '<div class="row col-sm-12">' + '<input type="text" name="extSrc[]" id="extSrc' + i + '" class="form-control number rekSumber" maxlength="13" placeholder="External Account">' + "</div>" + '<div class="row">' + '<div class="col-sm-4">' + '<input type="text" name="branchSrc[]" id="branchSrc' + i + '" class="form-control rekSumber number" maxlength="4" placeholder="Branch">' + "</div>" + '<div class="col-sm-4">' + '<input type="text" name="cifSrc[]" id="cifSrc' + i + '" class="form-control rekSumber ucase" maxlength="6" placeholder="CIF">' + "</div>" + '<div class="col-sm-4">' + '<input type="text" name="suffixSrc[]" id="suffixSrc' + i + '" class="form-control rekSumber number" maxlength="3" placeholder="Suffix">' + '<input type="hidden" name="tipeSrc[]" id="tipeSrc' + i + '" class="form-control detailSrc' + i + '" readonly>' + '<input type="hidden" name="namaSrc[]" id="namaSrc' + i + '" class="form-control detailSrc' + i + '" readonly>' + '<input type="hidden" name="ccySrc[]" id="ccySrc' + i + '" class="form-control detailSrc' + i + '" readonly>' + "</div>" + "</div>" + "</div>" + '<div class="col-sm-4">' + '<button type="button" class="btn btn-info" value="' + i + '" onclick="detailSumber(this);"><i class="fa fa-fw fa-info-circle"></i> Detail</button>&nbsp;' + '<button type="button" id="btnToogleSrc' + i + '" class="btn btn-secondary" onclick="toogle(this.id);" title="Toogle Form"><i class="fa fa-recycle"></i></button>' + "</div>" + '<div class="col-7" style="margin-top: 10px">' + '<input type="text" id="nominalSrc' + i + '" class="form-control currency text-right" onkeyup="nomsumber(this)" placeholder="Nominal Sumber ' + i + '">' + '<input type="hidden" id="nominalSrc' + i + '_" name="nominalSrc[]" class="form-control nomsumber text-right" readonly>' + "</div>" + "</div>" + '<table style="margin-left: 30px; margin-top: 10px">' + "<tr>" + '<td style="width: 150px; font-weight: bold">Nama Rekening</td>' + '<td> :&nbsp;&nbsp;</td><td id="nama_sumber' + i + '" class="detailSrc' + i + '"></td>' + "</tr>" + "<tr>" + '<td style="width: 110px; font-weight: bold">Tipe Rekening</td><td> :&nbsp;&nbsp;</td>' + '<td id="tipe_rek_sumber' + i + '" class="detailSrc' + i + '"></td>' + "</tr>" + "<tr>" + '<td style="width: 110px; font-weight: bold">Mata Uang</td>' + "<td> :&nbsp;&nbsp;</td>" + '<td id="tipe_ccy_sumber' + i + '" class="detailSrc' + i + '"></td>' + "</tr>" + "</table><br>" + "</div>");
         $(".removeField").css("display", "");
 
         if ($("#accuseSrc" + i).val() == "internal") {
@@ -327,11 +327,19 @@ function detailSumber(val) {
                     $("#ccySrc" + val.value).val(data.currency);
 
                     $(".toastrDefaultInfo").show(function () {
-                        toastr.info("Data ditemukan!");
+                        if (accuse == "internal") {
+                            toastr.info(data.branch + "-" + data.cif + "-" + data.suffix + " | Data ditemukan!");
+                        } else {
+                            toastr.info(data.externalAccountNumber + " | Data ditemukan!");
+                        }
                     });
                 } else {
                     $(".toastrDefaultError").show(function () {
-                        toastr.error(data.msgdesc);
+                        if (accuse == "internal") {
+                            toastr.error(branch + "-" + cif + "-" + suffix + " <br> " + data.msgdesc);
+                        } else {
+                            toastr.error(ext + " <br> " + data.msgdesc);
+                        }
                     });
                 }
             } else {
@@ -415,12 +423,18 @@ function detailTujuan() {
                     $("#ccyDst").val(data.currency);
 
                     $(".toastrDefaultInfo").show(function () {
-                        toastr.info("Data ditemukan!");
+                        if (accuse == "internal") {
+                            toastr.info(data.branch + "-" + data.cif + "-" + data.suffix + " | Data ditemukan!");
+                        } else {
+                            toastr.info(data.externalAccountNumber + " | Data ditemukan!");
+                        }
                     });
                 } else {
-                    $(".toastrDefaultError").show(function () {
-                        toastr.error(data.msgdesc);
-                    });
+                    if (accuse == "internal") {
+                        toastr.error(branch + "-" + cif + "-" + suffix + " <br> " + data.msgdesc);
+                    } else {
+                        toastr.error(ext + " <br> " + data.msgdesc);
+                    }
                 }
             } else {
                 $(".toastrDefaultError").show(function () {

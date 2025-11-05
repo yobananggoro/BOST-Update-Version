@@ -35,7 +35,7 @@ class ReporTransaksiController extends \App\Http\Controllers\Controller
             if ($resp->status() == 200) {
                 if ($resp['responseCode'] == '00') {
                     $data = json_decode($resp, true)['data'];
-                    // dd($data);
+                    //dd($data);
 
                     return view('pemindahbukuan::report-transaksi.default', compact('data','request','branch'));
                 } else {

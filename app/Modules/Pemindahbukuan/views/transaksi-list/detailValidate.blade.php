@@ -5,14 +5,14 @@
     <div class="card card-default">
         <div class="card-header text-center" style="font-size: 18px; font-weight: bold">Detail Transaksi</div>
         <div class="card-body">
-            <div class="col-sm-12" style="font-size: 18px">
-                <table cellspacing="0" cellpadding="0">
+            <div class="col-sm-12" style="font-size: 17px">
+                <table cellspacing="0" cellpadding="1" style="width: 100%">
                     <tbody>
                         @foreach($additional_info['rekening_sumber'] as $key => $dbt)
                         <tr>
                             <td style="width: 200px; font-weight: bold">Rekening Sumber {{ $key == 0 ? "" : $key+1 }}</td>
                             <td style="width: 25px"> :</td>
-                            <td style="width: 500px"><b>@if(@$dbt['accuseSrc'] == 'external') {{@$dbt['extSrc']}} @else {{@$dbt['branchSrc']}} - {{@$dbt['cifSrc']}} - {{@$dbt['suffixSrc']}} @endif</b></td>
+                            <td><b>@if(@$dbt['accuseSrc'] == 'external') {{@$dbt['extSrc']}} @else {{@$dbt['branchSrc']}} - {{@$dbt['cifSrc']}} - {{@$dbt['suffixSrc']}} @endif</b></td>
                         </tr>
                         <tr>
                             <td style="font-weight: bold">Nama</td>
@@ -33,7 +33,7 @@
                         <tr>
                             <td style="font-weight: bold">Nominal</td>
                             <td> :</td>
-                            <td>{{number_format(@$dbt['nominalSrc'])}}</td>
+                            <td style="font-weight: bold; text-align: right">{{ number_format(@$dbt['nominalSrc'], 2, '.', ',') }}</td>
                         </tr>
                         <tr>
                             <td style="font-weight: bold">Terbilang</td>
@@ -53,7 +53,7 @@
                             </td>
                         </tr>
                         @endforeach
-                        
+
                         @foreach($additional_info['rekening_tujuan'] as $key => $cr)
                         <tr style="">
                             <td style="font-weight: bold">Rekening Tujuan {{ $key == 0 ? "" : $key+1 }}</td>
@@ -79,7 +79,7 @@
                         <tr>
                             <td style="font-weight: bold">Nominal</td>
                             <td> :</td>
-                            <td>{{number_format(@$cr['nominalDst'])}}</td>
+                            <td style="font-weight: bold; text-align: right">{{ number_format(@$cr['nominalDst'], 2, '.', ',') }}</td>
                         </tr>
                         <tr>
                             <td style="font-weight: bold">Terbilang</td>
@@ -98,22 +98,22 @@
                                 <hr>
                             </td>
                         </tr>
-                        @endforeach
+                        @endforeach 
                         <tr>
                             <td style="font-weight: bold">Refference</td>
                             <td> :</td>
                             <td>{{@$data['reff']}}</td>
                         </tr>
                         <tr>
-                            <td style="font-weight: bold">Nominal Total</td>
+                            <td style="font-weight: bold">Nominal Transaksi</td>
                             <td> :</td>
-                            <td>{{number_format(@$data['nominal'])}}</td>
+                            <td style="font-weight: bold; text-align: right">{{number_format(@$data['nominal'], 2, '.', ',')}}</td>
                         </tr>
-                        <!-- <tr>
+                        <tr>
                             <td style="font-weight: bold">Terbilang</td>
                             <td> :</td>
-                            <td><i>{{terbilang(@$data['nominal'])}}</i></td>
-                        </tr> -->
+                            <td><i>{{ terbilang(@$data['nominal'], null, null, @$additional_info['rekening_sumber'][0]['ccySrc']) }}</i></td>
+                        </tr>
                         <tr>
                             <td style="font-weight: bold">Keterangan</td>
                             <td> :</td>
@@ -121,17 +121,17 @@
                         </tr>
                         <tr>
                             <td></td>
-                            <td></td>
+                            <td> :</td>
                             <td>{{@$additional_info['narative2']}}</td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td></td>
+                            <td> :</td>
                             <td>{{@$additional_info['narative3']}}</td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td></td>
+                            <td> :</td>
                             <td>{{@$additional_info['narative4']}}</td>
                         </tr>
                         <tr>

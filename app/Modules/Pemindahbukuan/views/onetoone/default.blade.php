@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <input type="hidden" name="accuseSrc" id="accuseSrc" value="{{ @$accuseSrc }}">
                     <input type="hidden" name="accuseDst" id="accuseDst" value="{{ @$accuseDst }}">
-                    <div class="col-sm-12">
+                    <div class="col-sm-12 form-group">
                         <label>Rekening Sumber <span style="color: red">*</span></label>
                         <div class="row">
                             <div class="col-sm-8">
@@ -43,24 +43,24 @@
 
                         <table style="margin-left: 30px; margin-top: 10px">
                             <tr>
-                                <td style="width: 110px; font-weight: bold">Nama Account</td>
+                                <td style="width: 150px; font-weight: bold">Nama Rekening</td>
                                 <td> :&nbsp;&nbsp;</td>
                                 <td id="nama_sumber" class="detailSrc"></td>
                             </tr>
                             <tr>
-                                <td style="width: 110px; font-weight: bold">Tipe Account</td>
+                                <td style="width: 110px; font-weight: bold">Tipe Rekening</td>
                                 <td> :&nbsp;&nbsp;</td>
                                 <td id="tipe_rek_sumber" class="detailSrc"></td>
                             </tr>
                             <tr>
-                                <td style="width: 110px; font-weight: bold">Currency</td>
+                                <td style="width: 110px; font-weight: bold">Mata Uang</td>
                                 <td> :&nbsp;&nbsp;</td>
                                 <td id="tipe_ccy_sumber" class="detailSrc"></td>
                             </tr>
                         </table>
-                    </div><br>
+                    </div>
 
-                    <div class="col-12">
+                    <div class="col-12 form-group">
                         <label>Rekening Tujuan <span style="color: red">*</span></label>
                         <div class="row">
                             <div class="col-sm-8">
@@ -89,39 +89,33 @@
                         </div>
                         <table style="margin-left: 30px; margin-top: 10px">
                             <tr>
-                                <td style="width: 110px; font-weight: bold">Nama Account</td>
+                                <td style="width: 150px; font-weight: bold">Nama Rekening</td>
                                 <td> :&nbsp;&nbsp;</td>
                                 <td id="nama_tujuan" class="detailDst"></td>
                             </tr>
                             <tr>
-                                <td style="width: 110px; font-weight: bold">Tipe Account</td>
+                                <td style="width: 110px; font-weight: bold">Tipe Rekening</td>
                                 <td> :&nbsp;&nbsp;</td>
                                 <td id="tipe_rek_tujuan" class="detailDst"></td>
                             </tr>
                             <tr>
-                                <td style="width: 110px; font-weight: bold">Currency</td>
+                                <td style="width: 110px; font-weight: bold">Mata Uang</td>
                                 <td> :&nbsp;&nbsp;</td>
                                 <td id="tipe_ccy_tujuan" class="detailDst"></td>
                             </tr>
                         </table>
-                    </div><br>
-                    <div class="col-12">
+                    </div>
+                    <div class="col-12 form-group">
                         <label>Refference</label>
                         <input type="text" name="reff" id="reff" class="form-control" value="{{ @$reff }}" readonly>
-                    </div><br>
-                    <div class="col-12">
-                        <label>Nominal <span style="color: red">*</span></label>
+                    </div>
+                    <div class="col-12 form-group">
+                        <label>Nominal <span id="ccy_amount"></span><span style="color: red">*</span></label>
                         <input type="text" name="nominal_" id="nominal_" class="form-control currency text-right" placeholder="Nominal">
                         <input type="hidden" name="nominal" id="nominal" class="form-control text-right" readonly>
-                    </div><br>
-                    <!-- <div class="col-12">
-                        <label>Keterangan</label>
-                        <input type="text" name="narative1" id="narative1" class="form-control nar" maxlength="35" placeholder="Narative 1">
+                        <input type="hidden" name="exchangeRate" id="exchangeRate" class="form-control text-right" readonly>
                     </div>
-                    <div class="col-12">
-                        <label></label>
-                        <input type="text" name="narative2" id="narative2" class="form-control nar" maxlength="35" placeholder="Narative 2">
-                    </div> -->
+                    <div id="rates_fields"></div>
                     <div class="col-12">
                         <label>Keterangan</label>
                         <input type="text" name="narative3" id="narative3" class="form-control nar" maxlength="35" placeholder="Narative 3">
@@ -133,15 +127,14 @@
                 </div>
                 <div class="card-footer clearfix">
                     <div class="col-12">
-                        <div class="margin">
-                            <div class="btn-group">
-                                <button type="submit" id="btnEnter" class="btn btn-sm btn-primary" style="width: 80px"><i class="fa fa-check"></i>  Submit</button>
-                            </div>
-                            <div class="btn-group">
-                                <button type="reset" class="btn btn-sm btn-danger" style="width: 80px"><i class="fa fa-redo"></i> Reset</button>
-                            </div>
-                            <button type="button" id="listRekening" class="btn btn-sm btn-default float-right" data-toggle="modal" data-target="#modal-xl" style="width: 150px; position: right">List
-                                Rekening</button>
+                        <div class="btn-group">
+                            <button type="button" id="btnEnter" class="btn btn-sm btn-primary" style="width: 80px"><i class="fa fa-check"></i> Submit</button>
+                        </div>
+                        <div class="btn-group">
+                            <button type="reset" class="btn btn-sm btn-danger" style="width: 80px"><i class="fa fa-redo"></i> Reset</button>
+                        </div>
+                        <div class="btn-group float-right">
+                            <button type="button" id="listRekening" class="btn btn-sm btn-secondary " data-toggle="modal" data-target="#modal-xl" style="width: 150px; position: right">List Rekening</button>
                         </div>
                     </div>
                 </div>

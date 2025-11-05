@@ -94,7 +94,6 @@ function validateForm() {
     }
     //Kolom Rekening Sumber Start End
 
-    
     //Kolom Rekening Tujuan Start
     if ($("#accuseDst").val() == "internal") {
         if (branchDst.length < 4 || cifDst.length < 6 || suffixDst.length < 3) {
@@ -163,13 +162,10 @@ function detailSumber() {
     var suffix = $("#suffixSrc").val();
     var ext = $("#extSrc").val();
     var accuse = $("#accuseSrc").val();
+    var ccyDst = $("#ccyDst").val();
 
-    $("#nama_sumber").html("");
-    $("#tipe_rek_sumber").html("");
-    $("#tipe_ccy_sumber").html("");
-    $("#tipeSrc").val("");
-    $("#namaSrc").val("");
-    $("#ccySrc").val("");
+    $("#nama_sumber,#tipe_rek_sumber,#tipe_ccy_sumber").html("");
+    $("#tipeSrc,#namaSrc,#ccySrc").val("");
 
     if ($("#accuseSrc").val() == "internal") {
         if (branch.length < 4 || cif.length < 6 || suffix.length < 3) {
@@ -214,6 +210,7 @@ function detailSumber() {
                     $("#nama_sumber").html(data.accountShortName);
                     $("#tipe_rek_sumber").html(data.accountType);
                     $("#tipe_ccy_sumber").html(data.currency);
+                    $("#ccy_amount").html(data.currency);
 
                     $("#branchSrc").val(data.branch);
                     $("#cifSrc").val(data.cif);
@@ -223,12 +220,24 @@ function detailSumber() {
                     $("#namaSrc").val(data.accountShortName);
                     $("#ccySrc").val(data.currency);
 
+                    if (ccyDst != "") {
+                        getRates();
+                    }
+
                     $(".toastrDefaultInfo").show(function () {
-                        toastr.info("Data ditemukan!");
+                        if (accuse == "internal") {
+                            toastr.info(data.branch + "-" + data.cif + "-" + data.suffix + " | Data ditemukan!");
+                        } else {
+                            toastr.info(data.externalAccountNumber + " | Data ditemukan!");
+                        }
                     });
                 } else {
                     $(".toastrDefaultError").show(function () {
-                        toastr.error(data.msgdesc);
+                        if (accuse == "internal") {
+                            toastr.error(branch + "-" + cif + "-" + suffix + " <br> " + data.msgdesc);
+                        } else {
+                            toastr.error(ext + " <br> " + data.msgdesc);
+                        }
                     });
                 }
             } else {
@@ -252,13 +261,10 @@ function detailTujuan() {
     var suffix = $("#suffixDst").val();
     var ext = $("#extDst").val();
     var accuse = $("#accuseDst").val();
+    var ccySrc = $("#ccySrc").val();
 
-    $("#nama_tujuan").html("");
-    $("#tipe_rek_tujuan").html("");
-    $("#tipe_ccy_tujuan").html("");
-    $("#tipeDst").val("");
-    $("#namaDst").val("");
-    $("#ccyDst").val("");
+    $("#nama_tujuan,#tipe_rek_tujuan,tipe_ccy_tujuan").html("");
+    $("#tipeDst,#namaDst,#ccyDst").val("");
 
     if ($("#accuseDst").val() == "internal") {
         if (branch.length < 4 || cif.length < 6 || suffix.length < 3) {
@@ -312,12 +318,24 @@ function detailTujuan() {
                     $("#namaDst").val(data.accountShortName);
                     $("#ccyDst").val(data.currency);
 
+                    if (ccySrc != "") {
+                        getRates();
+                    }
+
                     $(".toastrDefaultInfo").show(function () {
-                        toastr.info("Data ditemukan!");
+                        if (accuse == "internal") {
+                            toastr.info(data.branch + "-" + data.cif + "-" + data.suffix + " | Data ditemukan!");
+                        } else {
+                            toastr.info(data.externalAccountNumber + " | Data ditemukan!");
+                        }
                     });
                 } else {
                     $(".toastrDefaultError").show(function () {
-                        toastr.error(data.msgdesc);
+                        if (accuse == "internal") {
+                            toastr.error(branch + "-" + cif + "-" + suffix + " <br> " + data.msgdesc);
+                        } else {
+                            toastr.error(ext + " <br> " + data.msgdesc);
+                        }
                     });
                 }
             } else {
@@ -360,5 +378,83 @@ function toogle(id) {
         }
 
         $("#branchDst,#cifDst,#suffixDst,#extDst").css("background-color", "");
+    }
+}
+
+function getRates() {
+    var ccy_src = $("#ccySrc").val() || null;
+    var ccy_dst = $("#ccyDst").val() || null;
+
+    // console.log("getRates:", ccy_src, ccy_dst);
+
+    $("#rates_fields").html("");
+    $("#exchangeRate").val("");
+
+    // Pastikan kedua nilai terisi dan berbeda
+    if (!ccy_src || !ccy_dst || ccy_src === ccy_dst) return;
+
+    // ✅ Jika salah satu IDR → cukup 1 kali panggilan
+    if (ccy_src == "IDR" || ccy_dst == "IDR") {
+        const currency = ccy_src == "IDR" ? ccy_dst : ccy_src;
+        getSingleRate(currency, ccy_src, ccy_dst);
+        return;
+    }
+
+    // ✅ Jika keduanya bukan IDR → panggil 2x (USD dan JPY misalnya)
+    getSingleRate(ccy_src, ccy_src, "IDR"); // pertama: USD ke IDR
+    getSingleRate(ccy_dst, ccy_dst, "IDR"); // kedua: JPY ke IDR
+}
+
+// Fungsi AJAX tunggal
+function getSingleRate(currency, ccy_src, ccy_dst) {
+    $.ajax({
+        url: "ccy-rates",
+        type: "POST",
+        data: { ccy: currency },
+        success: function (data) {
+            $(".loading-page").hide();
+            if (data.status == 200) {
+                const formatted_buy = new Intl.NumberFormat("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                }).format(data.rates["exchangeRateBuy"]);
+
+                const formatted_sell = new Intl.NumberFormat("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                }).format(data.rates["exchangeRateSell"]);
+
+                // console.log(`✅ Rate fetched for ${currency}`, data.rates);
+
+                // Kirim ke fungsi pemroses
+                if (ccy_src == "IDR" && ccy_dst != "IDR") {
+                    valRates(formatted_sell, ccy_src, ccy_dst);
+                } else if (ccy_src != "IDR" && ccy_dst == "IDR") {
+                    valRates(formatted_buy, ccy_src, ccy_dst);
+                } else {
+                    // kasus non-IDR pair
+                    valRates(formatted_buy, currency, "IDR");
+                }
+            }
+        },
+        error: function (error) {
+            $(".loading-page").hide();
+            toastr.error("Gagal ambil rate untuk " + currency);
+        },
+    });
+}
+
+function valRates(e, ccy1, ccy2) {
+    var i = 1;
+    const noSeparator = e.replace(/,/g, "");
+    if (i <= 2) {
+        $("#exchangeRate").val(noSeparator);
+        $("#rates_fields").append('<div id="fieldRates" class="col-12 form-group"><label>Rate ' + ccy1 + " / " + ccy2 + ' </label><input type="text" class="form-control text-right" value="' + e + '" disabled></div>');
+        ++i;
+        return i;
+    } else {
+        $("#fieldRates").remove();
+        i--;
+        return i;
     }
 }

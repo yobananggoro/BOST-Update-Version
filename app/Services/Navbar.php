@@ -20,7 +20,7 @@ class Navbar
     /**
      * @var array
      */
-    protected $uri_exceptions = ['home', 'login', 'logout']; 
+    protected $uri_exceptions = ['home', 'login', 'logout'];
 
     /**
      * @var string
@@ -61,12 +61,11 @@ class Navbar
         $navbar = !is_null($navbar) ? $navbar : $this->navbar;
         $html = '';
         $currentnav = request()->segment(1);
-
+        // dd($navbar);
         foreach ($navbar as $nav) {
             $child_html = '';
             $has_childs = count($nav['childs']);
-            $uri = Str::contains($nav['uri'], 'index') ? route($nav['uri']) :
-                (Str::contains($nav['uri'], 'javascript') ? $nav['uri'] : url('/' . $nav['uri']));
+            $uri = Str::contains($nav['uri'], 'index') ? route($nav['uri']) : (Str::contains($nav['uri'], 'javascript') ? $nav['uri'] : url('/' . $nav['uri']));
             $title = sprintf(
                 $this->nav_format,
                 (!is_null($nav['icon']) ? $nav['icon'] : 'fas fa-circle-o'),
@@ -111,28 +110,83 @@ class Navbar
     /**
      *
      */
+    // protected function setUserNavbar()
+    // {
+    //     // dd(auth()->user()->roles);
+    //     foreach (\Modules\HakAkses\Entities\Role::findByName(auth()->user()->roles->first()->name)->modules->where('visible', 1) as $access) {
+    //         // foreach (\App\Entities\Module::where('visible', 1)->orderByRaw('cast(sequence as float)')->get() as $access) {
+    //         if (isset($this->routes[$access->uri]) || Str::contains($access->uri, '#')) {
+    //             $structure = [
+    //                 'id' => $access->id,
+    //                 'label' => $access->label,
+    //                 'icon' => $access->icon,
+    //                 'parent_module' => $access->parent_module,
+    //                 'childs' => []
+    //             ];
+    //             $structure['uri'] = isset($this->routes[$access->uri]) ? $this->routes[$access->uri] : $access->uri;
+
+    //             if (!is_null($access->parent_module)) {
+    //                 $childs = \Illuminate\Support\Arr::where($this->navbar, function ($value, $key) use ($access) {
+    //                     if ($value['id'] === $access->parent_module) {
+    //                         return $value;
+    //                     }
+    //                 })->orderByRaw("string_to_array(sequence, '.')::int[] DESC");
+
+    //                 if (!empty($childs)) {
+    //                     array_push($this->navbar[key($childs)]['childs'], $structure);
+    //                 }
+    //             } else {
+    //                 $this->navbar[] = $structure;
+    //             }
+    //         }
+    //     }
+    // }
+
     protected function setUserNavbar()
     {
-        // dd(auth()->user()->roles);
         foreach (\Modules\HakAkses\Entities\Role::findByName(auth()->user()->roles->first()->name)->modules->where('visible', 1) as $access) {
-        // foreach (\App\Entities\Module::where('visible', 1)->orderByRaw('cast(sequence as float)')->get() as $access) {
             if (isset($this->routes[$access->uri]) || Str::contains($access->uri, '#')) {
+
                 $structure = [
-                    'id' => $access->id, 'label' => $access->label,
-                    'icon' => $access->icon, 'parent_module' => $access->parent_module,
+                    'id' => $access->id,
+                    'label' => $access->label,
+                    'icon' => $access->icon,
+                    'parent_module' => $access->parent_module,
+                    'sequence' => $access->sequence,
                     'childs' => []
                 ];
-                $structure['uri'] = isset($this->routes[$access->uri]) ? $this->routes[$access->uri] : $access->uri;
+
+                $structure['uri'] = isset($this->routes[$access->uri])
+                    ? $this->routes[$access->uri]
+                    : $access->uri;
+
+                $compareSequenceDesc = function ($a, $b) {
+                    $partsA = array_map('intval', explode('.', $a['sequence'] ?? '0'));
+                    $partsB = array_map('intval', explode('.', $b['sequence'] ?? '0'));
+
+                    $length = max(count($partsA), count($partsB));
+
+                    for ($i = 0; $i < $length; $i++) {
+                        $x = $partsA[$i] ?? 0;
+                        $y = $partsB[$i] ?? 0;
+
+                        if ($x > $y) return 1;
+                        if ($x < $y) return -1;
+                    }
+
+                    return 0;
+                };
 
                 if (!is_null($access->parent_module)) {
-                    $childs = \Illuminate\Support\Arr::where($this->navbar, function ($value, $key) use ($access) {
-                        if ($value['id'] === $access->parent_module) {
-                            return $value;
-                        }
+                    $childs = \Illuminate\Support\Arr::where($this->navbar, function ($value) use ($access) {
+                        return $value['id'] === $access->parent_module;
                     });
 
                     if (!empty($childs)) {
-                        array_push($this->navbar[key($childs)]['childs'], $structure);
+                        uasort($childs, $compareSequenceDesc);
+                        $firstKey = array_key_first($childs);
+                        $this->navbar[$firstKey]['childs'][] = $structure;
+                        usort($this->navbar[$firstKey]['childs'], $compareSequenceDesc);
                     }
                 } else {
                     $this->navbar[] = $structure;
@@ -159,6 +213,7 @@ class Navbar
         })[0]->firstWhere('uri', $current);
         $mappedParentId = isset($mappedNav['parent_module']) ? $mappedNav['parent_module'] : null;
 
+        // dd($mappedNav);
         return !is_null($mappedParentId) && $mappedParentId === $parentId ? ' active' : '';
     }
 }

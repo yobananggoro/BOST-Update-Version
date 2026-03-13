@@ -630,6 +630,95 @@ class BulkHelper extends Controller
         }
     }
 
+    public function bulkUploadMTM($request)
+    {
+        $tokens = $this->setToken->accessToken;
+        $url = config('app.backend_bo') . '/bulk/files/upload';
+
+        $file               = request('file');
+        $file_path          = $file->getPathname();
+        $file_mime          = $file->getMimeType('image');
+        $file_uploaded_name = $file->getClientOriginalName();
+
+        $body = [
+            [
+                'name'        => 'file',
+                'filename'    => $file_uploaded_name,
+                'Mime-type'   => $file_mime,
+                'contents'    => fopen($file_path, 'r'),
+            ],
+            [
+                'name'        => 'reference',
+                'contents'    => $request->reff,
+            ],
+            [
+                'name'        => 'branch',
+                'contents'    => auth()->user()->profile->unit_kerja_kode,
+            ],
+            [
+                'name'        => 'createdBy',
+                'contents'    => auth()->user()->username,
+            ],
+            [
+                'name'        => 'bulkType',
+                'contents'    => $request->trxtype,
+            ],
+            [
+                'name'        => 'trxName',
+                'contents'    => $request->trxName,
+            ],
+            [
+                'name'        => 'dbCode',
+                'contents'    => $request->dbCode,
+            ],
+            [
+                'name'        => 'crCode',
+                'contents'    => $request->crCode,
+            ],
+        ];
+
+        $message = array(
+            'reference'     => $request->reff,
+            'branch'        => auth()->user()->profile->unit_kerja_kode,
+            'createdBy'     => auth()->user()->username,
+            'bulkType'      => $request->trxtype,
+            'filename'      => $file_uploaded_name,
+            'trxName'       => $request->trxName,
+            'dbCode'        => $request->dbCode,
+            'crCode'        => $request->crCode
+        );
+        // dd($request,$message);
+
+        try {
+            $client = new \GuzzleHttp\Client();
+            $response = $client->post($url, [
+                'headers'    => ['Authorization' => 'Bearer ' . $tokens],
+                'multipart'    => $body,
+            ]);
+
+            $msgRsp = $response->getBody()->getContents();
+            Log::info("Upload BulkFile Request: " . json_encode($message));
+            Log::info("Upload BulkFile Response: " . $msgRsp);
+            // dd($response,$response->getBody(),$response->getBody()->getContents(),json_decode($response->getBody()->getContents(), true));
+
+            return response()->json([
+                'message'       => $msgRsp,
+                'statusCode'    => $response->getStatusCode(),
+            ], $response->getStatusCode());
+        } catch (\Exception $e) {
+            $statusCode = $e->getResponse() ? $e->getResponse()->getStatusCode() : null;
+            Log::error("Upload BulkFile Request: " . json_encode($message));
+            Log::error("Upload BulkFile Response: " . $statusCode . '|' . $e->getMessage());
+
+            if ($statusCode == 400) {
+                return response()->json([
+                    'message' => $e->getMessage(),
+                    'statusCode' => $statusCode,
+                ], $statusCode);
+            }
+        }
+    }
+
     public function getListBulk($request)
     {
         $tokens = $this->setToken->accessToken;
@@ -649,7 +738,7 @@ class BulkHelper extends Controller
             'branch'        => auth()->user()->profile->rolename != "SUPER ADMIN" ? auth()->user()->profile->unit_kerja_kode : $request->branch,
             'fileStatus'    => $request->status_bulk == null ? '' : $request->status_bulk,
             'startDate'     => $formattedStartDate,
-			'endDate'       => $formattedEndDate
+            'endDate'       => $formattedEndDate
         );
 
         // dd($message);

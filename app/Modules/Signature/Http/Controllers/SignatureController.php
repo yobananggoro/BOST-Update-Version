@@ -9,15 +9,15 @@ use App\Http\Helper\BostHelper;
 class SignatureController extends \App\Http\Controllers\Controller
 {
     /**
-    * @param Request $request
-    * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-    */
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(Request $request)
     {
         \Assets::addJs('custom/signature.js');
         return view('signature::view_signature');
     }
-    
+
     public function checkImageByCIF(Request $request)
     {
         // dd($request);
@@ -26,8 +26,14 @@ class SignatureController extends \App\Http\Controllers\Controller
         $data = json_decode($resp, true);
         // dd($resp, json_decode($resp, true), $resp->status());exit;
 
+        // if ($resp->status() != 200) {
+        //     $data = 0;
+
+        //     // return redirect('view-signature')->with('data', 'request');
+        // }
+
+        // dd(count($data));
         \Assets::addJs('custom/signature.js');
-        return view('signature::view_signature', compact('data','request'));
+        return view('signature::view_signature', compact('data', 'request'));
     }
-    
 }

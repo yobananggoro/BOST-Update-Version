@@ -118,11 +118,11 @@
                     <div id="rates_fields"></div>
                     <div class="col-12">
                         <label>Keterangan</label>
-                        <input type="text" name="narative3" id="narative3" class="form-control nar" maxlength="35" placeholder="Narative 3">
+                        <input type="text" name="narative3" id="narative3" class="form-control nar" placeholder="Narative 3">
                     </div>
                     <div class="col-12">
                         <label></label>
-                        <input type="text" name="narative4" id="narative4" class="form-control nar" maxlength="35" placeholder="Narative 4">
+                        <input type="text" name="narative4" id="narative4" class="form-control nar" placeholder="Narative 4">
                     </div>
                 </div>
                 <div class="card-footer clearfix">

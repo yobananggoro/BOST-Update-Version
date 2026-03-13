@@ -145,19 +145,19 @@
 
                     <div class="col-12">
                         <label>Keterangan</label>
-                        <input type="text" name="narative1" id="narative1" class="form-control nar" maxlength="35" placeholder="Narative 1">
+                        <input type="text" name="narative1" id="narative1" class="form-control nar" placeholder="Narative 1">
                     </div>
                     <div class="col-12">
                         <label></label>
-                        <input type="text" name="narative2" id="narative2" class="form-control nar" maxlength="35" placeholder="Narative 2">
+                        <input type="text" name="narative2" id="narative2" class="form-control nar" placeholder="Narative 2">
                     </div>
                     <div class="col-12">
                         <label></label>
-                        <input type="text" name="narative3" id="narative3" class="form-control nar" maxlength="35" placeholder="Narative 3">
+                        <input type="text" name="narative3" id="narative3" class="form-control nar" placeholder="Narative 3">
                     </div>
                     <div class="col-12">
                         <label></label>
-                        <input type="text" name="narative4" id="narative4" class="form-control nar" maxlength="35" placeholder="Narative 4">
+                        <input type="text" name="narative4" id="narative4" class="form-control nar" placeholder="Narative 4">
                     </div>
                 </div>
                 <div class="card-footer clearfix">

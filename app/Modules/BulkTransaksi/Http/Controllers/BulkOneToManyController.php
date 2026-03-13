@@ -28,7 +28,7 @@ class BulkOneToManyController extends \App\Http\Controllers\Controller
         return view('bulktransaksi::onetomany.default', compact('reff', 'accuse'));
     }
 
-    public function validasi(Request $request)
+    public function validasi(BulkUploadRequest $request)
     {
         // dd($request);
         try {

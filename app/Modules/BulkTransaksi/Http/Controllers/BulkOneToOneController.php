@@ -27,7 +27,7 @@ class BulkOneToOneController extends \App\Http\Controllers\Controller
         return view('bulktransaksi::onetoone.default', compact('reff'));
     }
 
-    public function validasi(Request $request)
+    public function validasi(BulkUploadRequest $request)
     {
         try {
             $import = new TotalImport();

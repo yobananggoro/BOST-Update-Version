@@ -41,6 +41,12 @@ Route::group(['middleware' => ['auth', 'role:' . permitRolesByUri('upload-onetoo
     Route::get('upload-onetoone-ho/download/{filename}', 'BulkOneToOneHOController@downloadTemplate');
 });
 
+Route::group(['middleware' => ['auth', 'role:' . permitRolesByUri('upload-manytomany')]], function () {
+    Route::resource('upload-manytomany', 'BulkManyToManyController')->except('create','show','edit','destroy');
+    Route::post('upload-manytomany/validasi', 'BulkManyToManyController@validasi');
+    Route::get('upload-manytomany/download/{filename}', 'BulkManyToManyController@downloadTemplate');
+});
+
 Route::group(['middleware' => ['auth', 'role:' . permitRolesByUri('list-bulkupload')]], function () {
     Route::resource('list-bulkupload', 'ListBulkUploadController')->except('create','show','edit','destroy');
     Route::post('list-bulkupload/filter', 'ListBulkUploadController@listBulk');

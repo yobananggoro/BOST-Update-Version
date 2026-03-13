@@ -96,7 +96,7 @@ class ListBulkUploadController extends \App\Http\Controllers\Controller
                 usort($data, function ($a, $b) {
                     return $a['id'] - $b['id'];
                 });
-                // dd($addtInfo);
+                // dd($addtInfo,$data);
 
                 return view('bulktransaksi::transaksi-list.detail', compact('data', 'page', 'request', 'size', 'addtInfo'));
             } else if ($resp[0]->status() == 400) {
@@ -200,17 +200,18 @@ class ListBulkUploadController extends \App\Http\Controllers\Controller
                             'trxType' => $request->trxType,
                             'timecreate' => substr($request->timecreate, 0, -4),
                             'timeoto' => substr($request->timeoto, 0, -4),
+                            'amount' => $request->amount,
                             'data' => $chunk,
                         ])
                             ->setOption('page-size', 'A4')  // Ukuran halaman
                             ->setOption('orientation', 'landscape')  // Orientasi halaman
                             ->save($pdfPath);  // Simpan PDF ke path sementara
-
+ 
                         // Menambahkan file PDF ke dalam ZIP
                         $zip->addFile($pdfPath, $pdfName);
                         $pdfFiles[] = $pdfPath;  // Menambahkan path file PDF ke array
                     }
-
+                    // dd($pdf);
                     // Menutup file ZIP setelah semua file PDF ditambahkan
                     $zip->close();
 

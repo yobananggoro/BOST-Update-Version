@@ -7,15 +7,6 @@ use Illuminate\Validation\Rule;
 
 class BulkUploadRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return auth()->check() && auth()->user()->hasAnyRole(permitRolesByUri('upload-onetomany'));
-    }
 
     /**
      * Get the validation rules that apply to the request.

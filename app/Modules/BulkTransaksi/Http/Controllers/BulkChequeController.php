@@ -29,7 +29,7 @@ class BulkChequeController extends \App\Http\Controllers\Controller
         return view('bulktransaksi::cheque.default', compact('reff', 'accuse'));
     }
 
-    public function validasi(Request $request)
+    public function validasi(BulkUploadRequest $request)
     {
         // dd($request);
         try {

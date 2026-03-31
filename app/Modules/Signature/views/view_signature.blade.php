@@ -4,13 +4,15 @@
 <div class="row toastrDefaultInfo"></div>
 <div class="row toastrDefaultError"></div>
 <div class="col-5">
-    <div class="card card-default">
+    <!-- <div> -->
+    <div class="card card-default" style="display:inline-block; width: 100%">
         <form action="{{ url('view-signature/checkImage') }}" method="post" id="formAccount" role="form" class="form-horizontal">
             @csrf
             <div class="card-body">
                 <input type="hidden" name="accuse" id="accuse" value="external" readonly>
                 <input type="hidden" name="cif_cust" id="cif_cust" value="{{@$request->cif_cust}}" readonly>
                 <input type="hidden" name="cif_name" id="cif_name" value="{{@$request->cif_name}}" readonly>
+                <input type="hidden" name="cif_type" id="cif_type" value="{{@$request->cif_type}}" readonly>
                 <div class="col-sm-12">
                     <label>Account <span style="color: red">*</span></label>
                     <div class="row">
@@ -47,6 +49,11 @@
                                 <td style="width: 10px; display: block">:</td>
                                 <td id="cust_name"></td>
                             </tr>
+                            <tr>
+                                <td style="width: 110px">Account Type</td>
+                                <td style="width: 10px; display: block">:</td>
+                                <td id="account_type"></td>
+                            </tr>
 
                         </table><br>
                         <table style="margin-left: 20px">
@@ -55,22 +62,29 @@
                                 <td></td>
                                 <td id="list"></td>
                             </tr>
-                            <tr>
-                                @if(isset($data))
-                                @foreach (@$data as $key => $value)
-                                <td style="margin-bottom: 20px;">
-                                    @if (!empty($value['img']))
-                                    <p>Text {{ $key+1 }}: {{ $value['text'] }}</p>
-                                    <span style="margin: 0px; padding-right: 2px"><img class="imgThumb" style="border-style:solid;border-width:1px" width="150px" height="100px" data-id="{{ $value['id'] }}" src="data:image/png;base64,{{ $value['img'] }}"></span>
-                                    <div id="zoomArea_{{ $value['id'] }}" style="position:absolute;display:none;z-index:5010;border-style:solid;border-width:1px"><img id="zoomImg_{{ $value['id'] }}" width="650px" height="500px" src=""></div>
-                                    @else
-                                    <p><i>Tidak ada gambar.</i></p>
-                                    @endif
-                                </td>
-
-                                @endforeach
+                            @if(isset($data))
+                                @if(count($data))
+                                    @foreach ($data as $key => $value)
+                                    <tr>
+                                        <td style="padding-right: 20px">
+                                            <p>Text {{ $key+1 }}: {{ $value['text'] }}</p>
+                                        </td>
+                                        <td style="padding-left: 20px">
+                                            <span style="margin: 0px; padding-right: 8px"><img class="imgThumb" style="border-style:solid;border-width:1px" width="150px" height="100px" data-id="{{ $value['id'] }}" src="data:image/png;base64,{{ $value['img'] }}"></span>
+                                            <div id="zoomArea_{{ $value['id'] }}" style="position:fixed;display:none;z-index:5010;border:1px solid #000;background:#fff;pointer-events: none; "><img id="zoomImg_{{ $value['id'] }}" width="450px" height="300px" src=""></div>
+                                            <br>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><br></td>
+                                    </tr>
+                                    @endforeach
+                                @else
+                                <tr>
+                                    <td style="background-color: red"><i>Image doesnt exist.</i></td>
+                                </tr>
                                 @endif
-                            </tr>
+                            @endif
                         </table>
                     </fieldset>
                 </div>
@@ -82,5 +96,6 @@
             </div>
         </form>
     </div>
+    <!-- </div> -->
 </div>
 @endsection

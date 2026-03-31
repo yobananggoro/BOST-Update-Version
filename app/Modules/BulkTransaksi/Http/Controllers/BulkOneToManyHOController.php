@@ -29,7 +29,7 @@ class BulkOneToManyHOController extends \App\Http\Controllers\Controller
         return view('bulktransaksi::onetomany-ho.default', compact('reff', 'accuse'));
     }
 
-    public function validasi(Request $request)
+    public function validasi(BulkUploadRequest $request)
     {
         try {
             $import = new TotalImport();

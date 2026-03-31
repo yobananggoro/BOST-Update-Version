@@ -79,7 +79,7 @@
                     </div>
                     <div class="col-12">
                         <label></label>
-                        <input type="text" name="narative4" id="narative4" class="form-control nar" maxlength="34" placeholder="Narative 4">
+                        <input type="text" name="narative4" id="narative4" class="form-control nar" maxlength="35" placeholder="Narative 4">
                     </div><br>
                     <div class="col-12">
                         <label>Rekening Tujuan Bulk File<span style="color: red">*</span></label><br>

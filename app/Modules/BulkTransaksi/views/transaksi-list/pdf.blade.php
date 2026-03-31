@@ -106,7 +106,7 @@
                 <td>{{ $d['trxType'] == 'd' ? $d['srcAccountNumber'] : $d['dstAccountNumber'] }}</td>
                 <td>{{ $d['accountName'] }}</td>
                 <td>{{ $d['accountStatus'] }}</td>
-                <td>{{ number_format($d['trxAmount'],2) }}</td>
+                <td style="text-align: right">{{ number_format($d['trxAmount'],2) }}</td>
                 <td>{{ $d['trxStatus'] }}</td>
                 <td>{{ $postdt ? $postdt->format('d-m-Y H:i:s') : '-' }}</td>
                 @else
@@ -116,12 +116,30 @@
                 <td>{{ $d['srcAccountNumber'] }}<br>{{ $d['dstAccountNumber'] }}</td>
                 <td>{{ $d['accountName'] }}</td>
                 <td>{{ $d['accountStatus'] }}</td>
-                <td>{{ number_format($d['trxAmount'],2) }}</td>
+                <td style="text-align: right">{{ number_format($d['trxAmount'],2) }}</td>
                 <td>{{ $d['trxStatus'] }}</td>
                 <td>{{ $postdt ? $postdt->format('d-m-Y H:i:s') : '-' }}</td>
                 @endif
             </tr>
             @endforeach
+            <tr>
+                <td colspan="6" style="background-color: lightgrey; text-align: right">Sub Total Debit</td>
+                <td style="background-color: lightgrey; text-align: right"><b>{{ number_format($amount, 2) }}</b></td>
+            </tr>
+            <tr>
+                <td colspan="6" style="background-color: lightgrey; text-align: right">Sub Total Credit</td>
+                <td style="background-color: lightgrey; text-align: right"><b>{{ number_format($amount, 2) }}</b></td>
+            </tr>
         </tbody>
+    </table>
+    <table class="table-borderless" style="width: 100%">
+        <tr>
+            <td style="text-align: center; height: 100px">Petugas</td>
+            <td style="text-align: center; height: 100px">Supervisor / Manager Operasional</td>
+        </tr>
+        <tr>
+            <td style="text-align: center">(...................................)</td>
+            <td style="text-align: center">(...................................)</td>
+        </tr>
     </table>
 </body>

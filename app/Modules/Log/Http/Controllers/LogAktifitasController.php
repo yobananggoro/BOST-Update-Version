@@ -14,6 +14,7 @@ class LogAktifitasController extends \App\Http\Controllers\Controller
     public function __invoke(Request $request)
     {
         foreach (\Modules\User\Entities\User::all() as $d) {
+            // dd($d->profile->nama);
             $causer[$d->id] = $d->profile->nama;
         }
 

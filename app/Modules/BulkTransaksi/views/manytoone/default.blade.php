@@ -47,17 +47,17 @@
                         <tr>
                             <td style="width: 150px; font-weight: bold">Nama Rekening</td>
                             <td> :&nbsp;&nbsp;</td>
-                            <td id="nama_sumber" class="detailSrc"></td>
+                            <td id="nama_tujuan" class="detailSrc"></td>
                         </tr>
                         <tr>
                             <td style="width: 110px; font-weight: bold">Tipe Rekening</td>
                             <td> :&nbsp;&nbsp;</td>
-                            <td id="tipe_rek_sumber" class="detailSrc"></td>
+                            <td id="tipe_rek_tujuan" class="detailSrc"></td>
                         </tr>
                         <tr>
                             <td style="width: 110px; font-weight: bold">Mata Uang</td>
                             <td> :&nbsp;&nbsp;</td>
-                            <td id="tipe_ccy_sumber" class="detailSrc"></td>
+                            <td id="tipe_ccy_tujuan" class="detailSrc"></td>
                         </tr>
                     </table>
                 </div><br>
@@ -91,7 +91,7 @@
                 </div>
                 <div class="col-12">
                     <label></label>
-                    <input type="text" name="narative4" id="narative4" class="form-control nar" maxlength="34" placeholder="Narative 4">
+                    <input type="text" name="narative4" id="narative4" class="form-control nar" maxlength="35" placeholder="Narative 4">
                 </div>
                 <blockquote>
                     <p>Catatan!</p>

@@ -9,6 +9,7 @@ $(function () {
 
     $("#cust").html($("#cif_cust").val());
     $("#cust_name").html($("#cif_name").val());
+    $("#account_type").html($("#cif_type").val());
 
     $("#btnEnter").click(function () {
         // alert('das');
@@ -82,17 +83,20 @@ function detail() {
                   },
         success: function (data) {
             $(".loading-page").hide(); //show progress bar
-            console.log(data);
+            // console.log(data);
             if (data.status == 200) {
                 if (data.code == "00") {
                     $("#cust").html(data.cif);
                     $("#cust_name").html(data.accountShortName);
+                    $("#account_type").html(data.accountType);
 
                     $("#branch").val(data.branch);
                     $("#cif,#cif_cust").val(data.cif);
                     $("#suffix").val(data.suffix);
                     $("#ext").val(data.externalAccountNumber);
                     $("#cif_name").val(data.accountShortName);
+                    $("#cif_type").val(data.accountType);
+                    
 
                     $(".toastrDefaultInfo").show(function () {
                         toastr.info("Data ditemukan!");
@@ -120,30 +124,45 @@ function detail() {
 
 function makeZoom() {
     $(".imgThumb").each(function () {
-        var sr = $(this).attr("src");
-        var imgID = $(this).data("id");
+        const $thumb = $(this);
+        const imgID = $thumb.data("id");
+        const src = $thumb.attr("src");
 
-        $(this).mousemove(function (evt) {
-            $("#zoomArea_" + imgID)
-                .css("top", evt.clientY + 10)
-                .css("left", evt.clientX + 10);
+        const $zoomArea = $("#zoomArea_" + imgID);
+        const $zoomImg = $("#zoomImg_" + imgID);
+
+        const offset = 20; // JARAK BAWAH CURSOR
+
+        $thumb.on("mouseenter", function (e) {
+            if (!$zoomImg.attr("src")) {
+                $zoomImg.attr("src", src);
+            }
+            $zoomArea.show();
         });
 
-        $(this).hover(
-            function (evt) {
-                const zoomImg = $("#zoomImg_" + imgID);
-                if (zoomImg.attr("src") === "") {
-                    zoomImg.attr("src", sr);
-                }
-                $("#zoomArea_" + imgID)
-                    .css("top", evt.clientY + 10)
-                    .css("left", evt.clientX + 10)
-                    .fadeIn("fast");
-            },
-            function () {
-                $("#zoomArea_" + imgID).fadeOut("fast");
+        $thumb.on("mousemove", function (e) {
+            let x = e.clientX;
+            let y = e.clientY + offset; // ⬅️ DI BAWAH CURSOR
+
+            // 🧱 batas bawah layar
+            if (y + $zoomArea.outerHeight() > window.innerHeight) {
+                y = e.clientY - $zoomArea.outerHeight() - offset;
             }
-        );
+
+            // 🧱 batas kanan layar
+            if (x + $zoomArea.outerWidth() > window.innerWidth) {
+                x = window.innerWidth - $zoomArea.outerWidth() - 10;
+            }
+
+            $zoomArea.css({
+                left: x + "px",
+                top: y + "px",
+            });
+        });
+
+        $thumb.on("mouseleave", function () {
+            $zoomArea.hide();
+        });
     });
 }
 

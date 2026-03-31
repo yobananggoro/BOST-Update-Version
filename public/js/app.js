@@ -25998,6 +25998,9 @@ function initPlugins() {
     }
     if ($(".select2").length) {
         $(".select2").select2();
+        // $(".select2").select2({
+        //     dropdownParent: $("body"),
+        // });
     }
     if ($(".custom-control").length) {
         bsCustomFileInput.init();

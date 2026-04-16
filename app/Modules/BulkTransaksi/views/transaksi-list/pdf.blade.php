@@ -76,10 +76,11 @@
                 <th style="width:10px">No.</th>
                 <th style="width:40px">Trx Code</th>
                 <th style="width:70px">Cheque No</th>
-                <th style="width:70px">Account</th>
+                <th style="width:50px">Account</th>
                 <th>Account Name</th>
                 <th>Account Status</th>
                 <th>Amount</th>
+                <th>Usercode</th>
                 <th>Posting Status</th>
                 <th>Posting Date</th>
             </tr>
@@ -107,6 +108,7 @@
                 <td>{{ $d['accountName'] }}</td>
                 <td>{{ $d['accountStatus'] }}</td>
                 <td style="text-align: right">{{ number_format($d['trxAmount'],2) }}</td>
+                <td>{{ $d['costCenter'] }}</td>
                 <td>{{ $d['trxStatus'] }}</td>
                 <td>{{ $postdt ? $postdt->format('d-m-Y H:i:s') : '-' }}</td>
                 @else
@@ -117,6 +119,7 @@
                 <td>{{ $d['accountName'] }}</td>
                 <td>{{ $d['accountStatus'] }}</td>
                 <td style="text-align: right">{{ number_format($d['trxAmount'],2) }}</td>
+                <td>{{ $d['costCenter'] }}</td>
                 <td>{{ $d['trxStatus'] }}</td>
                 <td>{{ $postdt ? $postdt->format('d-m-Y H:i:s') : '-' }}</td>
                 @endif

@@ -129,6 +129,8 @@ class OnetooneController extends \App\Http\Controllers\Controller
             'narative2'                 => array_key_exists("narrative2", @$json_string['data']) ? @$json_string['data']['narrative2'] : "",
             'narative3'                 => array_key_exists("narrative3", @$json_string['data']) ? @$json_string['data']['narrative3'] : "",
             'narative4'                 => array_key_exists("narrative4", @$json_string['data']) ? @$json_string['data']['narrative4'] : "",
+            'userCode1'                 => $request->userCode1,
+            'userCode2'                 => $request->userCode2,
         ]);
 
         // dd($data);
@@ -183,7 +185,9 @@ class OnetooneController extends \App\Http\Controllers\Controller
             'narative1'         => $request->narative1,
             'narative2'         => $request->narative2,
             'narative3'         => $request->narative3,
-            'narative4'         => $request->narative4
+            'narative4'         => $request->narative4,
+            'userCode1'         => $request->userCode1,
+            'userCode2'         => $request->userCode2,
         ]);
 
         $message = ['key' => 'Pemindahbukuan One To One Dengan Nomor Refference', 'value' => $request->reff];
@@ -239,6 +243,8 @@ class OnetooneController extends \App\Http\Controllers\Controller
         $data->narative2 = $additional_info['narative2'];
         $data->narative3 = $additional_info['narative3'];
         $data->narative4 = $additional_info['narative4'];
+        $data->userCode1 = $additional_info['userCode1'];
+        $data->userCode2 = $additional_info['userCode2'];
 
         // dd($data);
         // Call api posting ITA
@@ -284,7 +290,9 @@ class OnetooneController extends \App\Http\Controllers\Controller
                 'narative1',
                 'narative2',
                 'narative3',
-                'narative4'
+                'narative4',
+                'userCode1',
+                'userCode2',
             );
 
             // dd($resp->status(),$resp['responseCode'],$resp['data']['0']['messageDesc']);

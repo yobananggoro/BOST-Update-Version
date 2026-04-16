@@ -490,4 +490,50 @@ class BostHelper extends Controller
 			die();
 		}
 	}
+
+	public function userKode()
+	{
+		$tokens = $this->setToken->accessToken;
+		$url = config('app.backend_bo') . '/transactions/get-user-code';
+
+		try {
+			$response = Http::withHeaders(['Authorization' => 'Bearer ' . $tokens, 'Content-Type' => 'application/json',])->get($url);
+			// dd($response, json_decode($response, true));
+
+			if ($response->status() == 200) {
+				$respMsg = json_decode($response, true);
+				Log::info("List User Kode: " . json_encode(array_diff_key($respMsg, ['data' => ''])));
+			} else {
+				Log::info("List User Kode: " . $response);
+			}
+
+			return $response;
+		} catch (\Exception $e) {
+			echo $e->getMessage();
+			die();
+		}
+	}
+
+	public function reloadUserKode()
+	{
+		$tokens = $this->setToken->accessToken;
+		$url = config('app.backend_bo') . '/transactions/get-user-code/reload';
+
+		try {
+			$response = Http::withHeaders(['Authorization' => 'Bearer ' . $tokens, 'Content-Type' => 'application/json',])->get($url);
+			// dd($response, json_decode($response, true));
+
+			if ($response->status() == 200) {
+				$respMsg = json_decode($response, true);
+				Log::info("Reload Core User Kode: " . json_encode(array_diff_key($respMsg, ['data' => ''])));
+			} else {
+				Log::info("Reload Core User Kode: " . $response);
+			}
+
+			return $response;
+		} catch (\Exception $e) {
+			echo $e->getMessage();
+			die();
+		}
+	}
 }

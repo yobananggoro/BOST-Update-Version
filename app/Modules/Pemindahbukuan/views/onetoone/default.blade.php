@@ -120,9 +120,22 @@
                         <label>Keterangan</label>
                         <input type="text" name="narative3" id="narative3" class="form-control nar" placeholder="Narative 3">
                     </div>
-                    <div class="col-12">
+                    <div class="col-12 form-group">
                         <label></label>
                         <input type="text" name="narative4" id="narative4" class="form-control nar" placeholder="Narative 4">
+                    </div>
+                    <div class="col-12">
+                        <label>User Code</label>
+                        <select id="getUserCodeList" name="usercode_desc" class="form-control select2">
+                        </select><br>
+                        <div class="row form-group">
+                            <div class="col-6">
+                                <input type="text" name="userCode1" id="userCode1" class="form-control" readonly>
+                            </div>
+                            <div class="col-6">
+                                <input type="text" name="userCode2" id="userCode2" class="form-control" readonly>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer clearfix">

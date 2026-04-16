@@ -43,7 +43,6 @@ class ITAHelper extends Controller
             'ccyDst'                => $request->ccyDst,
             'isSourceExternal'      => $request->accuseSrc == 'external' ? "Y":"N",
             'isDestinationExternal' => $request->accuseDst == 'external' ? "Y":"N",
-            'isValidate'            => "Y",
             'ref'                   => $request->reff,
             'userId'                => auth()->user()->username,
             'branchUser'            => auth()->user()->profile->unit_kerja_kode,
@@ -52,7 +51,10 @@ class ITAHelper extends Controller
             // 'narrative1'            => $request->narative1,
             // 'narrative2'            => $request->narative2,
             'narrative3'            => $request->narative3,
-            'narrative4'            => $request->narative4
+            'narrative4'            => $request->narative4,
+            'userCode1'             => $request->userCode1,
+            'userCode2'             => $request->userCode2,
+            'isValidate'            => "Y",
         );
         // dd($message);
         try{
@@ -90,12 +92,14 @@ class ITAHelper extends Controller
             'userId'                => $request->userid,
             'headUser'              => auth()->user()->username,
             'branchUser'            => auth()->user()->profile->unit_kerja_kode,
-            'amount'                => $request->nominal,
+            'amount'                => strval($request->nominal),
             'exchangeRate'          => $request->exchangeRate,
             // 'narrative1'            => $request->narative1,
             // 'narrative2'            => $request->narative2,
             'narrative3'            => $request->narative3,
             'narrative4'            => $request->narative4,
+            'userCode1'             => $request->userCode1,
+            'userCode2'             => $request->userCode2,
             'isValidate'            => "N"
         );
         // dd($message);

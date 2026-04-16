@@ -4,16 +4,26 @@
 <div class="row">
     <div class="col-4">
         <div class="info-box">
-            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check"></i></span>
+            <span class="info-box-icon bg-primary"><i class="fas fa-check"></i></span>
             <div class="info-box-content">
-                <span class="info-box-text">Posting Success</span>
+                <span class="info-box-text">Posted</span>
                 <span class="info-box-number">
                     @php
-                        if(preg_match('/SUCCESS:\s*(\d+)/', $addtInfo, $matches))
-                        {
-                            $success = (int) $matches[1];
-                            echo number_format($success, 0, '', '.');
-                        }
+                    if(preg_match('/SUCCESS:\s*(\d+)/', $addtInfo, $matches))
+                    {
+                    $success = (int) $matches[1];
+                    echo number_format($success, 0, '', '.');
+                    }
+                    @endphp
+                </span><hr>
+                <span class="info-box-text">Verified</span>
+                <span class="info-box-number">
+                    @php
+                    if(preg_match('/VERIFY_SUCCESS:\s*(\d+)/', $addtInfo, $matches))
+                    {
+                    $success = (int) $matches[1];
+                    echo number_format($success, 0, '', '.');
+                    }
                     @endphp
                 </span>
             </div>
@@ -28,8 +38,18 @@
                     @php
                     if(preg_match('/IN_PROGRESS:\s*(\d+)/', $addtInfo, $matches))
                     {
-                        $inprogress = (int) $matches[1];
-                        echo number_format($inprogress, 0, '', '.');
+                    $inprogress = (int) $matches[1];
+                    echo number_format($inprogress, 0, '', '.');
+                    }
+                    @endphp
+                </span><hr>
+                <span class="info-box-text">Verify on Progress</span>
+                <span class="info-box-number">
+                    @php
+                    if(preg_match('/VERIFY_IN_PROGRESS:\s*(\d+)/', $addtInfo, $matches))
+                    {
+                    $inprogress = (int) $matches[1];
+                    echo number_format($inprogress, 0, '', '.');
                     }
                     @endphp
                 </span>
@@ -45,14 +65,26 @@
                     @php
                     if(preg_match('/FAILED:\s*(\d+)/', $addtInfo, $matches))
                     {
-                        $failed = (int) $matches[1];
-                        echo number_format($failed, 0, '', '.');
+                    $failed = (int) $matches[1];
+                    echo number_format($failed, 0, '', '.');
+                    }
+                    @endphp
+                </span><hr>
+                <span class="info-box-text">Not Verified</span>
+                <span class="info-box-number">
+                    @php
+                    if(preg_match('/VERIFY_FAILED:\s*(\d+)/', $addtInfo, $matches))
+                    {
+                    $failed = (int) $matches[1];
+                    echo number_format($failed, 0, '', '.');
                     }
                     @endphp
                 </span>
             </div>
         </div>
     </div>
+</div>
+<div class="row">
     <div class="col-12">
         <div class="card card-default">
             <div class="card-header border-0">
@@ -62,7 +94,7 @@
                         <tr>
                             <td style="width: 150px; text-align: left">Page</td>
                             <td style="width: 15px; text-align: left">:</td>
-                            <td style="width: 80px; text-align: left">{{$page}}</td>
+                            <td style="width: 180px; text-align: left">{{$page}}</td>
                         </tr>
                         <tr>
                             <td style="text-align: left">Max Rows per Page</td>
@@ -148,7 +180,7 @@
                             <td>{!! $d['trxType'] == 'd' ? $d['nar4'] : $d['nar4']."<br>".$d['nar8'] !!}</td>
                             <td>{{ $d['trxStatus'] }}</td>
                             <!-- <td>{{ $d['postingDt'] != null ? date('d M Y H:i:s', strtotime($d['postingDt'])) : '' }}</td> -->
-                             <td>{{ $d['postingDt'] != null ? \Carbon\Carbon::createFromFormat('Y-m-d-H.i.s.u', $d['postingDt'])->addMinute()->startOfMinute()->format('d M Y H:i:s') : '' }}</td>
+                            <td>{{ $d['postingDt'] != null ? \Carbon\Carbon::createFromFormat('Y-m-d-H.i.s.u', $d['postingDt'])->addMinute()->startOfMinute()->format('d M Y H:i:s') : '' }}</td>
                             <td>{{ $d['createdAt'] != null ? date('d M Y H:i:s', strtotime($d['createdAt'])) : '' }}</td>
                             <td>{{ $d['updatedAt'] != null ? date('d M Y H:i:s', strtotime($d['updatedAt'])) : '' }}</td>
                             @endif
@@ -172,58 +204,58 @@
                                             ‹
                                         </a>
                                         </li>
-                                    @else
+                                        @else
                                         <li class="paginate_button page-item previous" id="example1_previous">
                                             <a href="{{ route('list-bulkupload.listDetail', ['id' => $request->id, 'page' => $page-1, 'rows' => $request->rows, 'amount' => $request->amount]) }}" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">
                                                 ‹
                                             </a>
                                         </li>
-                                    @endif
+                                        @endif
 
-                                    <li class="paginate_button page-item next" id="example1_next">
-                                        <a href="{{ route('list-bulkupload.listDetail', ['id' => $request->id, 'page' => 0, 'rows' => $request->rows, 'amount' => $request->amount]) }}" aria-controls="example1" data-dt-idx="2" tabindex="0" class="page-link">
-                                            First
-                                        </a>
-                                    </li>
-                                    @for ($i = 0; $i <= ceil($request->rows/$size)-1; $i++)
-                                        @php
+                                        <li class="paginate_button page-item next" id="example1_next">
+                                            <a href="{{ route('list-bulkupload.listDetail', ['id' => $request->id, 'page' => 0, 'rows' => $request->rows, 'amount' => $request->amount]) }}" aria-controls="example1" data-dt-idx="2" tabindex="0" class="page-link">
+                                                First
+                                            </a>
+                                        </li>
+                                        @for ($i = 0; $i <= ceil($request->rows/$size)-1; $i++)
+                                            @php
                                             $startpage=$page - 2;
                                             $endpage=$page + 2;
-                                        @endphp
-                                        @if ($i >= $startpage && $i <= $endpage)
-                                            @if ($i==$page)
-                                            <li class="paginate_button page-item active">
-                                            <a href="{{ route('list-bulkupload.listDetail', ['id' => $request->id, 'page' => $page, 'rows' => $request->rows, 'amount' => $request->amount]) }}" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link">
-                                                {{$i}}
-                                            </a>
-                                            </li>
-                                            @else
-                                            <li class="paginate_button page-item">
-                                                <a href="{{ route('list-bulkupload.listDetail', ['id' => $request->id, 'page' => $i, 'rows' => $request->rows, 'amount' => $request->amount]) }}" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link">
+                                            @endphp
+                                            @if ($i >= $startpage && $i <= $endpage)
+                                                @if ($i==$page)
+                                                <li class="paginate_button page-item active">
+                                                <a href="{{ route('list-bulkupload.listDetail', ['id' => $request->id, 'page' => $page, 'rows' => $request->rows, 'amount' => $request->amount]) }}" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link">
                                                     {{$i}}
                                                 </a>
-                                            </li>
-                                            @endif
-                                        @endif
-                                    @endfor
-                                    <li class="paginate_button page-item next" id="example1_next">
-                                        <a href="{{ route('list-bulkupload.listDetail', ['id' => $request->id, 'page' => ceil($request->rows/$size)-1, 'rows' => $request->rows, 'amount' => $request->amount]) }}" aria-controls="example1" data-dt-idx="2" tabindex="0" class="page-link">
-                                            Last
-                                        </a>
-                                    </li>
-                                    @if ((@$page) >= ceil($request->rows/$size)-1)
-                                    <li class="paginate_button page-item disabled" id="example1_next">
-                                        <a type="button" aria-controls="example1" data-dt-idx="2" tabindex="0" class="page-link">
-                                            ›
-                                        </a>
-                                    </li>
-                                    @else
-                                    <li class="paginate_button page-item next" id="example1_next">
-                                        <a href="{{ route('list-bulkupload.listDetail', ['id' => $request->id, 'page' => $page+1, 'rows' => $request->rows, 'amount' => $request->amount]) }}" aria-controls="example1" data-dt-idx="2" tabindex="0" class="page-link">
-                                            ›
-                                        </a>
-                                    </li>
-                                    @endif
+                                                </li>
+                                                @else
+                                                <li class="paginate_button page-item">
+                                                    <a href="{{ route('list-bulkupload.listDetail', ['id' => $request->id, 'page' => $i, 'rows' => $request->rows, 'amount' => $request->amount]) }}" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link">
+                                                        {{$i}}
+                                                    </a>
+                                                </li>
+                                                @endif
+                                                @endif
+                                                @endfor
+                                                <li class="paginate_button page-item next" id="example1_next">
+                                                    <a href="{{ route('list-bulkupload.listDetail', ['id' => $request->id, 'page' => ceil($request->rows/$size)-1, 'rows' => $request->rows, 'amount' => $request->amount]) }}" aria-controls="example1" data-dt-idx="2" tabindex="0" class="page-link">
+                                                        Last
+                                                    </a>
+                                                </li>
+                                                @if ((@$page) >= ceil($request->rows/$size)-1)
+                                                <li class="paginate_button page-item disabled" id="example1_next">
+                                                    <a type="button" aria-controls="example1" data-dt-idx="2" tabindex="0" class="page-link">
+                                                        ›
+                                                    </a>
+                                                </li>
+                                                @else
+                                                <li class="paginate_button page-item next" id="example1_next">
+                                                    <a href="{{ route('list-bulkupload.listDetail', ['id' => $request->id, 'page' => $page+1, 'rows' => $request->rows, 'amount' => $request->amount]) }}" aria-controls="example1" data-dt-idx="2" tabindex="0" class="page-link">
+                                                        ›
+                                                    </a>
+                                                </li>
+                                                @endif
                                 </ul>
                             </div>
                         </div>

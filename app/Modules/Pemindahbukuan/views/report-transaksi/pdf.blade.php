@@ -56,16 +56,17 @@
         <thead>
             <tr style="text-align: center">
                 <th style="width: 10px">No.</th>
-                <th style="width: 120px">Reff Code</th>
-                <th style="width: 120px">Trx Name</th>
-                <th style="width: 130px">Time Stamps</th>
-                <th style="width: 30px">Trans</th>
-                <th style="width: 110px">Account</th>
-                <th>Short Name</th>
+                <th style="width: 120px">Kode Reff</th>
+                <th style="width: 120px">Nama Trx</th>
+                <th style="width: 130px">Tanggal</th>
+                <th style="width: 30px">Kode</th>
+                <th style="width: 110px">Akun</th>
+                <th>Nama Akun</th>
                 <th style="width: 30px">Ccy</th>
-                <th>Posting Amount</th>
+                <th>Nominal</th>
                 <th>User ID</th>
                 <th>User Oto</th>
+                <th>Usercode</th>
                 <th>Status Trx</th>
             </tr>
         </thead>
@@ -104,6 +105,7 @@
                 <td style="text-align: right">{{ number_format($value['trxAmount']) }} [<b>{{ $value['trxType'] }}</b>]</td>
                 <td>{{ $value['createdBy'] }}</td>
                 <td>{{ $value['overrideBy'] }}</td>
+                <td>{{ $value['addtInfo']['data']['userCode1'] }} - {{ $value['addtInfo']['data']['userCode2'] }}</td>
                 <td>{{ $value['isSuccess'] == true ? 'Sukses' : 'Gagal' }}</td>
             </tr>
             @endforeach

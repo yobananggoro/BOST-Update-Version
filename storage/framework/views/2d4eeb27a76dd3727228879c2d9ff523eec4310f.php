@@ -63,10 +63,10 @@
                 <th style="width: 110px">Akun</th>
                 <th>Nama Akun</th>
                 <th style="width: 30px">Ccy</th>
+                <th>User Kode</th>
                 <th>Nominal</th>
                 <th>User ID</th>
                 <th>User Oto</th>
-                <th>Usercode</th>
                 <th>Status Trx</th>
             </tr>
         </thead>
@@ -95,17 +95,18 @@
                     <td><?php echo e(isset($value['addtInfo']['rc']) ? $value['addtInfo']['txCode'] : '-'); ?></td>
                     <td><?php echo e(isset($value['addtInfo']['rc']) ? $value['addtInfo']['branch'].'-'.$value['addtInfo']['cif'].'-'.$value['addtInfo']['suffix'] : null); ?></td>
                     <td><?php echo e(isset($value['addtInfo']['rc']) ? $value['addtInfo']['accountName'] : null); ?></td>
-                    <td><?php echo e(isset($value['addtInfo']['rc']) ? $value['addtInfo']['currency'] : null); ?></td> 
+                    <td><?php echo e(isset($value['addtInfo']['rc']) ? $value['addtInfo']['currency'] : null); ?></td>
+                    <td>-</td>
                 <?php else: ?>
                     <td><?php echo isset($value['addtInfo']['responseCode']) ? $value['addtInfo']['data']['drCode'].'<br>'.$value['addtInfo']['data']['crCode'] : '-'; ?></td>
                     <td><?php echo e($value['trxSrcAcct']); ?><br><?php echo e($value['trxDstAcct']); ?></td>
                     <td><?php echo isset($value['addtInfo']['responseCode']) ? to_camel($value['addtInfo']['data']['sourceAccountName']).'<br>'.to_camel($value['addtInfo']['data']['destinationAccountName']) : null; ?></td>
                     <td><?php echo isset($value['addtInfo']['responseCode']) ? $value['addtInfo']['data']['sourceCurrency'].'<br>'.$value['addtInfo']['data']['destinationCurrency']  : null; ?></td>
+                    <td><?php echo e(isset($value['addtInfo']['data']['userCode1']) ? $value['addtInfo']['data']['userCode1'] . ' - ' . (isset($value['addtInfo']['data']['userCode2']) ? $value['addtInfo']['data']['userCode2'] : '-') : '-'); ?></td>
                 <?php endif; ?>
                 <td style="text-align: right"><?php echo e(number_format($value['trxAmount'])); ?> [<b><?php echo e($value['trxType']); ?></b>]</td>
                 <td><?php echo e($value['createdBy']); ?></td>
                 <td><?php echo e($value['overrideBy']); ?></td>
-                <td><?php echo e($value['addtInfo']['data']['userCode1']); ?> - <?php echo e($value['addtInfo']['data']['userCode2']); ?></td>
                 <td><?php echo e($value['isSuccess'] == true ? 'Sukses' : 'Gagal'); ?></td>
             </tr>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

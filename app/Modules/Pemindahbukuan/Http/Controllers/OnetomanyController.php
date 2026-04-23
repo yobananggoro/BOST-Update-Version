@@ -31,6 +31,7 @@ class OnetomanyController extends \App\Http\Controllers\Controller
         $accuseSrc = "internal";
         $accuseDst1 = "internal";
         
+        \Assets::addJs('custom/apuppt.js');
         \Assets::addJs('custom/prompt/prompt_dynamic.js');
         \Assets::addJs('custom/pemindahbukuan/onetomany.js');
         return view('pemindahbukuan::onetomany.default', compact('rek', 'reff', 'accuseSrc', 'accuseDst1'));

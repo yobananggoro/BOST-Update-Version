@@ -10,11 +10,12 @@
             @csrf
             <div class="card-body">
                 <input type="hidden" name="trxtype" value="OTO">
-                <div class="col-12">
+                <div class="col-12 form-group">
                     <label>Bulk File<span style="color: red">*</span></label><br>
                     <input type="file" id="myfile" name="file">
-                </div><br>
-                <div class="col-12">
+                </div>
+
+                <div class="col-12 form-group">
                     <label>Jenis Transaksi</label>
                     <select id="getTrxList" name="trxName" class="form-control select2">
                     </select><br>
@@ -28,11 +29,13 @@
                             <input type="text" name="crCode" id="crCode" class="form-control" readonly>
                         </div>
                     </div>
-                </div><br>
-                <div class="col-12">
+                </div>
+
+                <div class="col-12 form-group">
                     <label>Refference</label>
                     <input type="text" name="reff" id="reff" class="form-control" value="{{@$reff}}" readonly>
                 </div>
+
                 <blockquote>
                     <p>Catatan!</p>
                     <p>
@@ -41,6 +44,8 @@
                         browser terlebih dahulu agar dipastikan selalu mendapat versi terbaru.
                     </p>
                 </blockquote>
+
+                @include('addInfo')
             </div>
             <div class="card-footer clearfix">
                 <div class="btn-group">

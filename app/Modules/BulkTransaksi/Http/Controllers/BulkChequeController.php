@@ -24,6 +24,7 @@ class BulkChequeController extends \App\Http\Controllers\Controller
         $branch = auth()->user()->profile->unit_kerja_kode;
         $accuse = 'internal';
 
+        \Assets::addJs('custom/apuppt.js');
         \Assets::addJs('custom/bulktransaksi/bulk_cheque.js');
         \Assets::addJs('custom/prompt/prompt.js');
         return view('bulktransaksi::cheque.default', compact('reff', 'accuse'));

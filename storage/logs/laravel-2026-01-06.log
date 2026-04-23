@@ -1,0 +1,6 @@
+[2026-01-06 15:07:09] local.INFO: Auth UIM Request: {"userId":"L108"}  
+[2026-01-06 15:07:09] local.INFO: Auth UIM Response: {"succeeded":true,"message":null,"errors":null,"errorCode":null,"data":{"nrp":85015,"nama":"NAJIB NUGROHO","nip":"19.94.0165","userId":"L108","kodeCabang":"D440","namaCabang":"DIVISI INFORMATION TECHNOLOGY","kodeInduk":"D440","namaInduk":"DIVISI INFORMATION TECHNOLOGY","kodeKanwil":"0000","namaKanwil":"Kantor Pusat","jabatan":"Staf Middleware","email":"nnugroho@BANKBJB.CO.ID","idFungsi":"4643","namaFungsi":"SUPER ADMIN","kodePenempatan":"D440","namaPenempatan":"DIVISI INFORMATION TECHNOLOGY","id":"11344","costCentre":"01300","isApproval":false,"kodeUnitKerja":"D440","namaUnitKerja":"DIVISI INFORMATION TECHNOLOGY","kodeJabatan":"J2332","branchPayroll":"0000"},"statusCode":200}  
+[2026-01-06 15:08:18] local.ERROR: Maximum execution time of 30 seconds exceeded {"userId":"676099fb-1d34-41f6-b768-38d993292208","exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Maximum execution time of 30 seconds exceeded at D:\\Data\\Pemograman\\laragon\\www\\apuppt\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php:338)
+[stacktrace]
+#0 {main}
+"} 

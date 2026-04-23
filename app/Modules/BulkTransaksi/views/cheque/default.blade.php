@@ -10,7 +10,7 @@
             <form action="{{ url('upload-cheque/validasi') }}" method="post" id="formAccount" role="form" class="form-horizontal" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
-                    <div class="col-sm-12">
+                    <div class="col-sm-12 form-group">
                         <input type="hidden" name="accuse" id="accuse" value="{{$accuse}}">
                         <input type="hidden" name="trxtype" value="OTM">
                         <input type="hidden" name="dbCode" class="form-control" value="020" readonly>
@@ -59,29 +59,32 @@
                                 <td id="tipe_ccy_sumber" class="detailSrc"></td>
                             </tr>
                         </table>
-                    </div><br>
-                    <div class="col-12">
+                    </div>
+                    
+                    <div class="col-12 form-group">
                         <label>Refference</label>
                         <input type="text" name="reff" id="reff" class="form-control" value="{{@$reff}}" readonly>
-                    </div><br>
-                    <div class="col-12">
+                    </div>
+                    
+                    <div class="col-12 form-group">
                         <label>Nomor Cheque <span style="color: red">*</span></label>
                         <input type="text" name="chequeNo" id="chequeNo" maxlength="16" class="form-control number" placeholder="Nomor Cheque">
-                    </div><br>
-                    <div class="col-12">
+                    </div>
+                    
+                    <div class="col-12 form-group">
                         <label>Nominal <span style="color: red">*</span></label>
                         <input type="text" name="nominal_" id="nominal_" class="form-control currency text-right" placeholder="Nominal">
                         <input type="hidden" name="nominal" id="nominal" class="form-control text-right" readonly>
-                    </div><br>
-                    <div class="col-12">
+                    </div>
+                    
+                    <div class="col-12 form-group">
                         <label>Keterangan</label>
                         <input type="text" name="narative3" id="narative3" class="form-control nar" maxlength="35" placeholder="Narative 3">
                     </div>
-                    <div class="col-12">
-                        <label></label>
+                    <div class="col-12 form-group">
                         <input type="text" name="narative4" id="narative4" class="form-control nar" maxlength="35" placeholder="Narative 4">
-                    </div><br>
-                    <div class="col-12">
+                    </div>
+                    <div class="col-12 form-group">
                         <label>Rekening Tujuan Bulk File<span style="color: red">*</span></label><br>
                         <input type="file" id="myfile" name="file">
                     </div>
@@ -93,6 +96,7 @@
                             browser terlebih dahulu agar dipastikan selalu mendapat versi terbaru.
                         </p>
                     </blockquote>
+                    @include('addInfo')
                 </div>
                 <div class="card-footer clearfix">
                     <div class="btn-group">
@@ -104,7 +108,7 @@
                     <div class="btn-group">
                         <a href="{{ url('upload-cheque/download/template_bulk_cheque.xlsx') }}" type="button" class="btn btn-sm btn-success"><i class="fa fa-download"></i> Template Excel</a>
                     </div>
-                    <button type="button" id="listRekening" class="btn btn-sm btn-default float-right" data-toggle="modal" data-target="#modal-xl" style="width: 150px; position: right">List Rekening</button>
+                    <button type="button" id="listRekening" class="btn btn-sm btn-secondary float-right" data-toggle="modal" data-target="#modal-xl" style="width: 150px; position: right">List Rekening</button>
                 </div>
             </form>
         </div>

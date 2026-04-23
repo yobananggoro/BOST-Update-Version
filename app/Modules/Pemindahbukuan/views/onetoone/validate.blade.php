@@ -8,7 +8,7 @@
             @csrf
             <div class="card-header text-center" style="font-size: 18px; font-weight: bold">Verifikasi Transaksi</div>
             <div class="card-body">
-                <div class="form-group" style="display: none">
+                <div class="form-group" style="display: ">
                     <input type="text" name="branchSrc" value="{{@$data[0]['branchSrc']}}" maxlength="4" readonly>
                     <input type="text" name="cifSrc" value="{{@$data[0]['cifSrc']}}" maxlength="6" readonly>
                     <input type="text" name="suffixSrc" value="{{@$data[0]['suffixSrc']}}" maxlength="3" readonly>
@@ -41,8 +41,18 @@
                     <input type="text" name="nominalDst" value="{{@$data[0]['amountDst']}}" readonly>
                     <input type="text" name="exchangeRate" value="{{@$data[0]['exchangeRate']}}" readonly>
                     @endif
-                        
 
+                    <input type="text" name="instrumentCode" value="{{@$data[0]['instrumentCode']}}" readonly> 
+                    <input type="text" name="instrumentOther" value="{{@$data[0]['instrumentOther']}}" readonly> 
+                    <input type="text" name="classificationCode" value="{{@$data[0]['classificationCode']}}" readonly> 
+                    <input type="text" name="classificationOther" value="{{@$data[0]['classificationOther']}}" readonly> 
+                    <input type="text" name="purposeCode" value="{{@$data[0]['purposeCode']}}" readonly>
+                    <input type="text" name="purposeOther" value="{{@$data[0]['purposeOther']}}" readonly>
+                    <input type="text" name="sourceCode" value="{{@$data[0]['sourceCode']}}" readonly>
+                    <input type="text" name="sourceOther" value="{{@$data[0]['sourceOther']}}" readonly>
+                    <input type="text" name="destinationCode" value="{{@$data[0]['destinationCode']}}" readonly>
+                    <input type="text" name="destinationOther" value="{{@$data[0]['destinationOther']}}" readonly>
+                    <input type="text" name="remark" value="{{@$data[0]['remark']}}" readonly>
                 </div>
                 <div class="row" style="font-size: 17px">
                     <div class="col-sm-12">

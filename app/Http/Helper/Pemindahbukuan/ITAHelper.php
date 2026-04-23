@@ -96,7 +96,19 @@ class ITAHelper extends Controller
             // 'narrative2'            => $request->narative2,
             'narrative3'            => $request->narative3,
             'narrative4'            => $request->narative4,
-            'isValidate'            => "N"
+            'isValidate'            => "N",
+            
+            'instrumentCode'        => $request->instrumentCode,
+            'instrumentOther'       => $request->instrumentOther,
+            'classificationCode'    => $request->classificationCode,
+            'classificationOther'   => $request->classificationOther,
+            'purposeCode'           => $request->purposeCode,
+            'purposeOther'          => $request->purposeOther,
+            'sourceCode'            => $request->sourceCode,
+            'sourceOther'           => $request->sourceOther,
+            'destinationCode'       => $request->destinationCode,
+            'destinationOther'      => $request->destinationOther,
+            'remark'                => $request->remark
         );
         // dd($message);
         
@@ -112,4 +124,5 @@ class ITAHelper extends Controller
             die();
         }
     }
+
 }

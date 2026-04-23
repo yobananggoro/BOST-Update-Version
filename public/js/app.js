@@ -13,7 +13,7 @@
     "use strict";
     var t = [],
         E = C.document,
-        r = Object.getPrototypeOf,
+        r = Object.getPrototypeOf, 
         s = t.slice,
         g = t.concat,
         u = t.push,

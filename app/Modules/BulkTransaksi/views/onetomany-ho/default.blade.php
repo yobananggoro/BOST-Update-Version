@@ -10,7 +10,7 @@
             <form action="{{ url('upload-onetomany-ho/validasi') }}" method="post" id="formAccount" role="form" class="form-horizontal" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
-                    <div class="col-sm-12">
+                    <div class="col-sm-12 form-group">
                         <input type="hidden" name="accuse" id="accuse" value="{{$accuse}}">
                         <input type="hidden" name="trxtype" value="OTM">
                         <label>Rekening Sumber <span style="color: red">*</span></label>
@@ -57,8 +57,9 @@
                                 <td id="tipe_ccy_sumber" class="detailSrc"></td>
                             </tr>
                         </table>
-                    </div><br>
-                    <div class="col-12">
+                    </div>
+
+                    <div class="col-12 form-group">
                         <label>Jenis Transaksi</label>
                         <select id="getTrxList" name="trxName" class="form-control select2">
                         </select><br>
@@ -72,35 +73,35 @@
                                 <input type="text" name="crCode" id="crCode" class="form-control" readonly>
                             </div>
                         </div>
-                    </div><br>
-                    <div class="col-12">
+                    </div>
+
+                    <div class="col-12 form-group">
                         <label>Refference</label>
                         <input type="text" name="reff" id="reff" class="form-control" value="{{@$reff}}" readonly>
-                    </div><br>
+                    </div>
+
                     <div id="numbCheck">
                     </div>
-                    <div class="col-12">
+
+                    <div class="col-12 form-group">
                         <label>Nominal <span style="color: red">*</span></label>
                         <input type="text" name="nominal_" id="nominal_" class="form-control currency text-right" placeholder="Nominal">
                         <input type="hidden" name="nominal" id="nominal" class="form-control text-right" readonly>
-                    </div><br>
-                    <div class="col-12">
+                    </div>
+                    <div class="col-12 form-group">
                         <label>Keterangan</label>
                         <input type="text" name="narative1" id="narative1" class="form-control nar" maxlength="35" placeholder="Narative 1">
                     </div>
-                    <div class="col-12">
-                        <label></label>
+                    <div class="col-12 form-group">
                         <input type="text" name="narative2" id="narative2" class="form-control nar" maxlength="35" placeholder="Narative 2">
                     </div>
-                    <div class="col-12">
-                        <label></label>
+                    <div class="col-12 form-group">
                         <input type="text" name="narative3" id="narative3" class="form-control nar" maxlength="35" placeholder="Narative 3">
                     </div>
-                    <div class="col-12">
-                        <label></label>
+                    <div class="col-12 form-group">
                         <input type="text" name="narative4" id="narative4" class="form-control nar" maxlength="35" placeholder="Narative 4">
-                    </div><br>
-                    <div class="col-12">
+                    </div>
+                    <div class="col-12 form-group">
                         <label>Rekening Tujuan Bulk File<span style="color: red">*</span></label><br>
                         <input type="file" id="myfile" name="file">
                     </div>
@@ -112,6 +113,7 @@
                             browser terlebih dahulu agar dipastikan selalu mendapat versi terbaru.
                         </p>
                     </blockquote>
+                    @include('addInfo')
                 </div>
                 <div class="card-footer clearfix">
                     <div class="btn-group">
@@ -123,7 +125,7 @@
                     <div class="btn-group">
                         <a href="{{ url('upload-onetomany-ho/download/template_bulk_agi_ho.xlsx') }}" type="button" class="btn btn-sm btn-success"><i class="fa fa-download"></i> Template Excel</a>
                     </div>
-                    <button type="button" id="listRekening" class="btn btn-sm btn-default float-right" data-toggle="modal" data-target="#modal-xl" style="width: 150px; position: right">List Rekening</button>
+                    <button type="button" id="listRekening" class="btn btn-sm btn-secondary float-right" data-toggle="modal" data-target="#modal-xl" style="width: 150px; position: right">List Rekening</button>
                 </div>
             </form>
         </div>

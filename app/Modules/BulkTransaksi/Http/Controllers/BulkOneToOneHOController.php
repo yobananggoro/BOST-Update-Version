@@ -23,6 +23,8 @@ class BulkOneToOneHOController extends \App\Http\Controllers\Controller
         $TransaksiSequence = new TransaksiSequence();
         $reff = $TransaksiSequence::generateReff();
 
+        \Assets::addJs('custom/apuppt.js');
+        \Assets::addJs('custom/jenistrx.js');
         \Assets::addJs('custom/bulktransaksi/bulk_onetoone.js');
         return view('bulktransaksi::onetoone-ho.default', compact('reff'));
     }

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 use Ramsey\Uuid\Uuid;
 use Carbon\Carbon;
 use App\Entities\Token;
@@ -20,24 +21,57 @@ class BostHelper extends Controller
 
 	public function __construct()
 	{
-		$this->clientId = env('CLIENTID');
+		// $this->clientId = env('CLIENTID');
+		$this->clientId = config('bost.client_id');
+		$this->clientSecret = config('bost.client_secret');
 		$this->checkToken();
 	}
 
+	// public function checkToken()
+	// {
+	// 	$getToken = Token::FindToken($this->clientId)->first();
+	// 	// dd($getToken);
+	// 	if (is_null($getToken)) {
+	// 		// dd('q');
+	// 		$this->auth();
+	// 	} else {
+	// 		$currentToken = (strtotime(Carbon::now()) - strtotime($getToken->updated_at)) * 1000;
+	// 		if ($getToken->expiredToken - $currentToken < 43200000) { // 43200000 = 12 jam dalam milidetik
+	// 			// dd('b');
+	// 			$this->auth();
+	// 			$getToken = Token::FindToken($this->clientId)->first(); // Refresh after auth
+	// 		}
+	// 	}
+
+	// 	$this->setToken = $getToken;
+	// }
+
 	public function checkToken()
 	{
-		$getToken = Token::FindToken($this->clientId)->first();
-		// dd($getToken);
-		if (is_null($getToken)) {
-			// dd('q');
-			$this->auth();
-		} else {
-			$currentToken = (strtotime(Carbon::now()) - strtotime($getToken->updated_at)) * 1000;
-			if ($getToken->expiredToken - $currentToken < 43200000) { // 43200000 = 12 jam dalam milidetik
-				// dd('b');
-				$this->auth();
-				$getToken = Token::FindToken($this->clientId)->first(); // Refresh after auth
+		$lock = Cache::lock('token_refresh_lock', 10); // 10 detik
+
+		try {
+			if ($lock->get()) { // hanya 1 process yang boleh masuk block ini
+				$getToken = Token::FindToken($this->clientId)->first();
+
+				if (is_null($getToken)) {
+					$this->auth();
+				} else {
+					$currentToken = (strtotime(Carbon::now()) - strtotime($getToken->updated_at)) * 1000;
+					if ($getToken->expiredToken - $currentToken < 43200000) {
+						$this->auth();
+					}
+				}
+
+				$getToken = Token::FindToken($this->clientId)->first();
+			} else {
+				// process lain sedang refresh token
+				// tunggu token selesai di-refresh
+				usleep(300000); // 0.3 detik
+				$getToken = Token::FindToken($this->clientId)->first();
 			}
+		} finally {
+			optional($lock)->release();
 		}
 
 		$this->setToken = $getToken;
@@ -50,8 +84,10 @@ class BostHelper extends Controller
 
 	public function auth()
 	{
-		$clientId = env('CLIENTID');
-		$clientSecret = env('CLIENTSECRET');
+		// $clientId = env('CLIENTID');
+		// $clientSecret = env('CLIENTSECRET');
+		$clientId = $this->clientId;
+		$clientSecret = $this->clientSecret;
 		$url = config('app.backend_bo') . '/auth/login';
 
 		$message = [
@@ -66,7 +102,8 @@ class BostHelper extends Controller
 			// dd($response, json_decode($response, true));exit;
 
 			if ($response->status() == 200) {
-				$json_string = json_decode($response, true);
+				// $json_string = json_decode($response, true);
+				$json_string = $response->json();
 
 				$data = Token::FindToken($this->clientId)->first();
 				if (is_null($data)) {
@@ -483,6 +520,102 @@ class BostHelper extends Controller
 			} else {
 				Log::info("Reload Core Currency: " . $response);
 			}
+
+			return $response;
+		} catch (\Exception $e) {
+			echo $e->getMessage();
+			die();
+		}
+	}
+
+	public function kodefikasiList($request)
+	{
+		// dd($request);
+		$tokens = $this->setToken->accessToken;
+		$url = config('app.backend_bo') . '/transactions/codification/' . $request->groupCode;
+
+		try {
+			$response = Http::withHeaders(['Authorization' => 'Bearer ' . $tokens, 'Content-Type' => 'application/json',])->get($url);
+			// dd(json_decode($response, true));
+			Log::info("List Kodefikasi Request: " . $request->groupCode);
+
+			if ($response->status() == 200) {
+				$respMsg = json_decode($response, true);
+				Log::info("List Kodefikasi Response: " . json_encode(array_diff_key($respMsg, ['data' => ''])));
+			} else {
+				Log::info("List Kodefikasi Response: " . $response);
+			}
+
+			return $response;
+		} catch (\Exception $e) {
+			echo $e->getMessage();
+			die();
+		}
+	}
+
+	public function kodefikasiStore($request)
+	{
+		// dd($request);
+		$tokens = $this->setToken->accessToken;
+		$url = config('app.backend_bo') . '/transactions/codification';
+		$message = array(
+			'groupCode' => $request->groupCode,
+			'keyCode' => $request->keyCode,
+			'value' => $request->values,
+			'description' => $request->description,
+			'isActive' => $request->isActive == 1 ? true : false,
+			'createdBy' => auth()->user()->username
+		);
+		// dd($message);
+		try {
+			$response = Http::withHeaders(['Authorization' => 'Bearer ' . $tokens, 'Content-Type' => 'application/json',])->post($url, $message);
+			// dd($response, json_decode($response, true));
+			Log::info("Kodefikasi Store Request: " . json_encode($message));
+			Log::info("Kodefikasi Store Response: " . $response);
+
+			return $response;
+		} catch (\Exception $e) {
+			echo $e->getMessage();
+			die();
+		}
+	}
+
+	public function kodefikasiEdit($request)
+	{
+		// dd($request);
+		$tokens = $this->setToken->accessToken;
+		$url = config('app.backend_bo') . '/transactions/codification/' . $request->groupCode . '/' . $request->keyCode;
+		$message = array(
+			'value' => $request->values,
+			'description' => $request->description,
+			'isActive' => $request->isActive == 1 ? true : false,
+			'updatedBy' => auth()->user()->username
+		);
+		// dd($message);
+		try {
+			$response = Http::withHeaders(['Authorization' => 'Bearer ' . $tokens, 'Content-Type' => 'application/json',])->put($url, $message);
+			// dd($response, json_decode($response, true));
+			Log::info("Kodefikasi Edit Request: " . json_encode($message));
+			Log::info("Kodefikasi Edit Response: " . $response);
+
+			return $response;
+		} catch (\Exception $e) {
+			echo $e->getMessage();
+			die();
+		}
+	}
+
+	public function kodefikasiDelete($request)
+	{
+		// dd($request);
+		$tokens = $this->setToken->accessToken;
+		$url = config('app.backend_bo') . '/transactions/codification/' . $request->groupCode . '/' . $request->keyCode;
+
+		try {
+			$response = Http::withHeaders(['Authorization' => 'Bearer ' . $tokens, 'Content-Type' => 'application/json'])->delete($url);
+			// dd($response, json_decode($response, true));
+			Log::info("Kodefikasi Delete Request: " . $request->groupCode . "|" . $request->keyCode);
+			Log::info("Kodefikasi Delete Response: " . $response);
 
 			return $response;
 		} catch (\Exception $e) {

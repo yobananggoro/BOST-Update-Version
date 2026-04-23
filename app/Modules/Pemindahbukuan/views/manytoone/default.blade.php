@@ -13,7 +13,7 @@
                 @csrf
                 <div class="card-body">
                     <input type="hidden" name="trxtype" id="trxtype" value="MTO">
-                    <div class="col-12">
+                    <div class="col-12 form-group">
                         <input type="hidden" name="accuseSrc[]" id="accuseSrc1" value="{{@$accuseSrc1}}">
                         <label>Rekening Sumber <span style="color: red">*</span></label>
                         <div class="row">
@@ -42,8 +42,6 @@
                                 <button type="button" id="dynamic-ar" onclick="dynamicField()" class="btn btn-primary" style="width:40px"><i class="fa fa-plus"></i></button>
                                 <button type="button" onclick="deleteField()" class="btn btn-danger removeField" style="width: 40px; display: none"><i class="fa fa-trash"></i></button>
                             </div>
-
-
                             <div class="col-7" style="margin-top: 10px">
                                 <input type="text" id="nominalSrc1" class="form-control currency text-right" onkeyup="nomsumber(this)" placeholder="Nominal Sumber">
                                 <input type="hidden" id="nominalSrc1_" name="nominalSrc[]" class="form-control nomsumber text-right" readonly>
@@ -66,12 +64,12 @@
                                 <td id="tipe_ccy_sumber1" class="detailSrc"></td>
                             </tr>
                         </table>
-                    </div><br>
+                    </div>
 
                     <div id="dynamicAddRemove">
                     </div>
 
-                    <div class="col-12">
+                    <div class="col-12 form-group">
                         <input type="hidden" name="accuseDst" id="accuseDst" value="{{ @$accuseDst }}">
                         <label>Rekening Tujuan <span style="color: red">*</span></label>
                         <div class="row">
@@ -116,9 +114,9 @@
                                 <td id="tipe_ccy_tujuan" class="detailDst"></td>
                             </tr>
                         </table>
-                    </div><br>
+                    </div>
 
-                    <div class="col-12">
+                    <div class="col-12 form-group">
                         <label>Total Nominal Sumber</label>
                         <div class="row">
                             <div class="col-12">
@@ -126,9 +124,9 @@
                                 <input type="hidden" name="total" id="total" class="form-control total text-right" readonly>
                             </div>
                         </div>
-                    </div><br>
+                    </div>
 
-                    <div class="col-12">
+                    <div class="col-12 form-group">
                         <label>Nominal Tujuan</label>
                         <div class="row">
                             <div class="col-12">
@@ -136,29 +134,27 @@
                                 <input type="hidden" name="nominalDst" id="nominalDst" class="form-control text-right" readonly>
                             </div>
                         </div>
-                    </div><br>
+                    </div>
 
-                    <div class="col-12">
+                    <div class="col-12 form-group">
                         <label>Refference</label>
                         <input type="text" name="reff" id="reff" class="form-control" value="{{ @$reff }}" readonly>
-                    </div><br>
+                    </div>
 
-                    <div class="col-12">
+                    <div class="col-12 form-group">
                         <label>Keterangan</label>
                         <input type="text" name="narative1" id="narative1" class="form-control nar" placeholder="Narative 1">
                     </div>
-                    <div class="col-12">
-                        <label></label>
-                        <input type="text" name="narative2" id="narative2" class="form-control nar" placeholder="Narative 2">
+                    <div class="col-12 form-group">
+                        <input type="text" name="narative2" id="narative2" class="form-control nar" maxlength="35" placeholder="Narative 2">
                     </div>
-                    <div class="col-12">
-                        <label></label>
-                        <input type="text" name="narative3" id="narative3" class="form-control nar" placeholder="Narative 3">
+                    <div class="col-12 form-group">
+                        <input type="text" name="narative3" id="narative3" class="form-control nar" maxlength="35" placeholder="Narative 3">
                     </div>
-                    <div class="col-12">
-                        <label></label>
-                        <input type="text" name="narative4" id="narative4" class="form-control nar" placeholder="Narative 4">
+                    <div class="col-12 form-group">
+                        <input type="text" name="narative4" id="narative4" class="form-control nar" maxlength="35" placeholder="Narative 4">
                     </div>
+                    @include('addInfo')
                 </div>
                 <div class="card-footer clearfix">
                     <div class="margin">
@@ -169,7 +165,7 @@
                             <button type="reset" class="btn btn-sm btn-danger" style="width: 80px"><i class="fa fa-redo"></i> Reset</button>
                         </div>
                         <div class="btn-group float-right">
-                            <button type="button" id="listRekening" class="btn btn-sm btn-default" data-toggle="modal" data-target="#modal-xl" style="width: 150px; position: right">List Rekening</button>
+                            <button type="button" id="listRekening" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal-xl" style="width: 150px; position: right">List Rekening</button>
                         </div>
                     </div>
                 </div>

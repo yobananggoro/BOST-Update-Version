@@ -31,6 +31,7 @@ class OnetooneController extends \App\Http\Controllers\Controller
         $accuseDst = "internal";
         // dd($reff);
 
+        \Assets::addJs('custom/apuppt.js');
         \Assets::addJs('custom/prompt/prompt.js');
         \Assets::addJs('custom/pemindahbukuan/onetoone.js');
         return view('pemindahbukuan::onetoone.default', compact('rek', 'reff', 'accuseSrc', 'accuseDst'));
@@ -105,7 +106,6 @@ class OnetooneController extends \App\Http\Controllers\Controller
             'tipeSrc'                   => @$request->tipeSrc,
             'accuseSrc'                 => @$request->accuseSrc,
             'codeSrc'                   => @$json_string['data']['drCode'],
-            // 'amountSrc'                 => @$json_string['data']['drAmount'],
             'amountSrc'                 => isset($json_string['data']['drAmount']) ? number_format((float) str_replace(',', '', $json_string['data']['drAmount']), 2, '.', ''): '0.00',
 
             'branchDst'                 => @$json_string['data']['branchDst'],
@@ -118,7 +118,6 @@ class OnetooneController extends \App\Http\Controllers\Controller
             'tipeDst'                   => @$request->tipeDst,
             'accuseDst'                 => @$request->accuseDst,
             'codeDst'                   => @$json_string['data']['crCode'],
-            // 'amountDst'                 => @$json_string['data']['crAmount'],
             'amountDst'                 => isset($json_string['data']['crAmount']) ? number_format((float) str_replace(',', '', $json_string['data']['crAmount']), 2, '.', ''): '0.00',
 
             'nominal_'                  => $request->nominal_,
@@ -129,6 +128,18 @@ class OnetooneController extends \App\Http\Controllers\Controller
             'narative2'                 => array_key_exists("narrative2", @$json_string['data']) ? @$json_string['data']['narrative2'] : "",
             'narative3'                 => array_key_exists("narrative3", @$json_string['data']) ? @$json_string['data']['narrative3'] : "",
             'narative4'                 => array_key_exists("narrative4", @$json_string['data']) ? @$json_string['data']['narrative4'] : "",
+
+            'instrumentCode'            => $request->istrumentrx,
+            'instrumentOther'           => $request->istrumentrx == '99' ? $request->instrumenLainnya : null,
+            'classificationCode'        => $request->klasifikasitrx,
+            'classificationOther'       => $request->klasifikasitrx == '99' ? $request->klasifikasiLainnya : null,
+            'purposeCode'               => $request->kepentingantrx,
+            'purposeOther'              => $request->kepentingantrx == '99' ? $request->kepentinganLainnya : null,
+            'sourceCode'                => $request->sumberdanatrx,
+            'sourceOther'               => $request->sumberdanatrx == '9' ? $request->sumberDanaLainnya : null,
+            'destinationCode'           => $request->tujuantrx,
+            'destinationOther'          => $request->tujuantrx == '9' ? $request->tujuanLainnya : null,
+            'remark'                    => $request->beritaTrx,
         ]);
 
         // dd($data);
@@ -177,14 +188,27 @@ class OnetooneController extends \App\Http\Controllers\Controller
         );
 
         $data->additional_info = json_encode([
-            'rekening_sumber'   => $debit,
-            'rekening_tujuan'   => $credit,
-            'exchangeRate'      => $request->exchangeRate,
-            'narative1'         => $request->narative1,
-            'narative2'         => $request->narative2,
-            'narative3'         => $request->narative3,
-            'narative4'         => $request->narative4
+            'rekening_sumber'       => $debit,
+            'rekening_tujuan'       => $credit,
+            'exchangeRate'          => $request->exchangeRate,
+            'narative1'             => $request->narative1,
+            'narative2'             => $request->narative2,
+            'narative3'             => $request->narative3,
+            'narative4'             => $request->narative4,
+            'instrumentCode'        => $request->instrumentCode,
+            'instrumentOther'       => $request->instrumentOther,
+            'classificationCode'    => $request->classificationCode,
+            'classificationOther'   => $request->classificationOther,
+            'purposeCode'           => $request->purposeCode,
+            'purposeOther'          => $request->purposeOther,
+            'sourceCode'            => $request->sourceCode,
+            'sourceOther'           => $request->sourceOther,
+            'destinationCode'       => $request->destinationCode,
+            'destinationOther'      => $request->destinationOther,
+            'remark'                => $request->remark
         ]);
+
+        // dd($data);
 
         $message = ['key' => 'Pemindahbukuan One To One Dengan Nomor Refference', 'value' => $request->reff];
         $status = 'error';
@@ -240,7 +264,7 @@ class OnetooneController extends \App\Http\Controllers\Controller
         $data->narative3 = $additional_info['narative3'];
         $data->narative4 = $additional_info['narative4'];
 
-        // dd($data);
+        dd($data);
         // Call api posting ITA
         try {
             $reffToken = ReffToken::FindTokenReff(auth()->user()->username . "-" . $request->id)->first();  //cek reference token

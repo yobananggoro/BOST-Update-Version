@@ -6,7 +6,7 @@
         <div class="card card-default">
             <div class="card-header">
                 <div class="btn-group">
-                    <a href="{{ url('jenis-transaksi-kode') }}" class="btn btn-sm btn-primary"><i class="fas fa-search"></i> List Data</a>
+                    <a href="{{ url('jenis-transaksi-list') }}" class="btn btn-sm btn-primary"><i class="fas fa-search"></i> List Data</a>
                 </div>
                 <div class="btn-group">
                     <a href="{{ url('jenis-transaksi/reload') }}" class="btn btn-sm btn-danger"><i class="fas fa-redo"></i> Reload Data</a>

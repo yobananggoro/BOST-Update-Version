@@ -4,6 +4,7 @@ namespace Modules\JenisTrx\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Helper\BostHelper;
+use Illuminate\Support\Facades\Cache;
 
 class JenisTrxController extends \App\Http\Controllers\Controller
 {
@@ -44,6 +45,50 @@ class JenisTrxController extends \App\Http\Controllers\Controller
         } catch (Exception $e) {
             return $e->getMessage();
             die;
+        }
+    }
+
+    public function listDropdown(Request $request)
+    {
+        try {
+            $resp = Cache::remember('dropdown_items', 3600, function () use ($request) {
+
+                $BackEndHelper = new BostHelper();
+                $response = $BackEndHelper->jenisTransaksi($request);
+
+                $data = $response->json();
+
+                if (!isset($data['responseCode']) || $data['responseCode'] !== '00') {
+                    return false; // jangan cache error
+                }
+
+                return $data;
+            });
+
+            if ($resp === false) {
+
+                Cache::forget($cacheKey);
+
+                $BackEndHelper = new BostHelper();
+                $response = $BackEndHelper->jenisTransaksi($request);
+                $resp = $response->json();
+            }
+
+            $filtered = collect($resp['data'] ?? [])
+                // ->where('isActive', true)
+                ->sortBy('trxName')
+                ->values()
+                ->all();
+
+            return response()->json([
+                "status" => 200,
+                "listTrx" => $filtered
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                "status" => 500,
+                "error" => $e->getMessage()
+            ]);
         }
     }
 

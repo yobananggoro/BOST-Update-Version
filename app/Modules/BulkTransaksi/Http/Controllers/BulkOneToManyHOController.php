@@ -24,6 +24,8 @@ class BulkOneToManyHOController extends \App\Http\Controllers\Controller
         $branch = auth()->user()->profile->unit_kerja_kode;
         $accuse = 'internal';
 
+        \Assets::addJs('custom/apuppt.js');
+        \Assets::addJs('custom/jenistrx.js');
         \Assets::addJs('custom/bulktransaksi/bulk_onetomany.js');
         \Assets::addJs('custom/prompt/prompt.js');
         return view('bulktransaksi::onetomany-ho.default', compact('reff', 'accuse'));

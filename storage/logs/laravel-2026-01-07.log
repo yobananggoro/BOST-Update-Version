@@ -1,0 +1,6 @@
+[2026-01-07 11:26:06] local.INFO: Auth UIM Request: {"userId":"L108"}  
+[2026-01-07 11:26:06] local.INFO: Auth UIM Response: {"succeeded":true,"message":null,"errors":null,"errorCode":null,"data":{"nrp":85015,"nama":"NAJIB NUGROHO","nip":"19.94.0165","userId":"L108","kodeCabang":"D440","namaCabang":"DIVISI INFORMATION TECHNOLOGY","kodeInduk":"D440","namaInduk":"DIVISI INFORMATION TECHNOLOGY","kodeKanwil":"0000","namaKanwil":"Kantor Pusat","jabatan":"Staf Middleware","email":"nnugroho@BANKBJB.CO.ID","idFungsi":"4643","namaFungsi":"SUPER ADMIN","kodePenempatan":"D440","namaPenempatan":"DIVISI INFORMATION TECHNOLOGY","id":"11344","costCentre":"01300","isApproval":false,"kodeUnitKerja":"D440","namaUnitKerja":"DIVISI INFORMATION TECHNOLOGY","kodeJabatan":"J2332","branchPayroll":"0000"},"statusCode":200}  
+[2026-01-07 11:26:29] local.INFO: List Bulk Request: {"userId":"","branch":"0001","fileStatus":"","startDate":"2026-01-01","endDate":"2026-01-07"}  
+[2026-01-07 11:26:29] local.INFO: List Bulk Response: {"responseCode":"00","responseDesc":"Success"}  
+[2026-01-07 11:26:35] local.INFO: List Detail Report Request: "http:\/\/192.168.229.22:9191\/bulk\/files\/393"  
+[2026-01-07 11:26:35] local.INFO: List Detail Report Response: {"responseCode":"00","responseDesc":"File metadata fetched successfully.","addtInfo":"SUCCESS: 2, FAILED: 0, IN_PROGRESS: 0"}  

@@ -140,6 +140,8 @@ class OnetooneController extends \App\Http\Controllers\Controller
             'destinationCode'           => $request->tujuantrx,
             'destinationOther'          => $request->tujuantrx == '9' ? $request->tujuanLainnya : null,
             'remark'                    => $request->beritaTrx,
+            'userCode1'                 => $request->userCode1,
+            'userCode2'                 => $request->userCode2,
         ]);
 
         // dd($data);
@@ -205,7 +207,10 @@ class OnetooneController extends \App\Http\Controllers\Controller
             'sourceOther'           => $request->sourceOther,
             'destinationCode'       => $request->destinationCode,
             'destinationOther'      => $request->destinationOther,
-            'remark'                => $request->remark
+            'remark'                => $request->remark,
+            'exchangeRate'          => $request->exchangeRate,
+            'userCode1'             => $request->userCode1,
+            'userCode2'             => $request->userCode2,
         ]);
 
         // dd($data);
@@ -263,6 +268,8 @@ class OnetooneController extends \App\Http\Controllers\Controller
         $data->narative2 = $additional_info['narative2'];
         $data->narative3 = $additional_info['narative3'];
         $data->narative4 = $additional_info['narative4'];
+        $data->userCode1 = $additional_info['userCode1'];
+        $data->userCode2 = $additional_info['userCode2'];
 
         dd($data);
         // Call api posting ITA
@@ -308,7 +315,9 @@ class OnetooneController extends \App\Http\Controllers\Controller
                 'narative1',
                 'narative2',
                 'narative3',
-                'narative4'
+                'narative4',
+                'userCode1',
+                'userCode2',
             );
 
             // dd($resp->status(),$resp['responseCode'],$resp['data']['0']['messageDesc']);

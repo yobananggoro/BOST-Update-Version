@@ -90,7 +90,11 @@
                     <input type="text" name="narative3" id="narative3" class="form-control nar" maxlength="35" placeholder="Narative 3">
                 </div>
                 <div class="col-12 form-group">
+<<<<<<< Updated upstream
                     <input type="text" name="narative4" id="narative4" class="form-control nar" maxlength="35" placeholder="Narative 4">
+=======
+                    <input type="text" name="narative4" id="narative4" class="form-control nar" maxlength="34" placeholder="Narative 4">
+>>>>>>> Stashed changes
                 </div>
                 <blockquote>
                     <p>Catatan!</p>

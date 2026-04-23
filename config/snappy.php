@@ -32,18 +32,14 @@ return [
     |    The environment variables to set while running the wkhtmltopdf process.
     |
     */
-
-    // 'pdf' => [
-    //     'enabled' => true,
-    //     'binary'  => '"C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe"',
-    //     'timeout' => false,
-    //     'options' => [],
-    //     'env'     => [],
-    // ],
-
+    
     'pdf' => [
         'enabled' => true,
-        'binary'  => '/usr/local/bin/wkhtmltopdf', // atau sesuai hasil `which wkhtmltopdf`
+        /* versi windows */
+        'binary' => '"' . env('WKHTML_PDF_BINARY') . '"',
+
+        /* versi rhel */
+        //'binary' => env('WKHTML_PDF_BINARY'),
         'timeout' => false,
         'options' => [],
         'env'     => [],

@@ -56,14 +56,15 @@
         <thead>
             <tr style="text-align: center">
                 <th style="width: 10px">No.</th>
-                <th style="width: 120px">Reff Code</th>
-                <th style="width: 120px">Trx Name</th>
-                <th style="width: 130px">Time Stamps</th>
-                <th style="width: 30px">Trans</th>
-                <th style="width: 110px">Account</th>
-                <th>Short Name</th>
+                <th style="width: 120px">Kode Reff</th>
+                <th style="width: 120px">Nama Trx</th>
+                <th style="width: 130px">Tanggal</th>
+                <th style="width: 30px">Kode</th>
+                <th style="width: 110px">Akun</th>
+                <th>Nama Akun</th>
                 <th style="width: 30px">Ccy</th>
-                <th>Posting Amount</th>
+                <th>User Kode</th>
+                <th>Nominal</th>
                 <th>User ID</th>
                 <th>User Oto</th>
                 <th>Status Trx</th>
@@ -94,12 +95,14 @@
                     <td>{{ isset($value['addtInfo']['rc']) ? $value['addtInfo']['txCode'] : '-' }}</td>
                     <td>{{ isset($value['addtInfo']['rc']) ? $value['addtInfo']['branch'].'-'.$value['addtInfo']['cif'].'-'.$value['addtInfo']['suffix'] : null }}</td>
                     <td>{{ isset($value['addtInfo']['rc']) ? $value['addtInfo']['accountName'] : null }}</td>
-                    <td>{{ isset($value['addtInfo']['rc']) ? $value['addtInfo']['currency'] : null }}</td> 
+                    <td>{{ isset($value['addtInfo']['rc']) ? $value['addtInfo']['currency'] : null }}</td>
+                    <td>-</td>
                 @else
                     <td>{!! isset($value['addtInfo']['responseCode']) ? $value['addtInfo']['data']['drCode'].'<br>'.$value['addtInfo']['data']['crCode'] : '-' !!}</td>
                     <td>{{ $value['trxSrcAcct'] }}<br>{{$value['trxDstAcct'] }}</td>
                     <td>{!! isset($value['addtInfo']['responseCode']) ? to_camel($value['addtInfo']['data']['sourceAccountName']).'<br>'.to_camel($value['addtInfo']['data']['destinationAccountName']) : null !!}</td>
                     <td>{!! isset($value['addtInfo']['responseCode']) ? $value['addtInfo']['data']['sourceCurrency'].'<br>'.$value['addtInfo']['data']['destinationCurrency']  : null !!}</td>
+                    <td>{{ isset($value['addtInfo']['data']['userCode1']) ? $value['addtInfo']['data']['userCode1'] . ' - ' . (isset($value['addtInfo']['data']['userCode2']) ? $value['addtInfo']['data']['userCode2'] : '-') : '-' }}</td>
                 @endif
                 <td style="text-align: right">{{ number_format($value['trxAmount']) }} [<b>{{ $value['trxType'] }}</b>]</td>
                 <td>{{ $value['createdBy'] }}</td>

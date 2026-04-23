@@ -36,6 +36,9 @@
                     <input type="text" name="narative3" value="{{@$data[0]['narative3']}}" readonly>
                     <input type="text" name="narative4" value="{{@$data[0]['narative4']}}" readonly>
 
+                    <input type="text" name="userCode1" value="{{@$data[0]['userCode1']}}" readonly>
+                    <input type="text" name="userCode2" value="{{@$data[0]['userCode2']}}" readonly>
+
                     @if(($data[0]['ccySrc'] == 'IDR' && $data[0]['ccyDst'] != 'IDR') || ($data[0]['ccySrc'] != 'IDR' && $data[0]['ccyDst'] == 'IDR'))
                     <input type="text" name="nominalSrc" value="{{@$data[0]['amountSrc']}}" readonly>    
                     <input type="text" name="nominalDst" value="{{@$data[0]['amountDst']}}" readonly>

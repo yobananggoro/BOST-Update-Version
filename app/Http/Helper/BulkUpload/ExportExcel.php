@@ -54,6 +54,7 @@ class ExportExcel implements FromGenerator, WithHeadings
                         $row['trxAmount'] ?? '',
                         $row['trxStatus '] ?? '',
                         $row['postingDt'] ?? '',
+                        $row['costCenter'] ?? '',
                     ];
                 } else {
                     yield [
@@ -66,6 +67,7 @@ class ExportExcel implements FromGenerator, WithHeadings
                         $row['trxAmount'] ?? '',
                         $row['trxStatus '] ?? '',
                         $row['postingDt'] ?? '',
+                        $row['costCenter'] ?? '',
                     ];
                 }
             }
@@ -77,6 +79,6 @@ class ExportExcel implements FromGenerator, WithHeadings
 
     public function headings(): array
     {
-        return ['No', 'Trx Code', 'Cheque No', 'Account', 'Account Name', 'Account Status', 'Amount', 'Posting Status', 'Posting Date'];
+        return ['No', 'Trx Code', 'Cheque No', 'Account', 'Account Name', 'Account Status', 'Amount', 'Posting Status', 'Posting Date', 'Usercode'];
     }
 }

@@ -116,17 +116,23 @@
                         <input type="hidden" name="exchangeRate" id="exchangeRate" class="form-control text-right" readonly>
                     </div>
                     <div id="rates_fields"></div>
+                    <!-- <div class="col-12 form-group">
+                        <label>Keterangan</label>
+                        <input type="text" name="narative1" id="narative1" class="form-control nar" placeholder="Narative 1">
+                    </div>
+                    <div class="col-12 form-group">
+                        <input type="text" name="narative2" id="narative2" class="form-control nar" placeholder="Narative 2">
+                    </div> -->
                     <div class="col-12 form-group">
                         <label>Keterangan</label>
                         <input type="text" name="narative3" id="narative3" class="form-control nar" placeholder="Narative 3">
                     </div>
                     <div class="col-12 form-group">
-                        <label></label>
                         <input type="text" name="narative4" id="narative4" class="form-control nar" placeholder="Narative 4">
                     </div>
                     <div class="col-12">
                         <label>User Code</label>
-                        <select id="getUserCodeList" name="usercode_desc" class="form-control select2">
+                        <select id="getUserCodeList" name="usercode_desc" class="form-control select2" style="width: 100%">
                         </select><br>
                         <div class="row form-group">
                             <div class="col-6">

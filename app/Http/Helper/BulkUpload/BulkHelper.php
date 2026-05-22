@@ -36,6 +36,20 @@ class BulkHelper extends Controller
         $file_uploaded_name = $file->getClientOriginalName();
 
         // $nar = $request->narative3 . '|' . $request->narative4;
+        $addInfo = array(
+            'instrumentCode'        => $request->instrumentrx,
+            'instrumentOther'       => $request->instrumentOther,
+            'classificationCode'    => $request->klasifikasitrx,
+            'classificationOther'   => $request->klasifikasiLainnya,
+            'purposeCode'           => $request->kepentingantrx,
+            'purposeOther'          => $request->kepentinganLainnya,
+            'sourceCode'            => $request->sumberdanatrx,
+            'sourceOther'           => $request->sumberDanaLainnya,
+            'destinationCode'       => $request->tujuantrx,
+            'destinationOther'      => $request->tujuanLainnya,
+            'remark'                => $request->beritaTrx,
+        );
+
         $body = [
             [
                 'name'        => 'file',
@@ -103,6 +117,10 @@ class BulkHelper extends Controller
                 'name'        => 'crCode',
                 'contents'    => $request->crCode,
             ],
+            [
+                'name'        => 'trxInfoReq',
+                'contents'    => json_encode($addInfo),
+            ],
         ];
 
         $message = array(
@@ -121,7 +139,8 @@ class BulkHelper extends Controller
             'nar4'          => $request->narative4,
             'trxName'       => $request->trxName,
             'dbCode'        => $request->dbCode,
-            'crCode'        => $request->crCode
+            'crCode'        => $request->crCode,
+            'trxInfoReq'    => $addInfo
         );
 
         // **Tambahkan elemen hanya jika trxtype adalah 'OTM'**
@@ -184,6 +203,20 @@ class BulkHelper extends Controller
         $file_path          = $file->getPathname();
         $file_mime          = $file->getMimeType('image');
         $file_uploaded_name = $file->getClientOriginalName();
+
+        $addInfo = array(
+            'instrumentCode'        => $request->instrumentrx,
+            'instrumentOther'       => $request->instrumentOther,
+            'classificationCode'    => $request->klasifikasitrx,
+            'classificationOther'   => $request->klasifikasiLainnya,
+            'purposeCode'           => $request->kepentingantrx,
+            'purposeOther'          => $request->kepentinganLainnya,
+            'sourceCode'            => $request->sumberdanatrx,
+            'sourceOther'           => $request->sumberDanaLainnya,
+            'destinationCode'       => $request->tujuantrx,
+            'destinationOther'      => $request->tujuanLainnya,
+            'remark'                => $request->beritaTrx,
+        );
 
         $body = [
             [
@@ -256,6 +289,10 @@ class BulkHelper extends Controller
                 'name'        => 'chequeNo',
                 'contents'    => null,
             ],
+            [
+                'name'        => 'trxInfoReq',
+                'contents'    => json_encode($addInfo),
+            ],
         ];
 
         $message = array(
@@ -273,17 +310,20 @@ class BulkHelper extends Controller
             'nar4'          => $request->narative4,
             'trxName'       => $request->trxName,
             'dbCode'        => $request->dbCode,
-            'crCode'        => $request->crCode
+            'crCode'        => $request->crCode,
+            'trxInfoReq'    => $addInfo
         );
 
-        // dd($message, $body);
+        // dd($body,$message);
 
         try {
             $client = new \GuzzleHttp\Client();
             $response = $client->post($url, [
-                'headers'    => ['Authorization' => 'Bearer ' . $tokens],
-                'multipart'    => $body,
+                'headers'   => ['Authorization' => 'Bearer ' . $tokens],
+                'multipart' => $body,
             ]);
+
+            // dd($response);
 
             $msgRsp = $response->getBody()->getContents();
             Log::info("Upload BulkFile Request: " . json_encode($message));
@@ -320,6 +360,20 @@ class BulkHelper extends Controller
         $file_mime          = $file->getMimeType('image');
         $file_uploaded_name = $file->getClientOriginalName();
 
+        $addInfo = array(
+            'instrumentCode'        => $request->instrumentrx,
+            'instrumentOther'       => $request->instrumentOther,
+            'classificationCode'    => $request->klasifikasitrx,
+            'classificationOther'   => $request->klasifikasiLainnya,
+            'purposeCode'           => $request->kepentingantrx,
+            'purposeOther'          => $request->kepentinganLainnya,
+            'sourceCode'            => $request->sumberdanatrx,
+            'sourceOther'           => $request->sumberDanaLainnya,
+            'destinationCode'       => $request->tujuantrx,
+            'destinationOther'      => $request->tujuanLainnya,
+            'remark'                => $request->beritaTrx,
+        );
+
         $body = [
             [
                 'name'        => 'file',
@@ -355,6 +409,10 @@ class BulkHelper extends Controller
                 'name'        => 'crCode',
                 'contents'    => $request->crCode,
             ],
+            [
+                'name'        => 'trxInfoReq',
+                'contents'    => json_encode($addInfo),
+            ],
         ];
 
         $message = array(
@@ -365,7 +423,8 @@ class BulkHelper extends Controller
             'filename'      => $file_uploaded_name,
             'trxName'       => $request->trxName,
             'dbCode'        => $request->dbCode,
-            'crCode'        => $request->crCode
+            'crCode'        => $request->crCode,
+            'trxInfoReq'    => $addInfo
         );
         // dd($request,$message);
 
@@ -412,6 +471,20 @@ class BulkHelper extends Controller
         $file_mime          = $file->getMimeType('image');
         $file_uploaded_name = $file->getClientOriginalName();
 
+        $addInfo = array(
+            'instrumentCode'        => $request->instrumentrx,
+            'instrumentOther'       => $request->instrumentOther,
+            'classificationCode'    => $request->klasifikasitrx,
+            'classificationOther'   => $request->klasifikasiLainnya,
+            'purposeCode'           => $request->kepentingantrx,
+            'purposeOther'          => $request->kepentinganLainnya,
+            'sourceCode'            => $request->sumberdanatrx,
+            'sourceOther'           => $request->sumberDanaLainnya,
+            'destinationCode'       => $request->tujuantrx,
+            'destinationOther'      => $request->tujuanLainnya,
+            'remark'                => $request->beritaTrx,
+        );
+
         $body = [
             [
                 'name'        => 'file',
@@ -447,6 +520,10 @@ class BulkHelper extends Controller
                 'name'        => 'crCode',
                 'contents'    => $request->crCode,
             ],
+            [
+                'name'        => 'trxInfoReq',
+                'contents'    => json_encode($addInfo),
+            ],
         ];
 
         $message = array(
@@ -457,7 +534,8 @@ class BulkHelper extends Controller
             'filename'      => $file_uploaded_name,
             'trxName'       => $request->trxName,
             'dbCode'        => $request->dbCode,
-            'crCode'        => $request->crCode
+            'crCode'        => $request->crCode,
+            'trxInfoReq'    => $addInfo
         );
         // dd($request,$message);
 
@@ -503,6 +581,20 @@ class BulkHelper extends Controller
         $file_path          = $file->getPathname();
         $file_mime          = $file->getMimeType('image');
         $file_uploaded_name = $file->getClientOriginalName();
+
+        $addInfo = array(
+            'instrumentCode'        => $request->instrumentrx,
+            'instrumentOther'       => $request->instrumentOther,
+            'classificationCode'    => $request->klasifikasitrx,
+            'classificationOther'   => $request->klasifikasiLainnya,
+            'purposeCode'           => $request->kepentingantrx,
+            'purposeOther'          => $request->kepentinganLainnya,
+            'sourceCode'            => $request->sumberdanatrx,
+            'sourceOther'           => $request->sumberDanaLainnya,
+            'destinationCode'       => $request->tujuantrx,
+            'destinationOther'      => $request->tujuanLainnya,
+            'remark'                => $request->beritaTrx,
+        );
 
         $body = [
             [
@@ -575,6 +667,10 @@ class BulkHelper extends Controller
                 'name'        => 'crCode',
                 'contents'    => $request->crCode,
             ],
+            [
+                'name'        => 'trxInfoReq',
+                'contents'    => json_encode($addInfo),
+            ],
         ];
 
         $message = array(
@@ -594,6 +690,7 @@ class BulkHelper extends Controller
             'trxName'       => $request->trxName,
             'dbCode'        => $request->dbCode,
             'crCode'        => $request->crCode,
+            'trxInfoReq'    => $addInfo
         );
 
         // dd($message, $body);
@@ -640,6 +737,20 @@ class BulkHelper extends Controller
         $file_mime          = $file->getMimeType('image');
         $file_uploaded_name = $file->getClientOriginalName();
 
+        $addInfo = array(
+            'instrumentCode'        => $request->instrumentrx,
+            'instrumentOther'       => $request->instrumentOther,
+            'classificationCode'    => $request->klasifikasitrx,
+            'classificationOther'   => $request->klasifikasiLainnya,
+            'purposeCode'           => $request->kepentingantrx,
+            'purposeOther'          => $request->kepentinganLainnya,
+            'sourceCode'            => $request->sumberdanatrx,
+            'sourceOther'           => $request->sumberDanaLainnya,
+            'destinationCode'       => $request->tujuantrx,
+            'destinationOther'      => $request->tujuanLainnya,
+            'remark'                => $request->beritaTrx,
+        );
+
         $body = [
             [
                 'name'        => 'file',
@@ -675,6 +786,10 @@ class BulkHelper extends Controller
                 'name'        => 'crCode',
                 'contents'    => $request->crCode,
             ],
+            [
+                'name'        => 'trxInfoReq',
+                'contents'    => json_encode($addInfo),
+            ],
         ];
 
         $message = array(
@@ -685,7 +800,8 @@ class BulkHelper extends Controller
             'filename'      => $file_uploaded_name,
             'trxName'       => $request->trxName,
             'dbCode'        => $request->dbCode,
-            'crCode'        => $request->crCode
+            'crCode'        => $request->crCode,
+            'trxInfoReq'    => $addInfo
         );
         // dd($request,$message);
 

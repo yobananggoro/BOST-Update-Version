@@ -11,6 +11,8 @@ use Modules\User\Entities\User;
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Maatwebsite\Excel\Facades\Excel;
 use ZipArchive;
+use PDF;
+use DOMDocument;
 
 class ListBulkUploadController extends \App\Http\Controllers\Controller
 {
@@ -25,6 +27,7 @@ class ListBulkUploadController extends \App\Http\Controllers\Controller
 
         \Assets::addJs('dataTables.js');
         \Assets::addJs('custom/bulktransaksi/listbulk.js');
+        \Assets::addJs('custom/bulktransaksi/report.js');
         return view('bulktransaksi::transaksi-list.default', compact('data', 'branch', 'request'));
     }
 
@@ -32,6 +35,7 @@ class ListBulkUploadController extends \App\Http\Controllers\Controller
     {
         \Assets::addJs('custom/bulktransaksi/listbulk.js');
         \Assets::addJs('dataTables.js');
+        \Assets::addJs('custom/bulktransaksi/report.js');
         try {
             $BackEndHelper = new BulkHelper();
             $resp = $BackEndHelper->getListBulk($request);
@@ -242,5 +246,55 @@ class ListBulkUploadController extends \App\Http\Controllers\Controller
     {
         // dd($request);
         return (new ExportExcel($request))->download("{$request->usermaker}_{$request->reff}_{$request->trxType}.xlsx");
+    }
+
+    public function export(Request $request)
+    {
+        \Assets::addJs('custom/bulktransaksi/report.js');
+        $printDate = now(); 
+        $user = User::where('username', $request->userid)->first();
+        
+        try{
+            $BackEndHelper = new BulkHelper();
+            $resp = $BackEndHelper->getListBulk($request);
+            // dd($resp, json_decode($resp, true));
+            
+            if ($resp->status() == 200) {
+                if ($resp['responseCode'] == '00') {
+                    $data = json_decode($resp, true)['data'];
+
+                    // dd($data, $request);
+                    $pdf = PDF::loadview('bulktransaksi::transaksi-list.exportPDF', ['printDate' => $printDate, 'user' => $user, 'request' => $request, 'data' => $data]);
+                    $pdf->setPaper('A4', 'landscape');
+                    
+                    return $pdf->stream('transaksi-list.exportPDF');
+                } else {
+                    $json_string    = json_decode($resp, true);
+                    $code           = $json_string['responseCode'];
+                    $desc           = $json_string['responseDesc'];
+                    $status         = 'error';
+                    $response       = $code.' | '.$desc;
+                    
+                    return redirect('report-bulk-transaksi')->with($status, $response);
+                }
+            } else {
+                $json_string    = json_decode($resp, true);
+                $status         = $resp->status();
+                $code           = $json_string['responseCode'];
+                $desc           = $json_string['responseDesc'];
+                $msgdesc        = isset($json_string['data'][0]['messageDesc']) ?  $json_string['data'][0]['messageDesc'] : $json_string['data'][0]['message'];
+                $msgid          = isset($json_string['data'][0]['messageId']) ? $json_string['data'][0]['messageId'] : "";
+                $response       = 'Data tidak ditemukan!<br>' . $msgdesc . ' | '.$code;
+                
+                if ($request->ajax())
+                return response()->json(['status' => $status, 'code' => $code, 'desc' => $desc, 'msgdesc' => 'Data tidak ditemukan!<br>'.$msgdesc, 'msgid' => $msgid]);
+            }
+            
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            die();
+        } 
+        
+        
     }
 }

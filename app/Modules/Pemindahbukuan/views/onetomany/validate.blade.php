@@ -43,6 +43,18 @@
                     <input type="text" name="narative2" value="{{ @$data['narative2'] }}" readonly>
                     <input type="text" name="narative3" value="{{ @$data['narative3'] }}" readonly>
                     <input type="text" name="narative4" value="{{ @$data['narative4'] }}" readonly>
+
+                    <input type="text" name="instrumentCode" value="{{@$data['instrumentCode']}}" readonly> 
+                    <input type="text" name="instrumentOther" value="{{@$data['instrumentOther']}}" readonly> 
+                    <input type="text" name="classificationCode" value="{{@$data['classificationCode']}}" readonly> 
+                    <input type="text" name="classificationOther" value="{{@$data['classificationOther']}}" readonly> 
+                    <input type="text" name="purposeCode" value="{{@$data['purposeCode']}}" readonly>
+                    <input type="text" name="purposeOther" value="{{@$data['purposeOther']}}" readonly>
+                    <input type="text" name="sourceCode" value="{{@$data['sourceCode']}}" readonly>
+                    <input type="text" name="sourceOther" value="{{@$data['sourceOther']}}" readonly>
+                    <input type="text" name="destinationCode" value="{{@$data['destinationCode']}}" readonly>
+                    <input type="text" name="destinationOther" value="{{@$data['destinationOther']}}" readonly>
+                    <input type="text" name="remark" value="{{@$data['remark']}}" readonly>
                 </div>
                 <div class="col-sm-12" style="font-size: 17px">
                     <table cellspacing="0" cellpadding="0">
@@ -71,7 +83,7 @@
                                 <tr>
                                     <td style="font-weight: bold">Nominal</td>
                                     <td> :</td>
-                                    <td>{{number_format(@$data['rekening_sumber'][$key]['nominalSrc'])}}</td>
+                                    <td style="font-weight: bold; text-align: right">{{number_format(@$data['rekening_sumber'][$key]['nominalSrc'], 2, '.', ',')}}</td>
                                 </tr>
                                 <tr>
                                     <td style="font-weight: bold">Terbilang</td>
@@ -108,7 +120,7 @@
                                 <tr>
                                     <td style="font-weight: bold">Nominal</td>
                                     <td> :</td>
-                                    <td>{{number_format(@$data['rekening_tujuan'][$key]['nominalDst'])}}</td>
+                                    <td style="font-weight: bold; text-align: right">{{number_format(@$data['rekening_tujuan'][$key]['nominalDst'], 2, '.', ',')}}</td>
                                 </tr>
                                 <tr>
                                     <td style="font-weight: bold">Terbilang</td>
@@ -134,7 +146,7 @@
                             <tr>
                                 <td style="font-weight: bold">Nominal Total</td>
                                 <td> :</td>
-                                <td>{{number_format(@$data['nominal'])}}</td>
+                                <td style="font-weight: bold; text-align: right">{{number_format(@$data['nominal'], 2, '.', ',')}}</td>
                             </tr>
                             <tr>
                                 <td style="font-weight: bold">Terbilang</td>
@@ -161,11 +173,6 @@
                                 <td></td>
                                 <td>{{@$data['narative4']}}</td> 
                             </tr>
-                            {{-- <tr>
-                                <td style="font-weight: bold">Status Validasi</td>
-                                <td>:</td>
-                                <td>{{@$data['status_transaksi']}}</td>
-                            </tr> --}}
                         </tbody>
                     </table>
                 </div>

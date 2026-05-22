@@ -54,6 +54,7 @@ Route::group(['middleware' => ['auth', 'role:' . permitRolesByUri('list-bulkuplo
     Route::get('list-bulkupload/listDetail', 'ListBulkUploadController@listDetail')->name('list-bulkupload.listDetail');
     Route::get('list-bulkupload/pdf', 'ListBulkUploadController@pdf')->name('list-bulkupload.pdf');
     Route::get('list-bulkupload/excel', 'ListBulkUploadController@excel')->name('list-bulkupload.excel');
+    Route::post('list-bulkupload/export', 'ListBulkUploadController@export');
 });
 
 Route::group(['middleware' => ['auth', 'role:' . permitRolesByUri('remote-otorisasibulk')]], function () {

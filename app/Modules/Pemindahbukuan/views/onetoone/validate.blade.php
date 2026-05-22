@@ -8,7 +8,7 @@
             @csrf
             <div class="card-header text-center" style="font-size: 18px; font-weight: bold">Verifikasi Transaksi</div>
             <div class="card-body">
-                <div class="form-group" style="display: ">
+                <div class="form-group" style="display: none">
                     <input type="text" name="branchSrc" value="{{@$data[0]['branchSrc']}}" maxlength="4" readonly>
                     <input type="text" name="cifSrc" value="{{@$data[0]['cifSrc']}}" maxlength="6" readonly>
                     <input type="text" name="suffixSrc" value="{{@$data[0]['suffixSrc']}}" maxlength="3" readonly>

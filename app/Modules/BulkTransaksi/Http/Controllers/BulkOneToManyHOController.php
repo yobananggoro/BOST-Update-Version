@@ -33,6 +33,7 @@ class BulkOneToManyHOController extends \App\Http\Controllers\Controller
 
     public function validasi(BulkUploadRequest $request)
     {
+        // dd($request);
         try {
             $import = new TotalImport();
             Excel::import($import, $request->file('file'));

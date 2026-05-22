@@ -20,5 +20,17 @@ $(function () {
         // dom: 'lrtip'
     });
 
+    $("#dataTableList").DataTable({
+        paging: true,
+        lengthChange: false,
+        searching: true,
+        ordering: true,
+        info: false,
+        autoWidth: true,
+        // dom: 'lrtip'
+    });
+
     $("#searchContainer").append($("#dataTableDetailUpload_filter"));
+    $("#searchContainer_list").append($("#dataTableList_filter"));
+    $("#pagingContainer_list").append($("#dataTableList_paginate"));
 });

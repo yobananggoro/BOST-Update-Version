@@ -65,8 +65,8 @@
                 <th style="width: 30px">Ccy</th>
                 <th>User Kode</th>
                 <th>Nominal</th>
-                <th>User ID</th>
-                <th>User Oto</th>
+                <th>Maker</th>
+                <th>Approver</th>
                 <th>Status Trx</th>
             </tr>
         </thead>

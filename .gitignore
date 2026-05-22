@@ -1,6 +1,6 @@
-node_modules
-vendor
+node_modules/
+vendor/
 .vscode
 .env
-storage/logs
-storage/framework
+storage/logs/
+storage/framework/

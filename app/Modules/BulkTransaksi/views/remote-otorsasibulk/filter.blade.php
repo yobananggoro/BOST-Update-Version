@@ -10,18 +10,18 @@
                     <input type="hidden" name="status_bulk" value="VERIFIED_AND_WAITING_APPROVAL">
                     @if(auth()->user()->profile->rolename == "SUPER ADMIN")
                     <div class="form-group col-12 row">
-                        <label class="col-sm-3 col-form-label">UserID Maker</label>
-                        <div class="col-sm-4">
+                        <label class="col-sm-4 col-form-label">UserID Maker</label>
+                        <div class="col-sm-8">
                             <div class="input-group">
                                 <input type="text" id="userID" name="userid" class="form-control ucase" onchange="getRequest(this)" maxlength="4" value="{{old('userid', @$request->userid)}}">
                             </div>
                         </div>
                     </div>
                     <div class="form-group col-12 row">
-                        <label class="col-sm-3 col-form-label">Branch</label>
-                        <div class="col-sm-9">
+                        <label class="col-sm-4 col-form-label">Branch</label>
+                        <div class="col-sm-8">
                             <div class="input-group">
-                                <select name="branch" class="form-control select2">
+                                <select name="branch" class="form-control select2" style="width: 100%">
                                     <option value="">- Pilih -</option>
                                     @foreach($branch as $key => $value)
                                     {{-- <option value="">{{$value['nama']}}</option> --}}
@@ -33,7 +33,7 @@
                     </div>
                     @else
                     <div class="form-group col-12 row">
-                        <label class="col-sm-3 col-form-label">UserID Maker</label>
+                        <label class="col-sm-4 col-form-label">UserID Maker</label>
                         <div class="col-sm-4">
                             <div class="input-group">
                                 @if(!in_array(auth()->user()->profile->rolename, ['Administrasi Dana Dan Jasa', 'Administrasi Kredit', 'Administrasi Operasional']))
@@ -45,10 +45,10 @@
                         </div>
                     </div>
                     <div class="form-group col-12 row">
-                        <label class="col-sm-3 col-form-label">Branch</label>
-                        <div class="col-sm-9">
+                        <label class="col-sm-4 col-form-label">Branch</label>
+                        <div class="col-sm-8">
                             <div class="input-group">
-                                <select class="form-control select2" disabled>
+                                <select class="form-control select2" style="width: 100%" disabled >
                                     @foreach($branch as $key => $value)
                                     {{-- <option value="">{{$value['nama']}}</option> --}}
                                     <option value="{{$value['kode']}}" {{$value['kode'] == auth()->user()->profile->unit_kerja_kode ? 'selected':'' }}>{{$value['nama']}}</option>

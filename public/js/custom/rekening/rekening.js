@@ -27,7 +27,7 @@ function cekGI33() {
         success:function(data){ 
             $('.loading-page').hide(); //show progress bar
             //fill data to form
-            console.log(data);
+            // console.log(data);
             if(data.code == '00'){
                 // alert('sukses');
                 $("#branch_").val(data.branch);
@@ -54,7 +54,7 @@ function cekGI33() {
             }  
         },
         error:function(error){
-            console.log(error);
+            // console.log(error);
         
             $('.toastrDefaultError').show(function() {
                 toastr.error(error)

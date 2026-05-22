@@ -1,17 +1,26 @@
 $(function () {
-    //Call ajax list jenis tx code
     jenisTrx();
-
-    $("#dataTable1").DataTable();
-    $("#dataTable2").DataTable({
-        paging: true,
-        lengthChange: false,
-        searching: true,
-        ordering: true,
-        info: true,
-        autoWidth: true,
-    });
+    initDataTable();
 });
+
+function initDataTable() {
+    if (typeof $.fn.DataTable === 'undefined') return;
+
+    if ($('#dataTable1').length) {
+        $('#dataTable1').DataTable();
+    }
+
+    if ($('#dataTable2').length) {
+        $('#dataTable2').DataTable({
+            paging: true,
+            lengthChange: false,
+            searching: true,
+            ordering: true,
+            info: true,
+            autoWidth: true,
+        });
+    }
+}
 
 function jenisTrx() {
     // alert("aa");

@@ -17,7 +17,7 @@
 
                 <div class="col-12 form-group">
                     <label>Jenis Transaksi</label>
-                    <select id="getTrxList" name="trxName" class="form-control select2">
+                    <select id="getTrxList" name="trxName" class="form-control select2" style="width: 100%">
                     </select><br>
                     <div class="row">
                         <div class="col-6">
@@ -30,21 +30,18 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-12 form-group">
                     <label>Refference</label>
                     <input type="text" name="reff" id="reff" class="form-control" value="{{@$reff}}" readonly>
                 </div>
-
-                <blockquote>
-                    <p>Catatan!</p>
+                <blockquote style="text-align: justify;text-justify: inter-word;hyphens: auto">
+                    <p><strong>Catatan!</strong></p>
                     <p>
                         Pastikan gunakan template yang telah disediakan oleh sistem, tidak disarankan untuk menggunakan template yang
                         bukan berasal dari template default. Sebelum melakukan unduh file template silahkan hapus cache
                         browser terlebih dahulu agar dipastikan selalu mendapat versi terbaru.
                     </p>
                 </blockquote>
-
                 @include('addInfo')
             </div>
             <div class="card-footer clearfix">

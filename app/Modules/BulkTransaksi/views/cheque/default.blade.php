@@ -60,40 +60,36 @@
                             </tr>
                         </table>
                     </div>
-                    
+
                     <div class="col-12 form-group">
                         <label>Refference</label>
                         <input type="text" name="reff" id="reff" class="form-control" value="{{@$reff}}" readonly>
                     </div>
-                    
+
                     <div class="col-12 form-group">
                         <label>Nomor Cheque <span style="color: red">*</span></label>
                         <input type="text" name="chequeNo" id="chequeNo" maxlength="16" class="form-control number" placeholder="Nomor Cheque">
                     </div>
-                    
+
                     <div class="col-12 form-group">
                         <label>Nominal <span style="color: red">*</span></label>
                         <input type="text" name="nominal_" id="nominal_" class="form-control currency text-right" placeholder="Nominal">
                         <input type="hidden" name="nominal" id="nominal" class="form-control text-right" readonly>
                     </div>
-                    
+
                     <div class="col-12 form-group">
                         <label>Keterangan</label>
                         <input type="text" name="narative3" id="narative3" class="form-control nar" maxlength="35" placeholder="Narative 3">
                     </div>
                     <div class="col-12 form-group">
-<<<<<<< Updated upstream
                         <input type="text" name="narative4" id="narative4" class="form-control nar" maxlength="35" placeholder="Narative 4">
-=======
-                        <input type="text" name="narative4" id="narative4" class="form-control nar" maxlength="34" placeholder="Narative 4">
->>>>>>> Stashed changes
                     </div>
                     <div class="col-12 form-group">
                         <label>Rekening Tujuan Bulk File<span style="color: red">*</span></label><br>
                         <input type="file" id="myfile" name="file">
                     </div>
-                    <blockquote>
-                        <p>Catatan!</p>
+                    <blockquote style="text-align: justify;text-justify: inter-word;hyphens: auto">
+                        <p><strong>Catatan!</strong></p>
                         <p>
                             Pastikan gunakan template yang telah disediakan oleh sistem, tidak disarankan untuk menggunakan template yang
                             bukan berasal dari template default. Sebelum melakukan unduh file template silahkan hapus cache

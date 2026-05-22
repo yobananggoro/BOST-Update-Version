@@ -96,20 +96,21 @@
                                 <td><hr></td>
                             </tr>
                             @endforeach
+                            
+                            <tr>
+                                <td style="font-weight: bold">Refference</td>
+                                <td> :</td>
+                                <td style="font-weight: bold">{{@$data['reff']}}</td>
+                            </tr>
                             <tr>
                                 <td style="font-weight: bold">Nominal Total</td>
                                 <td> :</td>
                                 <td style="font-weight: bold; text-align: right">{{number_format(@$data['nominal'], 2, '.', ',')}}</td>
                             </tr>
                             <tr>
-                                <td style="font-weight: bold">Refference</td>
-                                <td> :</td>
-                                <td>{{@$data['reff']}}</td>
-                            </tr>
-                            <tr>
                                 <td style="font-weight: bold">Terbilang</td>
                                 <td> :</td>
-                                <td><i>{{terbilang(@$data['nominal'])}}</i></td>
+                                <td><i>{{terbilang(@$data['nominal'], null, null, 'IDR')}}</i></td>
                             </tr>
                             <tr>
                                 <td style="font-weight: bold">Keterangan</td>

@@ -1,26 +1,26 @@
 <div class="row">
-    <div class="col-6">
+    <div class="col-7">
         <div class="card card-default">
             <div class="card-header">
                 <b>Filter</b>
             </div>
-            <form action="{{ url('list-bulkupload/filter') }}" method="post" role="form" class="form-horizontal">
+            <form action="{{ url('list-bulkupload/filter') }}" method="post" id="mainForm" role="form" class="form-horizontal">
                 @csrf
                 <div class="card-body">
                     @if(auth()->user()->profile->rolename == "SUPER ADMIN")
                     <div class="form-group col-12 row">
-                        <label class="col-sm-3 col-form-label">UserID Maker</label>
-                        <div class="col-sm-2">
+                        <label class="col-sm-4 col-form-label">UserID Maker</label>
+                        <div class="col-sm-8">
                             <div class="input-group">
                                 <input type="text" id="userID" name="userid" class="form-control ucase" onchange="getRequest(this)" maxlength="4" value="{{old('userid', @$request->userid)}}">
                             </div>
                         </div>
                     </div>
                     <div class="form-group col-12 row">
-                        <label class="col-sm-3 col-form-label">Branch</label>
-                        <div class="col-sm-9">
+                        <label class="col-sm-4 col-form-label">Branch</label>
+                        <div class="col-sm-8">
                             <div class="input-group">
-                                <select name="branch" class="form-control select2">
+                                <select name="branch" class="form-control select2" style="width: 100%">
                                     <option value="">- Pilih -</option>
                                     @foreach($branch as $key => $value)
                                     <option value="{{$value['kode']}}" {{$value['kode'] == $request->branch ? 'selected':'' }}>{{$value['nama']}}</option>
@@ -31,8 +31,8 @@
                     </div>
                     @else
                     <div class="form-group col-12 row">
-                        <label class="col-sm-3 col-form-label">UserID Maker</label>
-                        <div class="col-sm-2">
+                        <label class="col-sm-4 col-form-label">UserID Maker</label>
+                        <div class="col-sm-3">
                             <div class="input-group">
                                 @if(!in_array(auth()->user()->profile->rolename, ['Administrasi Dana Dan Jasa', 'Administrasi Kredit', 'Administrasi Operasional', 'Staf']))
                                 <input type="text" id="userID" name="userid" class="form-control ucase" onchange="getRequest(this)" maxlength="4" value="{{old('userid', @$request->userid)}}">
@@ -43,10 +43,10 @@
                         </div>
                     </div>
                     <div class="form-group col-12 row">
-                        <label class="col-sm-3 col-form-label">Branch</label>
-                        <div class="col-sm-9">
+                        <label class="col-sm-4 col-form-label">Branch</label>
+                        <div class="col-sm-8">
                             <div class="input-group">
-                                <select class="form-control select2" disabled>
+                                <select class="form-control select2" style="width: 100%" disabled>
                                     @foreach($branch as $key => $value)
                                     <option value="{{$value['kode']}}" {{$value['kode'] == auth()->user()->profile->unit_kerja_kode ? 'selected':'' }}>{{$value['nama']}}</option>
                                     @endforeach
@@ -57,10 +57,10 @@
                     </div>
                     @endif
                     <div class="form-group col-12 row">
-                        <label class="col-sm-3 col-form-label">Status Transaksi</label>
-                        <div class="col-sm-9">
+                        <label class="col-sm-4 col-form-label">Status Transaksi</label>
+                        <div class="col-sm-8">
                             <div class="input-group">
-                                <select name="status_bulk" class="form-control">
+                                <select name="status_bulk" id="status_bulk" class="form-control">
                                     <option value="" selected>- Pilih -</option>
                                     @foreach($status_bulk as $key => $value)
                                     <option value="{{$key}}" {{$key == $request->status_bulk ? 'selected':'' }}>{{$value}}</option>
@@ -70,7 +70,7 @@
                         </div>
                     </div>
                     <div class="form-group col-12 row">
-                        <label class="col-sm-3 col-form-label">Tanggal Transaksi</label>
+                        <label class="col-sm-4 col-form-label">Tanggal Transaksi</label>
                         <div class="col-sm-4">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -96,8 +96,17 @@
                     <div class="btn-group">
                         <a href="{{url('list-bulkupload')}}" type="button" class="btn btn-sm btn-danger"><i class="fas fa-redo"></i> Reset</a>
                     </div>
+                    <div class="btn-group float-right">
+                        @if(@$request->userid != '')
+                        <button id="btnPrintPDF" class="btn btn-sm btn-success"><i class="fas fa-print"></i> Export PDF</button>
+                        @endif
+                    </div>
                 </div>
             </form>
+            <script>
+                const exportUrl = "{{ url('list-bulkupload/export') }}";
+                const mainUrl = "{{ url('list-bulkupload/filter') }}";
+            </script>
         </div>
     </div>
 </div>

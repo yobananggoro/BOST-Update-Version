@@ -77,6 +77,20 @@ class AGIHelper extends Controller
             'currency'      => $request->ccySrc
         );
 
+        $addInfo = array(
+            'instrumentCode'        => $request->instrumentrx,
+            'instrumentOther'       => $request->instrumentOther,
+            'classificationCode'    => $request->klasifikasitrx,
+            'classificationOther'   => $request->klasifikasiLainnya,
+            'purposeCode'           => $request->kepentingantrx,
+            'purposeOther'          => $request->kepentinganLainnya,
+            'sourceCode'            => $request->sumberdanatrx,
+            'sourceOther'           => $request->sumberDanaLainnya,
+            'destinationCode'       => $request->tujuantrx,
+            'destinationOther'      => $request->tujuanLainnya,
+            'remark'                => $request->beritaTrx,
+        );
+
         $message = array(
             'debits'        => $debit,
             'credits'       => $credit,
@@ -87,7 +101,8 @@ class AGIHelper extends Controller
             'narrative1'    => $request->narative1,
             'narrative2'    => $request->narative2,
             'narrative3'    => $request->narative3,
-            'narrative4'    => $request->narative4
+            'narrative4'    => $request->narative4,
+            'trxInfoReq'    => $addInfo
         );
 
         try {
@@ -155,6 +170,20 @@ class AGIHelper extends Controller
             'currency'      => $request->ccyDst
         );
 
+        $addInfo = array(
+            'instrumentCode'        => $request->instrumentrx,
+            'instrumentOther'       => $request->instrumentOther,
+            'classificationCode'    => $request->klasifikasitrx,
+            'classificationOther'   => $request->klasifikasiLainnya,
+            'purposeCode'           => $request->kepentingantrx,
+            'purposeOther'          => $request->kepentinganLainnya,
+            'sourceCode'            => $request->sumberdanatrx,
+            'sourceOther'           => $request->sumberDanaLainnya,
+            'destinationCode'       => $request->tujuantrx,
+            'destinationOther'      => $request->tujuanLainnya,
+            'remark'                => $request->beritaTrx,
+        );
+
         $message = array(
             'debits'        => $debit,
             'credits'       => $credit,
@@ -165,7 +194,8 @@ class AGIHelper extends Controller
             'narrative1'    => $request->narative1,
             'narrative2'    => $request->narative2,
             'narrative3'    => $request->narative3,
-            'narrative4'    => $request->narative4
+            'narrative4'    => $request->narative4,
+            'trxInfoReq'    => $addInfo
         );
 
         // dd($message);
@@ -234,6 +264,20 @@ class AGIHelper extends Controller
             'currency'      => $request->ccySrc
         );
 
+        $addInfo = array(
+            'instrumentCode'        => $request->instrumentCode,
+            'instrumentOther'       => $request->instrumentOther,
+            'classificationCode'    => $request->classificationCode,
+            'classificationOther'   => $request->classificationOther,
+            'purposeCode'           => $request->purposeCode,
+            'purposeOther'          => $request->purposeOther,
+            'sourceCode'            => $request->sourceCode,
+            'sourceOther'           => $request->sourceOther,
+            'destinationCode'       => $request->destinationCode,
+            'destinationOther'      => $request->destinationOther,
+            'remark'                => $request->remark,
+        );
+
         $message = array(
             'debits'        => $debit,
             'credits'       => $credit,
@@ -245,7 +289,8 @@ class AGIHelper extends Controller
             'narrative1'    => $request->narative1,
             'narrative2'    => $request->narative2,
             'narrative3'    => $request->narative3,
-            'narrative4'    => $request->narative4
+            'narrative4'    => $request->narative4,
+            'trxInfoReq'    => $addInfo
         );
 
         try {
@@ -318,6 +363,20 @@ class AGIHelper extends Controller
             'currency'      => $request->ccyDst
         );
 
+        $addInfo = array(
+            'instrumentCode'        => $request->instrumentCode,
+            'instrumentOther'       => $request->instrumentOther,
+            'classificationCode'    => $request->classificationCode,
+            'classificationOther'   => $request->classificationOther,
+            'purposeCode'           => $request->purposeCode,
+            'purposeOther'          => $request->purposeOther,
+            'sourceCode'            => $request->sourceCode,
+            'sourceOther'           => $request->sourceOther,
+            'destinationCode'       => $request->destinationCode,
+            'destinationOther'      => $request->destinationOther,
+            'remark'                => $request->remark,
+        );
+
         $message = array(
             'debits'        => $debit,
             'credits'       => $credit,
@@ -329,7 +388,8 @@ class AGIHelper extends Controller
             'narrative1'    => $request->narative1,
             'narrative2'    => $request->narative2,
             'narrative3'    => $request->narative3,
-            'narrative4'    => $request->narative4
+            'narrative4'    => $request->narative4,
+            'trxInfoReq'    => $addInfo
         );
 
         try {
@@ -402,6 +462,20 @@ class AGIHelper extends Controller
             'currency'      => $request->ccySrc
         );
 
+        $addInfo = array(
+            'instrumentCode'        => $request->instrumentCode,
+            'instrumentOther'       => $request->instrumentOther,
+            'classificationCode'    => $request->classificationCode,
+            'classificationOther'   => $request->classificationOther,
+            'purposeCode'           => $request->purposeCode,
+            'purposeOther'          => $request->purposeOther,
+            'sourceCode'            => $request->sourceCode,
+            'sourceOther'           => $request->sourceOther,
+            'destinationCode'       => $request->destinationCode,
+            'destinationOther'      => $request->destinationOther,
+            'remark'                => $request->remark,
+        );
+
         $message = array(
             'debits'        => $debit,
             'credits'       => $credit,
@@ -413,7 +487,8 @@ class AGIHelper extends Controller
             'narrative1'    => $request->narative1,
             'narrative2'    => $request->narative2,
             'narrative3'    => $request->narative3,
-            'narrative4'    => $request->narative4
+            'narrative4'    => $request->narative4,
+            'trxInfoReq'    => $addInfo
         );
 
         try {
@@ -480,6 +555,20 @@ class AGIHelper extends Controller
             'currency'      => $request->ccyDst
         );
 
+        $addInfo = array(
+            'instrumentCode'        => $request->instrumentCode,
+            'instrumentOther'       => $request->instrumentOther,
+            'classificationCode'    => $request->classificationCode,
+            'classificationOther'   => $request->classificationOther,
+            'purposeCode'           => $request->purposeCode,
+            'purposeOther'          => $request->purposeOther,
+            'sourceCode'            => $request->sourceCode,
+            'sourceOther'           => $request->sourceOther,
+            'destinationCode'       => $request->destinationCode,
+            'destinationOther'      => $request->destinationOther,
+            'remark'                => $request->remark,
+        );
+
         $message = array(
             'debits'        => $debit,
             'credits'       => $credit,
@@ -491,7 +580,8 @@ class AGIHelper extends Controller
             'narrative1'    => $request->narative1,
             'narrative2'    => $request->narative2,
             'narrative3'    => $request->narative3,
-            'narrative4'    => $request->narative4
+            'narrative4'    => $request->narative4,
+            'trxInfoReq'    => $addInfo
         );
 
         // dd($message);exit;

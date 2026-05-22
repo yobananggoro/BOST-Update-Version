@@ -6,7 +6,7 @@
         <div class="col-12 form-group">
             <label>Instrumen Transaksi <span style="color: red">*</span></label>
             <div class="input-group mb-1">
-                <select id="getInstrumenList" name="istrumentrx" class="form-control" style="width: 100%" ;>
+                <select id="getInstrumenList" name="instrumentrx" class="form-control" style="width: 100%" ;>
                 </select>
                 <div id="instrumenOverlay" style="display:none;position:absolute;inset:0;background:rgba(255,255,255,0.6);z-index:10;align-items:center;justify-content:center;">
                     <i class="fa fa-spinner fa-spin fa-lg"></i>
@@ -59,7 +59,7 @@
             <div id="getTujuanText"></div>
         </div>
         <div class="col-12 form-group">
-            <label>Berita Transaksi</label>
+            <label>Berita Transaksi <span style="color: red">*</span></label>
             <div class="input-group mb-1">
                 <input type="text" name="beritaTrx" id="beritaTrx" class="form-control" maxlength="35" placeholder="Berita Transaksi">
             </div>

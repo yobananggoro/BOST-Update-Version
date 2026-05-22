@@ -56,7 +56,7 @@ class KodefikasiController extends \App\Http\Controllers\Controller
     {
         try {
             $cacheKey = 'dropdown_items_' . $request->groupCode;
-            $resp = Cache::remember($cacheKey, 3600, function () use ($request) {
+            $resp = Cache::remember($cacheKey, 36000, function () use ($request) {
 
                 $BackEndHelper = new BostHelper();
                 $response = $BackEndHelper->kodefikasiList($request);

@@ -7,7 +7,7 @@
         <div class="card card-default">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-striped" style="width: 115%">
+                    <table class="table table-striped" style="width: 150%">
                         <thead>
                             <tr>
                                 <th style="width:30px">Aksi</th>
@@ -18,7 +18,7 @@
                                 <th style="width:130px">User Maker</th>
                                 <th style="width:100px">User Oto</th>
                                 <th style="width:160px">Status Oto</th>
-                                <th style="width:140px">Status Transaksi</th>
+                                <th style="width:150px">Status Transaksi</th>
                                 <th style="width:180px">Tanggal Transaksi</th>
                                 <th style="width:180px">Tanggal Otorisasi</th>
                                 @if(auth()->user()->profile->rolename == "SUPER ADMIN")
@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <div class="col-6">
+                <div class="float-right"">
                     {{ $data->appends(\Illuminate\Support\Arr::except(request()->input(), '_token'))->setPath(url('transaksi-list'))->links() }}
                 </div>
             </div>

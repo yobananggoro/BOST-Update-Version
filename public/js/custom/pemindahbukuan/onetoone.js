@@ -225,7 +225,16 @@ function validateForm() {
         $("#tujuanLainnya").css("background-color", "");
     }
 
-    /* Start validasi additional info apuppt */
+    if ($("#beritaTrx").val() == "") {
+        $("#beritaTrx").css("background-color", "red");
+
+        result = "Berita Transaksi Tidak Boleh Kosong";
+        return result;
+    } else {
+        $("#beritaTrx").css("background-color", "");
+    }
+
+    /* End validasi additional info apuppt */
 
     return "success";
 }
@@ -553,7 +562,7 @@ function userCodeList() {
         // data: "",
         success: function (data) {
             $(".loading-page").hide(); //show progress bar
-            console.log(data);
+            // console.log(data);
             if (data.status == 200) {
                 let dropdown = $("#getUserCodeList");
                 dropdown.empty();

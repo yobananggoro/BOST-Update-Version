@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\URL;
 use App\Entities\Currency;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,7 +18,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('Navbar', \App\Services\Navbar::class);
-        
     }
 
     /**
@@ -44,6 +44,10 @@ class AppServiceProvider extends ServiceProvider
             if ($default) {
                 config(['currency.default' => $default]);
             } //dd($list,$default);
+        }
+
+        if (config('app.env') !== 'local') {
+            URL::forceScheme('https');
         }
     }
 }

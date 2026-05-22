@@ -52,7 +52,7 @@ class ExportExcel implements FromGenerator, WithHeadings
                         $row['accountName'] ?? '',
                         $row['accountStatus'] ?? '',
                         $row['trxAmount'] ?? '',
-                        $row['trxStatus '] ?? '',
+                        $row['trxStatus'] ?? '',
                         $row['postingDt'] ?? '',
                         $row['costCenter'] ?? '',
                     ];
@@ -65,7 +65,7 @@ class ExportExcel implements FromGenerator, WithHeadings
                         $row['accountName'] ?? '',
                         $row['accountStatus'] ?? '',
                         $row['trxAmount'] ?? '',
-                        $row['trxStatus '] ?? '',
+                        $row['trxStatus'] ?? '',
                         $row['postingDt'] ?? '',
                         $row['costCenter'] ?? '',
                     ];

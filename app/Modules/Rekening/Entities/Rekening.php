@@ -77,7 +77,7 @@ class Rekening extends Model
             ->orderBy('updated_at');
         } else {
             $q = $query->select('*')
-            ->where('branch', '=', auth()->user()->profile->unit_kerja_kode)
+            // ->where('branch', '=', auth()->user()->profile->unit_kerja_kode)
             ->orderBy('updated_at');
         }
         

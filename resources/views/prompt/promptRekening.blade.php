@@ -25,25 +25,41 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-footer"> 
+                            <div class="card-footer">
                                 <button type="submit" class="btn btn-sm btn-info" onclick="listRekening()"><i class="fa fa-search"></i> Filter</button>
                             </div>
                         </div>
                     </div>
-                    <table class="table table-bordered">
-                        <thead style="background-color: rgba(172, 169, 183, 0.757)">
-                            <tr>
-                                <th class="text-center" style="width:50px">No.</th>
-                                <th class="text-center">Nama Rekening</th>
-                                <th class="text-center" style="width:200px">Nomor Internal</th>
-                                <th class="text-center" style="width:200px">Nomor External</th>
-                                <th class="text-center" style="width:80px">Tipe</th>
-                                <th class="text-center" style="width:80px">Currency</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableData">
-                        </tbody>
-                    </table>
+                    <style>
+                        .table-container {
+                            height: 300px;
+                            overflow-y: auto;
+                        }
+
+                        .table thead th {
+                            position: sticky;
+                            top: 0;
+                            background: #93929a;
+                            /* wajib */
+                            z-index: 2;
+                        }
+                    </style>
+                    <div class="table-container">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" style="width:50px">No.</th>
+                                    <th class="text-center" style="width:400px">Nama Rekening</th>
+                                    <th class="text-center" style="width:150px">Nomor Internal</th>
+                                    <th class="text-center" style="width:150px">Nomor External</th>
+                                    <th class="text-center" style="width:80px">Tipe</th>
+                                    <th class="text-center" style="width:80px">Ccy</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                            </tbody>
+                        </table>
+                    </div>
                     <p id="halaman" class="text-right"></p>
                     <input type="hidden" id="paging">
                 </div>

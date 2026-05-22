@@ -37,6 +37,8 @@ $(function () {
 
 });
 
+
+
 function validateForm() {
     var result = "success";
     var branchSrc = $("#branchSrc").val();
@@ -111,7 +113,7 @@ function validateForm() {
     }
 
     /* Start validasi additional info apuppt */
-    
+
     if ($("#getInstrumenList").val() == "" || $("#getInstrumenList").val() == null) {
         $("#getInstrumenList").siblings(".select2-container").find(".select2-selection").css("background-color", "red");
 
@@ -192,7 +194,16 @@ function validateForm() {
         $("#tujuanLainnya").css("background-color", "");
     }
 
-    /* Start validasi additional info apuppt */
+    if ($("#beritaTrx").val() == "") {
+        $("#beritaTrx").css("background-color", "red");
+
+        result = "Berita Transaksi Tidak Boleh Kosong";
+        return result;
+    } else {
+        $("#beritaTrx").css("background-color", "");
+    }
+
+    /* End validasi additional info apuppt */
 
     return "success";
 }
@@ -240,13 +251,13 @@ function detailSumber() {
         data:
             accuse == "internal"
                 ? {
-                      branch: branch,
-                      cif: cif,
-                      suffix: suffix,
-                  }
+                    branch: branch,
+                    cif: cif,
+                    suffix: suffix,
+                }
                 : {
-                      extAcctNumber: ext,
-                  },
+                    extAcctNumber: ext,
+                },
         success: function (data) {
             $(".loading-page").hide(); //show progress bar
             // console.log(data);

@@ -8,8 +8,8 @@
                 @csrf
                 <div class="card-body">
                     <div class="form-group col-12 row">
-                        <label class="col-sm-3 col-form-label">Nama Transaksi</label>
-                        <div class="col-sm-4">
+                        <label class="col-sm-4 col-form-label">Nama Transaksi</label>
+                        <div class="col-sm-8">
                             <div class="input-group">
                                 <select name="tipe_transaksi" class="form-control">
                                     <option value="">- Pilih -</option>
@@ -21,16 +21,16 @@
                         </div>
                     </div>
                     <div class="form-group col-12 row">
-                        <label class="col-sm-3 col-form-label">User Maker</label>
-                        <div class="col-sm-4">
+                        <label class="col-sm-4 col-form-label">User Maker</label>
+                        <div class="col-sm-8">
                             <div class="input-group">
                                 <input type="text" id="userID" name="userid" class="form-control ucase" onchange="getRequest(this)" maxlength="4" value="{{old('userid', @$request->userid)}}">
                             </div>
                         </div>
                     </div>
                     <div class="form-group col-12 row">
-                        <label class="col-sm-3 col-form-label">Nomor Refference</label>
-                        <div class="col-sm-4">
+                        <label class="col-sm-4 col-form-label">Nomor Refference</label>
+                        <div class="col-sm-8">
                             <div class="input-group">
                                 <input type="text" id="noReff" name="reff" class="form-control ucase" value="{{old('reff', @$request->reff)}}">
                             </div>
@@ -38,10 +38,10 @@
                     </div>
                     @if(auth()->user()->profile->rolename == "SUPER ADMIN")
                     <div class="form-group col-12 row">
-                        <label class="col-sm-3 col-form-label">Branch</label>
-                        <div class="col-sm-9">
+                        <label class="col-sm-4 col-form-label">Branch</label>
+                        <div class="col-sm-8">
                             <div class="input-group">
-                                <select name="branch" class="form-control select2">
+                                <select name="branch" class="form-control select2" style="width: 100%;">
                                     <option value="">- Pilih -</option>
                                     @foreach($branch as $key => $value)
                                     {{-- <option value="">{{$value['nama']}}</option> --}}

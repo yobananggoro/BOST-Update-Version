@@ -198,6 +198,18 @@ class OnetomanyController extends \App\Http\Controllers\Controller
             'narative3'         => array_key_exists("narrative3", $json_string['data'][0]) ? $json_string['data'][0]['narrative3'] : "",
             'narative4'         => array_key_exists("narrative4", $json_string['data'][0]) ? $json_string['data'][0]['narrative4'] : "",
             // 'status_transaksi'  => $json_string['responseDesc'],
+
+            'instrumentCode'        => $request->instrumentrx,
+            'instrumentOther'       => $request->instrumentrx == '99' ? $request->instrumenLainnya : null,
+            'classificationCode'    => $request->klasifikasitrx,
+            'classificationOther'   => $request->klasifikasitrx == '99' ? $request->klasifikasiLainnya : null,
+            'purposeCode'           => $request->kepentingantrx,
+            'purposeOther'          => $request->kepentingantrx == '99' ? $request->kepentinganLainnya : null,
+            'sourceCode'            => $request->sumberdanatrx,
+            'sourceOther'           => $request->sumberdanatrx == '9' ? $request->sumberDanaLainnya : null,
+            'destinationCode'       => $request->tujuantrx,
+            'destinationOther'      => $request->tujuantrx == '9' ? $request->tujuanLainnya : null,
+            'remark'                => $request->beritaTrx,
         );
 
         // dd($data);
@@ -244,13 +256,24 @@ class OnetomanyController extends \App\Http\Controllers\Controller
         }
 
         $data->additional_info = json_encode([
-            'rekening_sumber'   => $debit,
-            'rekening_tujuan'   => $credit,
-            'nominal'           => $request->nominal_total,
-            'narative1'         => $request->narative1,
-            'narative2'         => $request->narative2,
-            'narative3'         => $request->narative3,
-            'narative4'         => $request->narative4
+            'rekening_sumber'       => $debit,
+            'rekening_tujuan'       => $credit,
+            'nominal'               => $request->nominal_total,
+            'narative1'             => $request->narative1,
+            'narative2'             => $request->narative2,
+            'narative3'             => $request->narative3,
+            'narative4'             => $request->narative4,
+            'instrumentCode'        => $request->instrumentCode,
+            'instrumentOther'       => $request->instrumentOther,
+            'classificationCode'    => $request->classificationCode,
+            'classificationOther'   => $request->classificationOther,
+            'purposeCode'           => $request->purposeCode,
+            'purposeOther'          => $request->purposeOther,
+            'sourceCode'            => $request->sourceCode,
+            'sourceOther'           => $request->sourceOther,
+            'destinationCode'       => $request->destinationCode,
+            'destinationOther'      => $request->destinationOther,
+            'remark'                => $request->remark,
         ]);
         // dd($data, json_decode($data->additional_info, true));
 
@@ -320,6 +343,18 @@ class OnetomanyController extends \App\Http\Controllers\Controller
         $data->narative2  = $additional_info['narative2'];
         $data->narative3  = $additional_info['narative3'];
         $data->narative4  = $additional_info['narative4'];
+
+        $data->instrumentCode       = $additional_info['instrumentCode'];
+        $data->instrumentOther      = $additional_info['instrumentOther'];
+        $data->classificationCode   = $additional_info['classificationCode'];
+        $data->classificationOther  = $additional_info['classificationOther'];
+        $data->purposeCode          = $additional_info['purposeCode'];
+        $data->purposeOther         = $additional_info['purposeOther'];
+        $data->sourceCode           = $additional_info['sourceCode'];
+        $data->sourceOther          = $additional_info['sourceOther'];
+        $data->destinationCode      = $additional_info['destinationCode'];
+        $data->destinationOther     = $additional_info['destinationOther'];
+        $data->remark               = $additional_info['remark'];
         // dd($data);
 
         try {
@@ -370,7 +405,18 @@ class OnetomanyController extends \App\Http\Controllers\Controller
                 'narative1',
                 'narative2',
                 'narative3',
-                'narative4'
+                'narative4',
+                'instrumentCode',
+                'instrumentOther',
+                'classificationCode',
+                'classificationOther',
+                'purposeCode',
+                'purposeOther',
+                'sourceCode',
+                'sourceOther',
+                'destinationCode',
+                'destinationOther',
+                'remark',
             );
 
             if ($resp->status() == 200) {

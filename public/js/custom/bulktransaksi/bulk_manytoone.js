@@ -173,7 +173,16 @@ function validateForm() {
         $("#tujuanLainnya").css("background-color", "");
     }
 
-    /* Start validasi additional info apuppt */
+    if ($("#beritaTrx").val() == "") {
+        $("#beritaTrx").css("background-color", "red");
+
+        result = "Berita Transaksi Tidak Boleh Kosong";
+        return result;
+    } else {
+        $("#beritaTrx").css("background-color", "");
+    }
+
+    /* End validasi additional info apuppt */
 
     return "success";
 }

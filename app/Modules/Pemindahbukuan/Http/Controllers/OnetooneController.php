@@ -106,7 +106,7 @@ class OnetooneController extends \App\Http\Controllers\Controller
             'tipeSrc'                   => @$request->tipeSrc,
             'accuseSrc'                 => @$request->accuseSrc,
             'codeSrc'                   => @$json_string['data']['drCode'],
-            'amountSrc'                 => isset($json_string['data']['drAmount']) ? number_format((float) str_replace(',', '', $json_string['data']['drAmount']), 2, '.', ''): '0.00',
+            'amountSrc'                 => isset($json_string['data']['drAmount']) ? number_format((float) str_replace(',', '', $json_string['data']['drAmount']), 2, '.', '') : '0.00',
 
             'branchDst'                 => @$json_string['data']['branchDst'],
             'cifDst'                    => @$json_string['data']['cifDst'],
@@ -118,7 +118,7 @@ class OnetooneController extends \App\Http\Controllers\Controller
             'tipeDst'                   => @$request->tipeDst,
             'accuseDst'                 => @$request->accuseDst,
             'codeDst'                   => @$json_string['data']['crCode'],
-            'amountDst'                 => isset($json_string['data']['crAmount']) ? number_format((float) str_replace(',', '', $json_string['data']['crAmount']), 2, '.', ''): '0.00',
+            'amountDst'                 => isset($json_string['data']['crAmount']) ? number_format((float) str_replace(',', '', $json_string['data']['crAmount']), 2, '.', '') : '0.00',
 
             'nominal_'                  => $request->nominal_,
             'nominal'                   => @$json_string['data']['amount'],
@@ -129,8 +129,8 @@ class OnetooneController extends \App\Http\Controllers\Controller
             'narative3'                 => array_key_exists("narrative3", @$json_string['data']) ? @$json_string['data']['narrative3'] : "",
             'narative4'                 => array_key_exists("narrative4", @$json_string['data']) ? @$json_string['data']['narrative4'] : "",
 
-            'instrumentCode'            => $request->istrumentrx,
-            'instrumentOther'           => $request->istrumentrx == '99' ? $request->instrumenLainnya : null,
+            'instrumentCode'            => $request->instrumentrx,
+            'instrumentOther'           => $request->instrumentrx == '99' ? $request->instrumenLainnya : null,
             'classificationCode'        => $request->klasifikasitrx,
             'classificationOther'       => $request->klasifikasitrx == '99' ? $request->klasifikasiLainnya : null,
             'purposeCode'               => $request->kepentingantrx,
@@ -263,15 +263,27 @@ class OnetooneController extends \App\Http\Controllers\Controller
             $data->ccyDst = $value['ccyDst'];
         }
 
-        $data->exchangeRate = $additional_info['exchangeRate'];
-        $data->narative1 = $additional_info['narative1'];
-        $data->narative2 = $additional_info['narative2'];
-        $data->narative3 = $additional_info['narative3'];
-        $data->narative4 = $additional_info['narative4'];
-        $data->userCode1 = $additional_info['userCode1'];
-        $data->userCode2 = $additional_info['userCode2'];
+        $data->exchangeRate         = $additional_info['exchangeRate'];
+        $data->narative1            = $additional_info['narative1'];
+        $data->narative2            = $additional_info['narative2'];
+        $data->narative3            = $additional_info['narative3'];
+        $data->narative4            = $additional_info['narative4'];
 
-        dd($data);
+        $data->instrumentCode       = $additional_info['instrumentCode'];
+        $data->instrumentOther      = $additional_info['instrumentOther'];
+        $data->classificationCode   = $additional_info['classificationCode'];
+        $data->classificationOther  = $additional_info['classificationOther'];
+        $data->purposeCode          = $additional_info['purposeCode'];
+        $data->purposeOther         = $additional_info['purposeOther'];
+        $data->sourceCode           = $additional_info['sourceCode'];
+        $data->sourceOther          = $additional_info['sourceOther'];
+        $data->destinationCode      = $additional_info['destinationCode'];
+        $data->destinationOther     = $additional_info['destinationOther'];
+        $data->remark               = $additional_info['remark'];
+        $data->userCode1            = $additional_info['userCode1'];
+        $data->userCode2            = $additional_info['userCode2'];
+
+        // dd($data);
         // Call api posting ITA
         try {
             $reffToken = ReffToken::FindTokenReff(auth()->user()->username . "-" . $request->id)->first();  //cek reference token
@@ -316,6 +328,17 @@ class OnetooneController extends \App\Http\Controllers\Controller
                 'narative2',
                 'narative3',
                 'narative4',
+                'instrumentCode',
+                'instrumentOther',
+                'classificationCode',
+                'classificationOther',
+                'purposeCode',
+                'purposeOther',
+                'sourceCode',
+                'sourceOther',
+                'destinationCode',
+                'destinationOther',
+                'remark',
                 'userCode1',
                 'userCode2',
             );

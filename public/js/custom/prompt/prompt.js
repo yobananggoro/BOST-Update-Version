@@ -20,22 +20,22 @@ function listRekening(action){
         data: {'nama':nama, 'cif':cif},
         cache: true,
         success:function(response){ 
-            // console.log(response.data);
+            // console.log(response.data.data);
             
             var table_data = '';
             $('#tableData').empty();
             
-            for(var i = 0; i<response.data.length;i++) {
+            for(var i = 0; i<response.data.data.length;i++) {
                 table_data += '<tr onclick="getRowData(this)">';
                 table_data += '<td class="text-center">'+ (i+1) +'.</td>';
-                table_data += '<td class="nameAccount">' + response.data[i].nama + '</td>'
-                table_data += '<td class="noAccount text-center">' + response.data[i].branch +"-"+ response.data[i].cif +"-"+ response.data[i].suffix + '</td>'
-                table_data += '<td class="zlab" style="display:none">' + response.data[i].branch + '</td>'
-                table_data += '<td class="zlan" style="display:none">' + response.data[i].cif + '</td>'
-                table_data += '<td class="zlas" style="display:none">' + response.data[i].suffix + '</td>'
-                table_data += '<td class="zlean text-center">' + response.data[i].externalNum + '</td>'
-                table_data += '<td class="tipeAccount text-center">' + response.data[i].tipe_rek + '</td>'
-                table_data += '<td class="tipeCcy text-center">' + response.data[i].tipe_ccy + '</td>'
+                table_data += '<td class="nameAccount">' + response.data.data[i].nama + '</td>'
+                table_data += '<td class="noAccount text-center">' + response.data.data[i].branch +"-"+ response.data.data[i].cif +"-"+ response.data.data[i].suffix + '</td>'
+                table_data += '<td class="zlab" style="display:none">' + response.data.data[i].branch + '</td>'
+                table_data += '<td class="zlan" style="display:none">' + response.data.data[i].cif + '</td>'
+                table_data += '<td class="zlas" style="display:none">' + response.data.data[i].suffix + '</td>'
+                table_data += '<td class="zlean text-center">' + response.data.data[i].externalNum + '</td>'
+                table_data += '<td class="tipeAccount text-center">' + response.data.data[i].tipe_rek + '</td>'
+                table_data += '<td class="tipeCcy text-center">' + response.data.data[i].tipe_ccy + '</td>'
                 table_data += '</tr>'; 
             }
             

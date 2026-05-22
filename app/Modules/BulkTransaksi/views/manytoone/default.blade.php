@@ -63,7 +63,7 @@
                 </div>
                 <div class="col-12 form-group">
                     <label>Jenis Transaksi</label>
-                    <select id="getTrxList" name="trxName" class="form-control select2">
+                    <select id="getTrxList" name="trxName" class="form-control select2" style="width: 100%">
                     </select><br>
                     <div class="row">
                         <div class="col-6">
@@ -90,14 +90,10 @@
                     <input type="text" name="narative3" id="narative3" class="form-control nar" maxlength="35" placeholder="Narative 3">
                 </div>
                 <div class="col-12 form-group">
-<<<<<<< Updated upstream
                     <input type="text" name="narative4" id="narative4" class="form-control nar" maxlength="35" placeholder="Narative 4">
-=======
-                    <input type="text" name="narative4" id="narative4" class="form-control nar" maxlength="34" placeholder="Narative 4">
->>>>>>> Stashed changes
                 </div>
-                <blockquote>
-                    <p>Catatan!</p>
+                <blockquote style="text-align: justify;text-justify: inter-word;hyphens: auto">
+                    <p><strong>Catatan!</strong></p>
                     <p>
                         Pastikan gunakan template yang telah disediakan oleh sistem, tidak disarankan untuk menggunakan template yang
                         bukan berasal dari template default. Sebelum melakukan unduh file template silahkan hapus cache

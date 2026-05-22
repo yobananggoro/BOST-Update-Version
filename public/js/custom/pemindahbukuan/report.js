@@ -39,8 +39,18 @@ $(function() {
         unformatAllVal();
         // $("#formPdf").attr('target', '_self').submit();
     });
-    
-    $("#dataTables").DataTable();
+
+    $("#tableReport").DataTable({
+        paging: true,
+        lengthChange: false,
+        searching: true,
+        ordering: true,
+        info: false,
+        autoWidth: true,
+    });
+
+    $("#searchContainer").append($("#tableReport_filter"));
+    $("#pagingContainer").append($("#tableReport_paginate"));
 });
 
 function validateForm(){

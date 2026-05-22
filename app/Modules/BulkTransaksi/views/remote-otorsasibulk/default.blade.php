@@ -5,8 +5,11 @@
 <div class="row" id="bulkList" style="display: ">
     <div class="col-12">
         <div class="card card-default">
-            <div class="card-body">
-                <table id="dataTable1" class="table table-striped">
+            <div class="card-header border-0">
+                <div class="float-right" id="searchContainer_list"></div>
+            </div>
+            <div class="card-body table-responsive" style="overflow-y: scroll">
+                <table id="dataTableList" class="table table-striped" style="width: 150%">
                     <thead>
                         <tr>
                             <th style="width:10px">No.</th>
@@ -26,7 +29,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
                         @if($data != '')
                         @foreach($data as $key => $d)
                         <tr>
@@ -60,6 +62,9 @@
                         @endif
                     </tbody>
                 </table>
+            </div>
+            <div class="card-footer">
+                <div class="float-right" id="pagingContainer_list"></div>
             </div>
         </div>
     </div>

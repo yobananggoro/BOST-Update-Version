@@ -27,22 +27,37 @@ class ITAHelper extends Controller
 
     public function itaval($request)
     {
+        // dd($request);
         $tokens = $this->setToken->accessToken;
         $url = config('app.backend_bo') . '/transactions/transfer-interbank';
-        
+
+        $addInfo = array(
+            'instrumentCode'        => $request->instrumentrx,
+            'instrumentOther'       => $request->instrumentOther,
+            'classificationCode'    => $request->klasifikasitrx,
+            'classificationOther'   => $request->klasifikasiLainnya,
+            'purposeCode'           => $request->kepentingantrx,
+            'purposeOther'          => $request->kepentinganLainnya,
+            'sourceCode'            => $request->sumberdanatrx,
+            'sourceOther'           => $request->sumberDanaLainnya,
+            'destinationCode'       => $request->tujuantrx,
+            'destinationOther'      => $request->tujuanLainnya,
+            'remark'                => $request->beritaTrx,
+        );
+
         $message = array(
             'branchSrc'             => $request->branchSrc,
             'cifSrc'                => $request->cifSrc,
             'suffixSrc'             => $request->suffixSrc,
             'sourceAccount'         => $request->extSrc,
-            'ccySrc'                => $request->ccySrc, 
+            'ccySrc'                => $request->ccySrc,
             'branchDst'             => $request->branchDst,
             'cifDst'                => $request->cifDst,
             'suffixDst'             => $request->suffixDst,
             'destinationAccount'    => $request->extDst,
             'ccyDst'                => $request->ccyDst,
-            'isSourceExternal'      => $request->accuseSrc == 'external' ? "Y":"N",
-            'isDestinationExternal' => $request->accuseDst == 'external' ? "Y":"N",
+            'isSourceExternal'      => $request->accuseSrc == 'external' ? "Y" : "N",
+            'isDestinationExternal' => $request->accuseDst == 'external' ? "Y" : "N",
             'ref'                   => $request->reff,
             'userId'                => auth()->user()->username,
             'branchUser'            => auth()->user()->profile->unit_kerja_kode,
@@ -55,9 +70,12 @@ class ITAHelper extends Controller
             'userCode1'             => $request->userCode1,
             'userCode2'             => $request->userCode2,
             'isValidate'            => "Y",
+            'trxInfoReq'            => $addInfo
         );
+
         // dd($message);
-        try{
+
+        try {
             $response = Http::withHeaders(['Authorization' => 'Bearer ' . $tokens, 'Content-Type' => 'application/json'])->post($url, $message);
             Log::info("ITA Validation Request: " . json_encode($message));
             Log::info("ITA Validation Response: " . $response);
@@ -68,38 +86,14 @@ class ITAHelper extends Controller
             die();
         }
     }
-    
+
     public function itapost($request)
     {
         // dd($request);
         $tokens = $this->setToken->accessToken;
         $url = config('app.backend_bo') . '/transactions/transfer-interbank';
-        
-        $message = array(
-            'branchSrc'             => $request->branchSrc,
-            'cifSrc'                => $request->cifSrc,
-            'suffixSrc'             => $request->suffixSrc,
-            'sourceAccount'         => $request->extSrc,
-            'ccySrc'                => $request->ccySrc,
-            'branchDst'             => $request->branchDst,
-            'cifDst'                => $request->cifDst,
-            'suffixDst'             => $request->suffixDst,
-            'destinationAccount'    => $request->extDst,
-            'ccyDst'                => $request->ccyDst,
-            'isSourceExternal'      => $request->accuseSrc == 'external' ? "Y":"N",
-            'isDestinationExternal' => $request->accuseDst == 'external' ? "Y":"N",
-            'ref'                   => $request->reff,
-            'userId'                => $request->userid,
-            'headUser'              => auth()->user()->username,
-            'branchUser'            => auth()->user()->profile->unit_kerja_kode,
-            'amount'                => strval($request->nominal),
-            'exchangeRate'          => $request->exchangeRate,
-            // 'narrative1'            => $request->narative1,
-            // 'narrative2'            => $request->narative2,
-            'narrative3'            => $request->narative3,
-            'narrative4'            => $request->narative4,
-            'isValidate'            => "N",
-            
+
+        $addInfo = array(
             'instrumentCode'        => $request->instrumentCode,
             'instrumentOther'       => $request->instrumentOther,
             'classificationCode'    => $request->classificationCode,
@@ -111,17 +105,44 @@ class ITAHelper extends Controller
             'destinationCode'       => $request->destinationCode,
             'destinationOther'      => $request->destinationOther,
             'remark'                => $request->remark,
+        );
+
+        $message = array(
+            'branchSrc'             => $request->branchSrc,
+            'cifSrc'                => $request->cifSrc,
+            'suffixSrc'             => $request->suffixSrc,
+            'sourceAccount'         => $request->extSrc,
+            'ccySrc'                => $request->ccySrc,
+            'branchDst'             => $request->branchDst,
+            'cifDst'                => $request->cifDst,
+            'suffixDst'             => $request->suffixDst,
+            'destinationAccount'    => $request->extDst,
+            'ccyDst'                => $request->ccyDst,
+            'isSourceExternal'      => $request->accuseSrc == 'external' ? "Y" : "N",
+            'isDestinationExternal' => $request->accuseDst == 'external' ? "Y" : "N",
+            'ref'                   => $request->reff,
+            'userId'                => $request->userid,
+            'headUser'              => auth()->user()->username,
+            'branchUser'            => auth()->user()->profile->unit_kerja_kode,
+            'amount'                => strval($request->nominal),
+            'exchangeRate'          => $request->exchangeRate,
+            // 'narrative1'            => $request->narative1,
+            // 'narrative2'            => $request->narative2,
+            'narrative3'            => $request->narative3,
+            'narrative4'            => $request->narative4,
             'userCode1'             => $request->userCode1,
             'userCode2'             => $request->userCode2,
-            'isValidate'            => "N"
+            'isValidate'            => "N",
+            'trxInfoReq'            => $addInfo
         );
+
         // dd($message);
-        
+
         try {
             $response = Http::withHeaders(['Authorization' => 'Bearer ' . $tokens, 'Content-Type' => 'application/json'])->post($url, $message);
             // dd($response, json_decode($response->getBody()->getContents(), true), json_decode($response, true)['error']);
             Log::info("ITA Posting Request: " . json_encode($message));
-            Log::info("ITA Posting Response: ".$response->status()."|". $response);
+            Log::info("ITA Posting Response: " . $response->status() . "|" . $response);
 
             return $response;
         } catch (\Exception $e) {
@@ -129,5 +150,4 @@ class ITAHelper extends Controller
             die();
         }
     }
-
 }

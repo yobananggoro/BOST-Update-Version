@@ -5,7 +5,7 @@
 <div class="row toastrDefaultInfo"></div>
 <div class="row toastrDefaultError"></div>
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-12 col-lg-7">
         <div class="card card-default">
             <div class="card-header">
             </div>
@@ -17,9 +17,11 @@
                         <input type="hidden" name="accuseSrc[]" id="accuseSrc1" value="{{@$accuseSrc1}}">
                         <label>Rekening Sumber <span style="color: red">*</span></label>
                         <div class="row">
-                            <div class="col-sm-8">
-                                <div class="row col-sm-12">
-                                    <input type="text" name="extSrc[]" id="extSrc1" class="form-control number rekSumber" maxlength="13" placeholder="External Account">
+                            <div class="col-sm-7">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <input type="text" name="extSrc[]" id="extSrc1" class="form-control number rekSumber" maxlength="13" placeholder="External Account">
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-4">
@@ -36,7 +38,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-5">
                                 <button type="button" class="btn btn-info" value="1" onclick="detailSumber(this);"><i class="fa fa-fw fa-info-circle"></i> Detail</button>
                                 <button type="button" id="btnToogleDst1" class="btn btn-secondary" onclick="toogle(this.id);" title="Toogle Form"><i class="fa fa-recycle"></i></button>
                                 <button type="button" id="dynamic-ar" onclick="dynamicField()" class="btn btn-primary" style="width:40px"><i class="fa fa-plus"></i></button>
@@ -73,9 +75,11 @@
                         <input type="hidden" name="accuseDst" id="accuseDst" value="{{ @$accuseDst }}">
                         <label>Rekening Tujuan <span style="color: red">*</span></label>
                         <div class="row">
-                            <div class="col-sm-8">
-                                <div class="row col-sm-12">
-                                    <input type="text" name="extDst" id="extDst" class="form-control number rekTujuan" maxlength="13" placeholder="External Account">
+                            <div class="col-sm-7">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <input type="text" name="extDst" id="extDst" class="form-control number rekTujuan" maxlength="13" placeholder="External Account">
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-4">
@@ -92,7 +96,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-5">
                                 <button type="button" class="btn btn-info" onclick="detailTujuan();"><i class="fa fa-info-circle"></i> Detail</button>
                                 <button type="button" id="btnToogleDst" class="btn btn-secondary" onclick="toogle(this.id);" title="Toogle Form"><i class="fa fa-recycle"></i></button>
                             </div>

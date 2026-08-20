@@ -107,15 +107,15 @@ class BulkHelper extends Controller
             ],
             [
                 'name'        => 'trxName',
-                'contents'    => $request->trxName,
+                'contents'    => $request->trxName == null ? 'Pemindahbukuan non cek' : $request->trxName,
             ],
             [
                 'name'        => 'dbCode',
-                'contents'    => $request->dbCode,
+                'contents'    => $request->dbCode == null ? '019' : $request->dbCode,
             ],
             [
                 'name'        => 'crCode',
-                'contents'    => $request->crCode,
+                'contents'    => $request->crCode == null ? '519' : $request->crCode,
             ],
             [
                 'name'        => 'trxInfoReq',
@@ -271,15 +271,15 @@ class BulkHelper extends Controller
             ],
             [
                 'name'        => 'trxName',
-                'contents'    => $request->trxName,
+                'contents'    => $request->trxName == null ? 'Pemindahbukuan non cek' : $request->trxName,
             ],
             [
                 'name'        => 'dbCode',
-                'contents'    => $request->dbCode,
+                'contents'    => $request->dbCode == null ? '019' : $request->dbCode,
             ],
             [
                 'name'        => 'crCode',
-                'contents'    => $request->crCode,
+                'contents'    => $request->crCode == null ? '519' : $request->crCode,
             ],
             [
                 'name'        => 'isCheque',
@@ -314,7 +314,25 @@ class BulkHelper extends Controller
             'trxInfoReq'    => $addInfo
         );
 
-        // dd($body,$message);
+        if (!empty($request->userCode1)) {
+            $body = array_merge($body, [
+                [
+                    'name'        => 'userCode1',
+                    'contents'    => $request->userCode1,
+                ],
+                [
+                    'name'        => 'userCode2',
+                    'contents'    => $request->userCode2,
+                ]
+            ]);
+
+            $message = array_merge($message,  [
+                'userCode1'    => $request->userCode1,
+                'userCode2'    => $request->userCode2,
+            ]);
+        }
+
+        // dd($body, $message);
 
         try {
             $client = new \GuzzleHttp\Client();
@@ -399,15 +417,15 @@ class BulkHelper extends Controller
             ],
             [
                 'name'        => 'trxName',
-                'contents'    => $request->trxName,
+                'contents'    => $request->trxName == null ? 'Pemindahbukuan non cek' : $request->trxName,
             ],
             [
                 'name'        => 'dbCode',
-                'contents'    => $request->dbCode,
+                'contents'    => $request->dbCode == null ? '019' : $request->dbCode,
             ],
             [
                 'name'        => 'crCode',
-                'contents'    => $request->crCode,
+                'contents'    => $request->crCode == null ? '519' : $request->crCode,
             ],
             [
                 'name'        => 'trxInfoReq',
@@ -510,15 +528,15 @@ class BulkHelper extends Controller
             ],
             [
                 'name'        => 'trxName',
-                'contents'    => $request->trxName,
+                'contents'    => $request->trxName == null ? 'Pemindahbukuan non cek' : $request->trxName,
             ],
             [
                 'name'        => 'dbCode',
-                'contents'    => $request->dbCode,
+                'contents'    => $request->dbCode == null ? '019' : $request->dbCode,
             ],
             [
                 'name'        => 'crCode',
-                'contents'    => $request->crCode,
+                'contents'    => $request->crCode == null ? '519' : $request->crCode,
             ],
             [
                 'name'        => 'trxInfoReq',
@@ -641,11 +659,11 @@ class BulkHelper extends Controller
             ],
             [
                 'name'        => 'nar1',
-                'contents'    => '',
+                'contents'    => $request->narative1,
             ],
             [
                 'name'        => 'nar2',
-                'contents'    => '',
+                'contents'    => $request->narative2,
             ],
             [
                 'name'        => 'nar3',
@@ -657,15 +675,15 @@ class BulkHelper extends Controller
             ],
             [
                 'name'        => 'trxName',
-                'contents'    => $request->trxName,
+                'contents'    => 'Pemindahbukuan dgn cek',
             ],
             [
                 'name'        => 'dbCode',
-                'contents'    => $request->dbCode,
+                'contents'    => '020'
             ],
             [
                 'name'        => 'crCode',
-                'contents'    => $request->crCode,
+                'contents'    => '520'
             ],
             [
                 'name'        => 'trxInfoReq',
@@ -776,15 +794,15 @@ class BulkHelper extends Controller
             ],
             [
                 'name'        => 'trxName',
-                'contents'    => $request->trxName,
+                'contents'    => $request->trxName == null ? 'Pemindahbukuan non cek' : $request->trxName,
             ],
             [
                 'name'        => 'dbCode',
-                'contents'    => $request->dbCode,
+                'contents'    => $request->dbCode == null ? '019' : $request->dbCode,
             ],
             [
                 'name'        => 'crCode',
-                'contents'    => $request->crCode,
+                'contents'    => $request->crCode == null ? '519' : $request->crCode,
             ],
             [
                 'name'        => 'trxInfoReq',
@@ -850,7 +868,7 @@ class BulkHelper extends Controller
         // dd($formattedStartDate, $formattedEndDate);
 
         $message = array(
-            'userId'        => !in_array(auth()->user()->profile->rolename, ['Administrasi Dana Dan Jasa', 'Administrasi Kredit', 'Administrasi Operasional', 'Staf']) ? $userID : auth()->user()->username,
+            'userId'        => !in_array(auth()->user()->profile->rolename, ['Operator']) ? $userID : auth()->user()->username,
             'branch'        => auth()->user()->profile->rolename != "SUPER ADMIN" ? auth()->user()->profile->unit_kerja_kode : $request->branch,
             'fileStatus'    => $request->status_bulk == null ? '' : $request->status_bulk,
             'startDate'     => $formattedStartDate,
@@ -1029,6 +1047,52 @@ class BulkHelper extends Controller
             return $response;
         } catch (\Exception $e) {
             echo $e->getMessage();
+            die();
+        }
+    }
+
+    public function getListReport($request)
+    {
+        $tokens = $this->setToken->accessToken;
+        $url = config('app.backend_bo') . '/bulk/files/details';
+        $approverID = auth()->user()->profile->rolename != "SUPER ADMIN" ? auth()->user()->username : $request->updatedBy;
+
+        // Format tanggal dari dd-MM-yyyy ke yyyy-MM-dd
+        $startDate = \DateTime::createFromFormat('d-m-Y', $request->startDate);
+        $endDate = \DateTime::createFromFormat('d-m-Y', $request->endDate);
+        $currentDate = date('Y-m-d');
+        $formattedStartDate = $startDate ? $startDate->format('Y-m-d') : null;
+        $formattedEndDate = $endDate ? $endDate->format('Y-m-d') : null;
+
+        // dd($formattedStartDate, $formattedEndDate);
+
+        $message = array(
+            'createdBy'         => $request->createdBy,
+            'updatedBy'         => $approverID,
+            'branch'            => auth()->user()->profile->rolename != "SUPER ADMIN" ? auth()->user()->profile->unit_kerja_kode : $request->branch,
+            'startDate'         => $formattedStartDate == null ? $currentDate : $formattedStartDate,
+            'endDate'           => $formattedEndDate == null ? $currentDate : $formattedEndDate
+        );
+
+        // dd($message);
+
+        try {
+            $response = Http::withHeaders(['Authorization' => 'Bearer ' . $tokens, 'Content-Type' => 'application/json',])->post($url, $message);
+            Log::info("List Bulk Request: " . json_encode($message));
+            // dd($response, json_decode($response, true));
+
+            if ($response->status() == 200) {
+                $respMsg = json_decode($response, true);
+
+                Log::info("List Report Bulk Response: " . json_encode(array_diff_key($respMsg, ['data' => ''])));
+            } else {
+                Log::info("List Report Bulk Response: " . $response);
+            }
+
+            return $response;
+        } catch (\Exception $e) {
+            // echo $e->getMessage();
+            Log::error("List Report Bulk Response: " . $e->getMessage());
             die();
         }
     }

@@ -18,8 +18,10 @@ class SessionExpired
             $lastActivity = session('last_activity', time());
             $sessionTimeout = config('session.lifetime') * 60; // waktu timeout dalam detik
 
-            
+            // dd('sessionExpired');
             if (time() - $lastActivity >= $sessionTimeout) {
+                $user->isLogin = false;
+                $user->update();
                 $request->session()->flush();
             } else {
                 session(['last_activity' => time()]);

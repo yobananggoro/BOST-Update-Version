@@ -77,12 +77,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function scopeGetAll($query)
     {
         // dd(auth()->user()->profile->idrole, auth()->user());exit;
-        if (!in_array(auth()->user()->profile->rolename, ['SUPER ADMIN', 'Staf ITS ', 'Staf IT'])) {
+        // if (!in_array(trim(auth()->user()->profile->rolename), ['SUPER ADMIN', 'Divisi IT Security', 'Divisi Teknologi Informasi'])) {
+        if (in_array(trim(auth()->user()->profile->rolename), transactionRoles())) {
             $q = $query->select('app_user.*','app_profile.*')
             ->join('app_profile', 'app_user.id', '=', 'app_profile.user_id')
             ->where('app_profile.unit_kerja_kode', '=', auth()->user()->profile->unit_kerja_kode)
             ->where('app_user.username', '!=', auth()->user()->username)
-            ->whereIn('app_profile.rolename', ['Administrasi Dana Dan Jasa', 'Administrasi Kredit', 'Administrasi Operasional', 'Staf'])
+            ->whereIn('app_profile.rolename', ['Operator'])
             ->orderby('app_user.status', 'desc');
         } else {
             $q = $query->select('app_user.*','app_profile.*')
@@ -91,7 +92,7 @@ class User extends Authenticatable implements MustVerifyEmail
             ->where('app_profile.rolename', '!=', 'SUPER ADMIN')
             ->orderby('app_user.status', 'desc');
         }
-        
+        // dd($q->get());
         return $q->get();
     }
     

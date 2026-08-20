@@ -32,7 +32,7 @@ class SignatureController extends \App\Http\Controllers\Controller
         //     // return redirect('view-signature')->with('data', 'request');
         // }
 
-        // dd(count($data));
+        // dd($data);
         \Assets::addJs('custom/signature.js');
         return view('signature::view_signature', compact('data', 'request'));
     }

@@ -51,13 +51,13 @@ class Transactions extends Model
             $query->where('branch', '=', $request->branch);
         }
         
-        if(in_array(auth()->user()->profile->rolename, ["Staf", "Administrasi Dana Dan Jasa","Administrasi Kredit","Administrasi Operasional"])){ 
+        if(in_array(auth()->user()->profile->rolename, ["Operator"])){ 
             $q = $query->select('*')
             ->where('userid', auth()->user()->username)
             // ->where('tanggal', Carbon::now()->format('Y-m-d'))
             ->orderBy('updated_at', 'desc');
 
-        } else if(in_array(auth()->user()->profile->rolename,["OODJ/OOK/OOPS/OODM","Officer","Manager Operasional","Manager"])){
+        } else if(!in_array(auth()->user()->profile->rolename,["Operator"])){
             // dd('a');
             $q = $query->select('*')
             ->where('branch', auth()->user()->profile->unit_kerja_kode)

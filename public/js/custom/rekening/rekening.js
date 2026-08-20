@@ -1,18 +1,18 @@
-function cekGI33() {
-    // document.getElementById('nama').value = "";
-    // document.getElementById('tipe_rek').value = "";
-    // document.getElementById('tipe_ccy').value = "";
-    // document.getElementById('branch1').value = "";
-    // document.getElementById('cif1').value = "";
-    // document.getElementById('suffix1').value = "";
+$(function () {
+    $("#dataTable").DataTable({
+        paging: true,
+        lengthChange: true,
+        searching: true,
+        ordering: true,
+        info: true,
+        autoWidth: true,
+    });
+});
 
+function cekGI33() {
     var branch  = $('#branch').val();
     var cif     = $('#cif').val();
     var suffix  = $('#suffix').val();
-    
-    // console.log(branch);
-    // console.log(cif);
-    // console.log(suffix);
 
     $('.loading-page').show(); //show progress bar
     

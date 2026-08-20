@@ -11,6 +11,6 @@ class LogAplikasiController extends \Rap2hpoutre\LaravelLogViewer\LogViewerContr
     {
         parent::__construct();
 
-        $this->middleware(['role:ADMIN IT|SUPER ADMIN']);
+        $this->middleware(['role:SUPER ADMIN']);
     }
 }

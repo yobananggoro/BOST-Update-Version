@@ -40,6 +40,16 @@ $(function () {
         }
     });
 
+    $(document).on("keyup", "#exchangeRate_", function () {
+        var nom = $(this).val();
+
+        if (nom.length > 0) {
+            $("#exchangeRate").val(parseFloat(nom.replace(/,/g, "")));
+        } else {
+            $("#exchangeRate").val("");
+        }
+    });
+
     $(".rekSumber").keyup(function (e) {
         $(".detailSrc").val("");
         $(".detailSrc").html("");
@@ -53,9 +63,6 @@ $(function () {
     $(".nar").keyup(function (e) {
         this.value = this.value.replace(/[\*\?:]/g, "");
     });
-
-    //Call ajax list usercode
-    userCodeList();
 });
 
 
@@ -144,7 +151,7 @@ function validateForm() {
     }
 
     /* Start validasi additional info apuppt */
-    
+
     if ($("#getInstrumenList").val() == "" || $("#getInstrumenList").val() == null) {
         $("#getInstrumenList").siblings(".select2-container").find(".select2-selection").css("background-color", "red");
 
@@ -292,13 +299,13 @@ function detailSumber() {
         data:
             accuse == "internal"
                 ? {
-                      branch: branch,
-                      cif: cif,
-                      suffix: suffix,
-                  }
+                    branch: branch,
+                    cif: cif,
+                    suffix: suffix,
+                }
                 : {
-                      extAcctNumber: ext,
-                  },
+                    extAcctNumber: ext,
+                },
         success: function (data) {
             $(".loading-page").hide(); //show progress bar
             // console.log(data);
@@ -391,13 +398,13 @@ function detailTujuan() {
         data:
             accuse == "internal"
                 ? {
-                      branch: branch,
-                      cif: cif,
-                      suffix: suffix,
-                  }
+                    branch: branch,
+                    cif: cif,
+                    suffix: suffix,
+                }
                 : {
-                      extAcctNumber: ext,
-                  },
+                    extAcctNumber: ext,
+                },
         success: function (data) {
             $(".loading-page").hide(); //show progress bar
             // console.log(data);
@@ -543,7 +550,7 @@ function valRates(e, ccy1, ccy2) {
     const noSeparator = e.replace(/,/g, "");
     if (i <= 2) {
         $("#exchangeRate").val(noSeparator);
-        $("#rates_fields").append('<div id="fieldRates" class="col-12 form-group"><label>Rate ' + ccy1 + " / " + ccy2 + ' </label><input type="text" class="form-control text-right" value="' + e + '" disabled></div>');
+        $("#rates_fields").append('<div id="fieldRates" class="col-12 form-group"><label>Rate ' + ccy1 + " / " + ccy2 + ' </label><input type="text" id="exchangeRate_" class="form-control currency text-right" value="' + e + '"></div>');
         ++i;
         return i;
     } else {
@@ -551,49 +558,4 @@ function valRates(e, ccy1, ccy2) {
         i--;
         return i;
     }
-}
-
-function userCodeList() {
-    // alert("aa");
-
-    $.ajax({
-        url: "user-code-list",
-        type: "GET",
-        // data: "",
-        success: function (data) {
-            $(".loading-page").hide(); //show progress bar
-            // console.log(data);
-            if (data.status == 200) {
-                let dropdown = $("#getUserCodeList");
-                dropdown.empty();
-                dropdown.append('<option value="">- Pilih -</option>');
-
-                data.listTrx.forEach(function (item) {
-                    dropdown.append('<option value="' + item.description + '" data-first="' + item.userCode1 + '" data-second="' + item.userCode2 + '">' + item.description + "</option>");
-                });
-
-                // Set dbCode and crCode to input when dropdown changes
-                dropdown.on('change', function () {
-                    var selected = $(this).find('option:selected');
-                    var usrCodeFirst = selected.data('first') || '';
-                    var usrCodeSecond = selected.data('second') || '';
-                    // alert(usrCodeFirst + ' - ' + usrCodeSecond);
-                    $('#userCode1').val(usrCodeFirst);
-                    $('#userCode2').val(usrCodeSecond);
-                });
-
-                dropdown.trigger('change.select2');
-            } else {
-                $(".toastrDefaultError").show(function () {
-                    toastr.error(data.message);
-                });
-            }
-        },
-        error: function (error) {
-            $(".loading-page").hide();
-            $(".toastrDefaultError").show(function () {
-                toastr.error(error);
-            });
-        },
-    });
 }

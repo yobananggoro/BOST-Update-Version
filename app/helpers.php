@@ -417,3 +417,35 @@ if (!function_exists('excludeKeys')) {
         return array_diff_key($array, array_flip($keysToExclude));
     }
 }
+
+if (!function_exists('adminRoles')) {
+    /**
+     * @param string $value
+     * @param integer $slice
+     * @return string
+     */
+    function adminRoles()
+    {
+        return Cache::remember('admin_roles', 3600, function () {
+            return Modules\User\Entities\Role::where('is_admin', true)
+                ->pluck('name')
+                ->toArray();
+        });
+    }
+}
+
+if (!function_exists('transactionRoles')) {
+    /**
+     * @param string $value
+     * @param integer $slice
+     * @return string
+     */
+    function transactionRoles()
+    {
+        return Cache::remember('transaction_roles', 3600, function () {
+            return Modules\User\Entities\Role::where('is_transactions', true)
+                ->pluck('name')
+                ->toArray();
+        });
+    }
+}

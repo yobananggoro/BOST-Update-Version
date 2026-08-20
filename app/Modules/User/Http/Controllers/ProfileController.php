@@ -14,6 +14,7 @@ class ProfileController
     {
         $data = auth()->user();
 
+        // dd($data);
         return view('user::profile', compact('data'));
     }
 }

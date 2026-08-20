@@ -117,10 +117,13 @@ class RemoteOtorisasiController extends \App\Http\Controllers\Controller
     public function transactions($data)
     {
         if ($data->tipe_transaksi == '1') {
+            // dd('a');
             $post = app(OnetooneController::class)->posting($data); //One to One
         } else if ($data->tipe_transaksi == '2') {
+            // dd('b');
             $post = app(OnetomanyController::class)->posting($data); //One to Many
         } else {
+            // dd('c');
             $post = app(ManytooneController::class)->posting($data); //Many to One
         }
 

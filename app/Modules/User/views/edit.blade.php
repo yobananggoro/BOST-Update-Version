@@ -24,7 +24,7 @@ if ($segment !== 'create' ) { $title = 'edit'; $method = 'put'; $action = ['user
                     <tr>
                         <td>Unit Kerja</td>
                         <td>:</td>
-                        <td>{{$data->profile->unitKerja->nama}} ({{$data->profile->rolename}})</td>
+                        <td>{{ $data->profile->unitKerja == null ? '#-'.$data->profile->unitKerja : $data->profile->unitKerja->nama }} ({{$data->profile->rolename}})</td>
                     </tr>
                 </tbody>
             </table>

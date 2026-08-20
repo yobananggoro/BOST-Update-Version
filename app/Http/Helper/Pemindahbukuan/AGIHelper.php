@@ -220,6 +220,7 @@ class AGIHelper extends Controller
 
     public function agivalpostOTM($request) //special condition
     {
+        // dd($request);
         $tokens = $this->setToken->accessToken;
         $url = config('app.backend_bo') . '/transactions/transfer-interbank-agi';
 

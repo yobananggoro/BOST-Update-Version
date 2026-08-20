@@ -36,11 +36,7 @@
                         <label class="col-sm-4 col-form-label">UserID Maker</label>
                         <div class="col-sm-4">
                             <div class="input-group">
-                                @if(!in_array(auth()->user()->profile->rolename, ['Administrasi Dana Dan Jasa', 'Administrasi Kredit', 'Administrasi Operasional']))
                                 <input type="text" id="userID" name="userid" class="form-control ucase" onchange="getRequest(this)" maxlength="4" value="{{old('userid', @$request->userid)}}">
-                                @else
-                                <input type="text" id="userID" name="userid" class="form-control ucase" onchange="getRequest(this)" maxlength="4" value="{{auth()->user()->username}}" readonly>
-                                @endif
                             </div>
                         </div>
                     </div>

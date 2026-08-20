@@ -2,5 +2,9 @@ node_modules/
 vendor/
 .vscode
 .env
-storage/logs/
-storage/framework/
+
+storage/logs/*
+!storage/logs/.gitignore
+
+storage/framework/views/*
+!storage/framework/views/.gitignore

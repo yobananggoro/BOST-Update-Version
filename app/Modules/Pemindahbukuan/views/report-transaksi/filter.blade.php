@@ -55,7 +55,7 @@
                         <label class="col-sm-4 col-form-label">User ID</label>
                         <div class="col-sm-8">
                             <div class="input-group">
-                                @if(auth()->user()->profile->rolename != "USER")
+                                @if(auth()->user()->profile->rolename != "Operator")
                                 <input type="text" id="userid" name="userid" class="form-control ucase" onchange="getRequest(this)" maxlength="4" value="{{ old('userid', @$request->userid) }}">
                                 @else
                                 <input type="text" id="userid" name="userid" class="form-control ucase" onchange="getRequest(this)" maxlength="4" value="{{ auth()->user()->username }}" readonly>

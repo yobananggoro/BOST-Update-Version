@@ -184,7 +184,8 @@ function validateForm() {
             if ($("#branchSrc" + x).val() == "" || $("#cifSrc" + x).val() == "" || $("#suffixSrc" + x).val() == "") {
                 $("#branchSrc" + x).css("background-color", "red");
                 $("#cifSrc" + x).css("background-color", "red");
-                $("#suffixSrc" + x).css("background-color", "red");
+                $("#suffixSrc" + x).css("background-color", "red"); 
+                $("#extSrc" + x).css("background-color", "red");
 
                 result = "Rekening Sumber " + x + " Tidak Boleh Kosong";
                 return result;
@@ -192,6 +193,7 @@ function validateForm() {
                 $("#branchSrc" + x).css("background-color", "");
                 $("#cifSrc" + x).css("background-color", "");
                 $("#suffixSrc" + x).css("background-color", "");
+                $("#extSrc" + x).css("background-color", "");
             }
 
             if ($("#tipeSrc" + x).val() == "") {

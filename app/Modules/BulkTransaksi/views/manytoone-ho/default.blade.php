@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Upload File Data Many To One HeadOffice')
+@section('title', 'Upload File Data Many To One')
 @section('content')
 <div class="row toastrDefaultInfo"></div>
 <div class="row toastrDefaultError"></div>
@@ -10,7 +10,7 @@
             @csrf
             <div class="card-body">
                 <div class="col-12 form-group">
-                    <label>Rekening Sumber Bulk File<span style="color: red">*</span></label><br>
+                    <label>Rekening Sumber Bulk File <span style="color: red">*</span></label><br>
                     <input type="file" id="myfile" name="file">
                 </div>
                 <div class="col-sm-12 form-group">
@@ -19,8 +19,10 @@
                     <label>Rekening Tujuan <span style="color: red">*</span></label>
                     <div class="row">
                         <div class="col-sm-8">
-                            <div class="row col-sm-12">
-                                <input type="text" name="ext" id="extDst" class="form-control number rekTujuan" maxlength="13" placeholder="External Account">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input type="text" name="ext" id="extDst" class="form-control number rekTujuan" maxlength="13" placeholder="External Account">
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">
@@ -34,6 +36,7 @@
                                     <input type="hidden" name="tipe" id="tipeDst" class="form-control detailDst" readonly>
                                     <input type="hidden" name="nama" id="namaDst" class="form-control detailDst" readonly>
                                     <input type="hidden" name="ccy" id="ccyDst" class="form-control detailDst" readonly>
+                                    <input type="hidden" name="needCostCenter" id="needCostCenter" class="form-control detailSrc" readonly>
                                 </div>
                             </div>
                         </div>
@@ -63,19 +66,7 @@
                 </div>
 
                 <div class="col-12 form-group">
-                    <label>Jenis Transaksi</label>
-                    <select id="getTrxList" name="trxName" class="form-control select2" style="width: 100%">
-                    </select><br>
-                    <div class="row">
-                        <div class="col-6">
-                            <label>Trx Debet</label>
-                            <input type="text" name="dbCode" id="dbCode" class="form-control" readonly>
-                        </div>
-                        <div class="col-6">
-                            <label>Trx Credit</label>
-                            <input type="text" name="crCode" id="crCode" class="form-control" readonly>
-                        </div>
-                    </div>
+                    @include('jenisTransaksi')
                 </div>
 
                 <div class="col-12 form-group">
@@ -101,6 +92,9 @@
                 </div>
                 <div class="col-12 form-group">
                     <input type="text" name="narative4" id="narative4" class="form-control nar" maxlength="35" placeholder="Narative 4">
+                </div>
+                <div class="col-12 form-group">
+                    @include('costCenter')
                 </div>
                 <blockquote style="text-align: justify;text-justify: inter-word;hyphens: auto">
                     <p><strong>Catatan!</strong></p>

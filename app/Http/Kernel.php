@@ -45,6 +45,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\StatusOnline::class,
+            \App\Http\Middleware\FinalizeLoginStatus::class,
             \App\Http\Middleware\LastActivityTime::class,
             // \App\Http\Middleware\SessionExpired::class,
         ],
@@ -95,6 +96,7 @@ class Kernel extends HttpKernel
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
         \Illuminate\Auth\Middleware\Authorize::class,
         \App\Http\Middleware\StatusOnline::class,
+        \App\Http\Middleware\FinalizeLoginStatus::class,
         \App\Http\Middleware\LastActivityTime::class,
         // \App\Http\Middleware\SessionExpired::class,
     ];

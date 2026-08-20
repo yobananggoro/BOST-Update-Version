@@ -237,6 +237,7 @@ function validateForm() {
                 $("#branchDst" + x).css("background-color", "red");
                 $("#cifDst" + x).css("background-color", "red");
                 $("#suffixDst" + x).css("background-color", "red");
+                $("#extDst" + x).css("background-color", "red");
 
                 result = "Rekening Tujuan " + x + " Tidak Boleh Kosong";
                 return result;
@@ -244,6 +245,7 @@ function validateForm() {
                 $("#branchDst" + x).css("background-color", "");
                 $("#cifDst" + x).css("background-color", "");
                 $("#suffixDst" + x).css("background-color", "");
+                $("#extDst" + x).css("background-color", "");
             }
 
             if ($("#tipeDst" + x).val() == "") {

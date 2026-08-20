@@ -17,8 +17,10 @@
                         <label>Rekening Sumber <span style="color: red">*</span></label>
                         <div class="row">
                             <div class="col-sm-8">
-                                <div class="row col-sm-12">
-                                    <input type="text" name="extSrc" id="extSrc" class="form-control number rekSumber" maxlength="13" placeholder="External Account">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <input type="text" name="extSrc" id="extSrc" class="form-control number rekSumber" maxlength="13" placeholder="External Account">
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-4">
@@ -64,8 +66,10 @@
                         <label>Rekening Tujuan <span style="color: red">*</span></label>
                         <div class="row">
                             <div class="col-sm-8">
-                                <div class="row col-sm-12">
-                                    <input type="text" name="extDst" id="extDst" class="form-control number rekTujuan" maxlength="13" placeholder="External Account">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <input type="text" name="extDst" id="extDst" class="form-control number rekTujuan" maxlength="13" placeholder="External Account">
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-4">
@@ -116,32 +120,22 @@
                         <input type="hidden" name="exchangeRate" id="exchangeRate" class="form-control text-right" readonly>
                     </div>
                     <div id="rates_fields"></div>
-                    <!-- <div class="col-12 form-group">
-                        <label>Keterangan</label>
-                        <input type="text" name="narative1" id="narative1" class="form-control nar" placeholder="Narative 1">
-                    </div>
-                    <div class="col-12 form-group">
-                        <input type="text" name="narative2" id="narative2" class="form-control nar" placeholder="Narative 2">
-                    </div> -->
                     <div class="col-12 form-group">
                         <label>Keterangan</label>
-                        <input type="text" name="narative3" id="narative3" class="form-control nar" placeholder="Narative 3">
+                        <input type="text" name="narative1" id="narative1" class="form-control nar" maxlength="35" placeholder="Narative 1">
                     </div>
                     <div class="col-12 form-group">
-                        <input type="text" name="narative4" id="narative4" class="form-control nar" placeholder="Narative 4">
+                        <input type="text" name="narative2" id="narative2" class="form-control nar" maxlength="35" placeholder="Narative 2">
+                    </div>
+                    <div class="col-12 form-group">
+                        <!-- <label>Keterangan</label> -->
+                        <input type="text" name="narative3" id="narative3" class="form-control nar" maxlength="35" placeholder="Narative 3">
+                    </div>
+                    <div class="col-12 form-group">
+                        <input type="text" name="narative4" id="narative4" class="form-control nar" maxlength="35" placeholder="Narative 4">
                     </div>
                     <div class="col-12">
-                        <label>User Code</label>
-                        <select id="getUserCodeList" name="usercode_desc" class="form-control select2" style="width: 100%">
-                        </select><br>
-                        <div class="row form-group">
-                            <div class="col-6">
-                                <input type="text" name="userCode1" id="userCode1" class="form-control" readonly>
-                            </div>
-                            <div class="col-6">
-                                <input type="text" name="userCode2" id="userCode2" class="form-control" readonly>
-                            </div>
-                        </div>
+                         @include('costCenter')
                     </div>
                     @include('addInfo')
                 </div>

@@ -16,8 +16,10 @@
                         <label>Rekening Sumber <span style="color: red">*</span></label>
                         <div class="row">
                             <div class="col-sm-8">
-                                <div class="row col-sm-12">
-                                    <input type="text" name="ext" id="extSrc" class="form-control number rekSumber" maxlength="13" placeholder="External Account">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <input type="text" name="ext" id="extSrc" class="form-control number rekSumber" maxlength="13" placeholder="External Account">
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-4">
@@ -73,12 +75,12 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="col-12 form-group">
                         <label>Refference</label>
                         <input type="text" name="reff" id="reff" class="form-control" value="{{@$reff}}" readonly>
                     </div>
-                    <div class="col-12 form-group">
+                    <!-- <div class="col-12 form-group">
                         <label>Transaksi Cheque?</label>
                         <div class="form-group">
                             <div class="form-check">
@@ -94,7 +96,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div id="numbCheck">
                     </div>
                     <div class="col-12 form-group">

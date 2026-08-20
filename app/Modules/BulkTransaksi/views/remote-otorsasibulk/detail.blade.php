@@ -9,9 +9,19 @@
 				<table class="float-left" cellspacing="0" cellpadding="0" style="font-weight: bold; font-size: 15px">
 					<tbody>
 						<tr>
+                            <td style="width: 150px; text-align: left">Refference</td>
+                            <td style="width: 15px; text-align: left">:</td>
+                            <td style="width: 180px; text-align: left">{{$request->reff}}</td>
+                        </tr>
+						<tr>
 							<td style="width: 140px; text-align: left">Page</td>
 							<td style="width: 15px; text-align: left">:</td>
 							<td style="width: 80px; text-align: left">{{$page}}</td>
+						</tr>
+						<tr>
+							<td style="text-align: left">Total rows per page</td>
+							<td style="text-align: left">:</td>
+							<td style="text-align: left">{{number_format($size, 0, '', '.')}} rows</td>
 						</tr>
 						<tr>
 							<td style="text-align: left">Total rows</td>
@@ -19,11 +29,15 @@
 							<td style="text-align: left">{{number_format($request->rows, 0, '', '.')}} rows</td>
 						</tr>
 						<tr>
-							<td style="text-align: left">Total rows per page</td>
-							<td style="text-align: left">:</td>
-							<!-- <td style="text-align: left">{{number_format(count($data), 0, '', '.')}} rows</td> -->
-							<td style="text-align: left">{{number_format($size, 0, '', '.')}} rows</td>
-						</tr>
+                            <td style="text-align: left">Total Debit</td>
+                            <td style="text-align: left">:</td>
+                            <td style="text-align: left">{{ number_format($request->amount, 2) }}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left">Total Credit</td>
+                            <td style="text-align: left">:</td>
+                            <td style="text-align: left">{{ number_format($request->amount, 2) }}</td>
+                        </tr>
 					</tbody>
 				</table>
 			</div>
@@ -32,13 +46,14 @@
 				<table id="dataTableDetailUpload" class="table table-striped" style="width: 170%">
 					<thead>
 						<tr>
-							<th style="width:10px">No.</th>
+							<th style="width:10px">Reff</th>
 							<th style="width:100px">Kode Trx</th>
 							<th>No Cheque</th>
                             <th>No Akun</th>
                             <th>Nama Akun</th>
                             <th>Status Akun</th>
                             <th>Ccy</th>
+							<th>Cost Center</th>
                             <th>Nominal</th>
 							<th>Nar 1</th>
 							<th>Nar 2</th>
@@ -52,13 +67,14 @@
 						@foreach($data as $key => $d)
 						<tr>
 							@if($d['trxType'] != 'dc')
-							<td>{{ $key+1 }}.</td>
+							<td>{{ $d['dcRefNo'] }}</td>
 							<td>{{ $d['trxType'] == 'd' ? $d['trxCodeDebit'].' (D) ' : $d['trxCodeCredit'].' (C) '}}</td>
 							<td>{{ $d['chequeNumber'] }}</td>
 							<td>{{ $d['trxType'] == 'd' ? $d['srcAccountNumber'] : $d['dstAccountNumber'] }}</td>
 							<td>{{ $d['accountName'] }}</td>
 							<td>{{ $d['accountStatus'] }}</td>
 							<td>{{ $d['trxType'] == 'd' ? $d['srcCcy'] : $d['dstCcy'] }}</td>
+							<td>{{ $d['costCenter'] }}</td>
 							<td class="text-right">{{ number_format($d['trxAmount'],2) }}</td>
 							<td>{{ $d['trxType'] == 'd' ? $d['nar1'] : $d['nar5'] }}</td>
 							<td>{{ $d['trxType'] == 'd' ? $d['nar2'] : $d['nar6'] }}</td>
@@ -67,12 +83,14 @@
 							<td>{{ $d['createdAt'] != null ? date('d M Y H:i:s', strtotime($d['createdAt'])) : '' }}</td>
 							<td>{{ $d['updatedAt'] != null ? date('d M Y H:i:s', strtotime($d['updatedAt'])) : '' }}</td>
 							@else
-							<td>{{ $key+1 }}.</td>
+							<td>{{ $d['dcRefNo'] }}</td>
 							<td>{{ $d['trxCodeDebit'].' (D) '}}<br>{{$d['trxCodeCredit'].' (C) '}}</td>
+							<td>{{ $d['chequeNumber'] }}</td>
 							<td>{{ $d['srcAccountNumber'] }}<br>{{ $d['dstAccountNumber'] }}</td>
 							<td>{{ $d['accountName'] }}</td>
 							<td>{{ $d['accountStatus'] }}</td>
 							<td>{{ $d['trxType'] == 'd' ? $d['srcCcy'] : $d['dstCcy'] }}</td>
+							<td>{{ $d['costCenter'] }}</td>
 							<td class="text-right">{{ number_format($d['trxAmount'],2) }}</td>
 							<td>{!! $d['trxType'] == 'd' ? $d['nar1'] : $d['nar1']."<br>".$d['nar5'] !!}</td>
 							<td>{!! $d['trxType'] == 'd' ? $d['nar2'] : $d['nar2']."<br>".$d['nar6'] !!}</td>
@@ -120,6 +138,7 @@
 						<!-- <h8><b>Total rows: {{number_format($request->rows, 0, '', '.')}}</b></h8> -->
 					</div>
 					<div class="col-6">
+						@if($request->rows > $size)
 						<div class="btn-group float-right">
 							<div class="dataTables_paginate paging_simple_numbers" id="example1_paginate" style="align-content: flex-end">
 								<ul class="pagination">
@@ -131,14 +150,14 @@
 										</li>
 										@else
 										<li class="paginate_button page-item previous" id="example1_previous">
-											<a href="{{ route('list-bulkupload.listDetail', ['id' => $request->id, 'page' => $page-1, 'rows' => $request->rows]) }}" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">
+											<a href="{{ route('list-bulkupload.listDetail', ['id' => $request->id, 'page' => $page-1, 'rows' => $request->rows, 'reff' => $request->reff]) }}" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">
 												‹
 											</a>
 										</li>
 										@endif
 
 										<li class="paginate_button page-item next" id="example1_next">
-											<a href="{{ route('list-bulkupload.listDetail', ['id' => $request->id, 'page' => 0, 'rows' => $request->rows]) }}" aria-controls="example1" data-dt-idx="2" tabindex="0" class="page-link">
+											<a href="{{ route('list-bulkupload.listDetail', ['id' => $request->id, 'page' => 0, 'rows' => $request->rows, 'reff' => $request->reff]) }}" aria-controls="example1" data-dt-idx="2" tabindex="0" class="page-link">
 												First
 											</a>
 										</li>
@@ -150,13 +169,13 @@
 											@if ($i >= $startpage && $i <= $endpage)
 												@if ($i==$page)
 												<li class="paginate_button page-item active">
-												<a href="{{ route('list-bulkupload.listDetail', ['id' => $request->id, 'page' => $page, 'rows' => $request->rows]) }}" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link">
+												<a href="{{ route('list-bulkupload.listDetail', ['id' => $request->id, 'page' => $page, 'rows' => $request->rows, 'reff' => $request->reff]) }}" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link">
 													{{$i}}
 												</a>
 												</li>
 												@else
 												<li class="paginate_button page-item">
-													<a href="{{ route('list-bulkupload.listDetail', ['id' => $request->id, 'page' => $i, 'rows' => $request->rows]) }}" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link">
+													<a href="{{ route('list-bulkupload.listDetail', ['id' => $request->id, 'page' => $i, 'rows' => $request->rows, 'reff' => $request->reff]) }}" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link">
 														{{$i}}
 													</a>
 												</li>
@@ -164,7 +183,7 @@
 												@endif
 												@endfor
 												<li class="paginate_button page-item next" id="example1_next">
-													<a href="{{ route('list-bulkupload.listDetail', ['id' => $request->id, 'page' => ceil($request->rows/$size)-1, 'rows' => $request->rows]) }}" aria-controls="example1" data-dt-idx="2" tabindex="0" class="page-link">
+													<a href="{{ route('list-bulkupload.listDetail', ['id' => $request->id, 'page' => ceil($request->rows/$size)-1, 'rows' => $request->rows, 'reff' => $request->reff]) }}" aria-controls="example1" data-dt-idx="2" tabindex="0" class="page-link">
 														Last
 													</a>
 												</li>
@@ -176,7 +195,7 @@
 												</li>
 												@else
 												<li class="paginate_button page-item next" id="example1_next">
-													<a href="{{ route('list-bulkupload.listDetail', ['id' => $request->id, 'page' => $page+1, 'rows' => $request->rows]) }}" aria-controls="example1" data-dt-idx="2" tabindex="0" class="page-link">
+													<a href="{{ route('list-bulkupload.listDetail', ['id' => $request->id, 'page' => $page+1, 'rows' => $request->rows, 'reff' => $request->reff]) }}" aria-controls="example1" data-dt-idx="2" tabindex="0" class="page-link">
 														›
 													</a>
 												</li>
@@ -184,6 +203,7 @@
 								</ul>
 							</div>
 						</div>
+						@endif
 					</div>
 				</div>
 			</div>

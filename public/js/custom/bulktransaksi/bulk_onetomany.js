@@ -34,10 +34,7 @@ $(function () {
     $(".nar").keyup(function (e) {
         this.value = this.value.replace(/[\*\?:]/g, "");
     });
-
 });
-
-
 
 function validateForm() {
     var result = "success";
@@ -84,6 +81,15 @@ function validateForm() {
     //     }
     // }
 
+    if ($("#dbCode").val() == "" && $("#crCode").val() == "") {
+        $("#getTrxList").siblings(".select2-container").find(".select2-selection").css("background-color", "red");
+
+        result = "Jenis Transaksi harus di pilih!";
+        return result;
+    } else {
+        $("#getTrxList").siblings(".select2-container").find(".select2-selection").removeAttr("style");
+    }
+
     if ($("#nominal_").val() == "") {
         $("#nominal_").css("background-color", "red");
 
@@ -102,9 +108,20 @@ function validateForm() {
         $("#nominal_").css("background-color", "");
     }
 
-    if ($("#narative3").val() == "" && $("#narative4").val() != "") {
-        result = "Silahkan isi kolom narative 3 terlebih dahulu!";
-        return result;
+    // if ($("#narative3").val() == "" && $("#narative4").val() != "") {
+    //     result = "Silahkan isi kolom narative 3 terlebih dahulu!";
+    //     return result;
+    // }
+
+    if ($("#needCostCenter").val() == "true") {
+        if ($("#userCode1").val() == "" && $("#userCode2").val() == "") {
+            $("#getUserCodeList").siblings(".select2-container").find(".select2-selection").css("background-color", "red");
+
+            result = "Rekening membutuhkan Cost Center.";
+            return result;
+        } else {
+            $("#getUserCodeList").siblings(".select2-container").find(".select2-selection").removeAttr("style");
+        }
     }
 
     if ($("#myfile").val() == "") {
@@ -251,13 +268,13 @@ function detailSumber() {
         data:
             accuse == "internal"
                 ? {
-                    branch: branch,
-                    cif: cif,
-                    suffix: suffix,
-                }
+                      branch: branch,
+                      cif: cif,
+                      suffix: suffix,
+                  }
                 : {
-                    extAcctNumber: ext,
-                },
+                      extAcctNumber: ext,
+                  },
         success: function (data) {
             $(".loading-page").hide(); //show progress bar
             // console.log(data);
@@ -274,6 +291,7 @@ function detailSumber() {
                     $("#tipeSrc").val(data.accountType);
                     $("#namaSrc").val(data.accountShortName);
                     $("#ccySrc").val(data.currency);
+                    $("#needCostCenter").val(data.costCenter);
 
                     $(".toastrDefaultInfo").show(function () {
                         if (accuse == "internal") {
@@ -334,5 +352,3 @@ function valCheque(e) {
         return i;
     }
 }
-
-

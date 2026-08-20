@@ -401,9 +401,10 @@ class BostHelper extends Controller
 
 	public function checkSignatureSVS($request)
 	{
-		// dd($request);
+		$account = $request->branch.$request->cif.$request->suffix;
+		// dd($request,$account);
 		try {
-			$response = Http::withBasicAuth(config('auth.user_svs'), config('auth.pass_svs'))->get(config('app.url_svs') . $request->cif_cust);
+			$response = Http::withBasicAuth(config('auth.user_svs'), config('auth.pass_svs'))->get(config('app.url_svs') . $account);
 			// Log::info("List Signature Request: " . json_encode($message));
 			Log::info("List Signature Response: " . $response);
 			// dd($response, json_decode($response, true));
@@ -661,6 +662,52 @@ class BostHelper extends Controller
 				Log::info("Reload Core User Kode: " . json_encode(array_diff_key($respMsg, ['data' => ''])));
 			} else {
 				Log::info("Reload Core User Kode: " . $response);
+			}
+
+			return $response;
+		} catch (\Exception $e) {
+			echo $e->getMessage();
+			die();
+		}
+	}
+
+	public function rekeningCostcenter()
+	{
+		$tokens = $this->setToken->accessToken;
+		$url = config('app.backend_bo') . '/transactions/get-cc-acc';
+
+		try {
+			$response = Http::withHeaders(['Authorization' => 'Bearer ' . $tokens, 'Content-Type' => 'application/json',])->get($url);
+			// dd($response, json_decode($response, true));
+
+			if ($response->status() == 200) {
+				$respMsg = json_decode($response, true);
+				Log::info("Rekening CostCenter: " . json_encode(array_diff_key($respMsg, ['data' => ''])));
+			} else {
+				Log::info("Rekening CostCenter: " . $response);
+			}
+
+			return $response;
+		} catch (\Exception $e) {
+			echo $e->getMessage();
+			die();
+		}
+	}
+
+	public function reloadRekeningCostcenter()
+	{
+		$tokens = $this->setToken->accessToken;
+		$url = config('app.backend_bo') . '/transactions/get-cc-acc/reload';
+
+		try {
+			$response = Http::withHeaders(['Authorization' => 'Bearer ' . $tokens, 'Content-Type' => 'application/json',])->get($url);
+			// dd($response, json_decode($response, true));
+
+			if ($response->status() == 200) {
+				$respMsg = json_decode($response, true);
+				Log::info("Reload Core Rekening Costcenter: " . json_encode(array_diff_key($respMsg, ['data' => ''])));
+			} else {
+				Log::info("Reload Core Rekening Costcente: " . $response);
 			}
 
 			return $response;

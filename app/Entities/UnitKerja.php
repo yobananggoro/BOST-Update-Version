@@ -19,7 +19,7 @@ class UnitKerja extends Model
     */
     protected $fillable = [
         // 'kode', 'nama', 'parentkode', 'hckode', 'cabang', 'kanwil',
-        'kode', 'nama',
+        'kode', 'nama', 'kode_induk'
     ];
     
     /**

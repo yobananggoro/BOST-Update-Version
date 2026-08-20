@@ -63,21 +63,29 @@
                                 <td id="list"></td>
                             </tr>
                             @if(isset($data))
-                                @if(count($data))
-                                    @foreach ($data as $key => $value)
+                                @if(count($data['data']))
+                                    @foreach ($data['data'] as $key => $value)
                                     <tr>
                                         <td style="padding-right: 20px">
                                             <p>Text {{ $key+1 }}: {{ $value['text'] }}</p>
                                         </td>
+                                        <!-- <td style="padding-left: 20px">
+                                                    <span style="margin: 0px; padding-right: 8px"><img class="imgThumb" style="border-style:solid;border-width:1px" width="150px" height="100px" data-id="{{ $value['id'] }}" src="data:image/png;base64,{{ $value['img'] }}"></span>
+                                                    <div id="zoomArea_{{ $value['id'] }}" style="position:fixed;display:none;z-index:5010;border:1px solid #000;background:#fff;pointer-events: none; "><img id="zoomImg_{{ $value['id'] }}" width="450px" height="300px" src=""></div>
+                                                    <br>
+                                                </td> -->
                                         <td style="padding-left: 20px">
-                                            <span style="margin: 0px; padding-right: 8px"><img class="imgThumb" style="border-style:solid;border-width:1px" width="150px" height="100px" data-id="{{ $value['id'] }}" src="data:image/png;base64,{{ $value['img'] }}"></span>
-                                            <div id="zoomArea_{{ $value['id'] }}" style="position:fixed;display:none;z-index:5010;border:1px solid #000;background:#fff;pointer-events: none; "><img id="zoomImg_{{ $value['id'] }}" width="450px" height="300px" src=""></div>
-                                            <br>
+                                            <img id="img_{{ $value['id'] }}" class="imgThumb hex-image" data-id="{{ $value['id'] }}" data-hex="{{ $value['img'] }}" width="150" height="100" style="border:2px solid #000; border-radius:4px;"/>
+
+                                            <div id="zoomArea_{{ $value['id'] }}" style="position: fixed; display: none; z-index: 5010; border: 1px solid #000; background: #fff; pointer-events: none">
+                                                <img id="zoomImg_{{ $value['id'] }}" width="550" height="400" src="" />
+                                            </div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><br></td>
+                                        <td></td>
                                     </tr>
+
                                     @endforeach
                                 @else
                                 <tr>

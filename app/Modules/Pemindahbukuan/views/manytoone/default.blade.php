@@ -147,7 +147,7 @@
 
                     <div class="col-12 form-group">
                         <label>Keterangan</label>
-                        <input type="text" name="narative1" id="narative1" class="form-control nar" placeholder="Narative 1">
+                        <input type="text" name="narative1" id="narative1" class="form-control nar" maxlength="35" placeholder="Narative 1">
                     </div>
                     <div class="col-12 form-group">
                         <input type="text" name="narative2" id="narative2" class="form-control nar" maxlength="35" placeholder="Narative 2">

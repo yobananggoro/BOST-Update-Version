@@ -16,7 +16,7 @@ class BulkUploadRequest extends FormRequest
     public function rules()
     {
         return [
-            'file' => 'required|max:1000|mimes:xlsx,xls'
+            'file' => 'required|max:2000|mimes:xlsx,xls'
         ];
     }
 

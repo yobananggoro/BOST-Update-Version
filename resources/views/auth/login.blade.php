@@ -22,10 +22,58 @@
 
     <div class="row">
         <div class="col-12">
-            <button class="btn btn-primary btn-block btn-flat">
+            <button type="submit" class="btn btn-primary btn-block btn-flat" id="login-submit-btn">
                 {{ __('button.login') }}
             </button>
         </div>
     </div>
     {{ Form::close() }}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const loginForm = document.querySelector('form[name="form-login"]');
+            const submitButton = document.getElementById('login-submit-btn');
+            const storageKey = 'login-submit-in-progress';
+
+            if (!loginForm || !submitButton) {
+                return;
+            }
+
+            const resetButton = function () {
+                submitButton.disabled = false;
+                submitButton.innerText = '{{ __('button.login') }}';
+                sessionStorage.removeItem(storageKey);
+            };
+
+            const startSubmit = function () {
+                if (submitButton.disabled) {
+                    return false;
+                }
+
+                submitButton.disabled = true;
+                submitButton.innerText = 'Processing...';
+                sessionStorage.setItem(storageKey, '1');
+            };
+
+            if (sessionStorage.getItem(storageKey) === '1') {
+                resetButton();
+            }
+
+            loginForm.addEventListener('submit', startSubmit);
+
+            loginForm.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                }
+            });
+
+            window.addEventListener('pageshow', function () {
+                resetButton();
+            });
+
+            window.addEventListener('beforeunload', function () {
+                sessionStorage.removeItem(storageKey);
+            });
+        });
+    </script>
 @endsection

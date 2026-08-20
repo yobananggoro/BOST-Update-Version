@@ -18,8 +18,10 @@
                         <label>Rekening Sumber <span style="color: red">*</span></label>
                         <div class="row">
                             <div class="col-sm-8">
-                                <div class="row col-sm-12">
-                                    <input type="text" name="ext" id="extSrc" class="form-control number rekSumber" maxlength="13" placeholder="External Account">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <input type="text" name="ext" id="extSrc" class="form-control number rekSumber" maxlength="13" placeholder="External Account">
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-4">
@@ -79,11 +81,18 @@
 
                     <div class="col-12 form-group">
                         <label>Keterangan</label>
+                        <input type="text" name="narative1" id="narative1" class="form-control nar" maxlength="35" placeholder="Narative 1">
+                    </div>
+                    <div class="col-12 form-group">
+                        <input type="text" name="narative2" id="narative2" class="form-control nar" maxlength="35" placeholder="Narative 2">
+                    </div>
+                    <div class="col-12 form-group">
                         <input type="text" name="narative3" id="narative3" class="form-control nar" maxlength="35" placeholder="Narative 3">
                     </div>
                     <div class="col-12 form-group">
                         <input type="text" name="narative4" id="narative4" class="form-control nar" maxlength="35" placeholder="Narative 4">
                     </div>
+                    
                     <div class="col-12 form-group">
                         <label>Rekening Tujuan Bulk File<span style="color: red">*</span></label><br>
                         <input type="file" id="myfile" name="file">

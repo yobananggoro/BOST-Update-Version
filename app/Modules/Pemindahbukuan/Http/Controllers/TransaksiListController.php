@@ -13,6 +13,7 @@ class TransaksiListController extends \App\Http\Controllers\Controller
     {
         $data = Transactions::fetch($request);  
         $branch = UnitKerja::GetAll();
+        // dd($data);
         
         return view('pemindahbukuan::transaksi-list.default', compact('request','data','branch')); 
     }

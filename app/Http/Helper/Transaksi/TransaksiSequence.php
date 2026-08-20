@@ -11,26 +11,17 @@ class TransaksiSequence
 {
     public static function increaseCounter()
     {
-        try {
-            $sqnc = TransactionSeq::findsequence();
-            $userid = auth()->user()->username;
-            if (count($sqnc) > 0) {
-                $seq = $sqnc->first();
-                $trx = TransactionSeq::where('userid', $userid)->first();
-                $trx->userid = $userid;
-                $trx->sequence = $seq->sequence + 1;
-            } else {
-                $trx = new TransactionSeq;
-                $trx->id = Uuid::uuid4();
-                $trx->userid = $userid;
-                $trx->sequence = 1;
-            }
+        $userid = auth()->user()->username;
+        $seq = TransactionSeq::findsequence()->first();
+        $trx = TransactionSeq::firstOrNew(['userid' => $userid]);
 
-            $trx->save();
-            return true;
-        } catch (Exception $e) {
-            return false;
+        if (!$trx->exists) {
+            $trx->id = Uuid::uuid4();
         }
+
+        $trx->userid = $userid;
+        $trx->sequence = $seq ? $seq->sequence + 1 : 2;
+        return $trx->save();
     }
 
     public static function generateReff()

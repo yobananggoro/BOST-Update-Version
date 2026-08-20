@@ -38,7 +38,7 @@ function jenisTrx() {
                 dropdown.append('<option value="">- Pilih -</option>');
 
                 data.listTrx.forEach(function (item) {
-                    dropdown.append('<option value="' + item.trxName + '" data-dbcode="' + item.dbCode + '" data-crcode="' + item.crCode + '">' + item.trxName + "</option>");
+                    dropdown.append('<option value="' + item.trxName + '" data-dbcode="' + item.dbCode + '" data-crcode="' + item.crCode + '">' + item.trxName + " [" + item.dbCode + " - " + item.crCode + "]</option>");
                 });
 
                 // Set dbCode and crCode to input when dropdown changes

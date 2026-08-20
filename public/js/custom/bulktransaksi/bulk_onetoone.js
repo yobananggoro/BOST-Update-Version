@@ -23,6 +23,15 @@ function validateForm() {
         return result;
     }
 
+    if ($("#dbCode").val() == "" && $("#crCode").val() == "") {
+        $("#getTrxList").siblings(".select2-container").find(".select2-selection").css("background-color", "red");
+
+        result = "Jenis Transaksi harus di pilih!";
+        return result;
+    } else {
+        $("#getTrxList").siblings(".select2-container").find(".select2-selection").removeAttr("style");
+    }
+
     /* Start validasi additional info apuppt */
     
     if ($("#getInstrumenList").val() == "" || $("#getInstrumenList").val() == null) {

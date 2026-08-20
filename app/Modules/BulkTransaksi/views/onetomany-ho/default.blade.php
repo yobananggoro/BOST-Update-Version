@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Upload File One To Many HeadOffice')
+@section('title', 'Upload File One To Many')
 @section('content')
 <div class="row toastrDefaultInfo"></div>
 <div class="row toastrDefaultError"></div>
@@ -16,8 +16,10 @@
                         <label>Rekening Sumber <span style="color: red">*</span></label>
                         <div class="row">
                             <div class="col-sm-8">
-                                <div class="row col-sm-12">
-                                    <input type="text" name="ext" id="extSrc" class="form-control number rekSumber" maxlength="13" placeholder="External Account">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <input type="text" name="ext" id="extSrc" class="form-control number rekSumber" maxlength="13" placeholder="External Account">
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-4">
@@ -31,6 +33,7 @@
                                         <input type="hidden" name="tipe" id="tipeSrc" class="form-control detailSrc" readonly>
                                         <input type="hidden" name="nama" id="namaSrc" class="form-control detailSrc" readonly>
                                         <input type="hidden" name="ccy" id="ccySrc" class="form-control detailSrc" readonly>
+                                        <input type="hidden" name="needCostCenter" id="needCostCenter" class="form-control detailSrc" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -60,25 +63,31 @@
                     </div>
 
                     <div class="col-12 form-group">
-                        <label>Jenis Transaksi</label>
-                        <select id="getTrxList" name="trxName" class="form-control select2" style="width: 100%">
-                        </select><br>
-                        <div class="row">
-                            <div class="col-6">
-                                <label>Trx Debet</label>
-                                <input type="text" name="dbCode" id="dbCode" class="form-control" readonly>
-                            </div>
-                            <div class="col-6">
-                                <label>Trx Credit</label>
-                                <input type="text" name="crCode" id="crCode" class="form-control" readonly>
-                            </div>
-                        </div>
+                        @include('jenisTransaksi')
                     </div>
 
                     <div class="col-12 form-group">
                         <label>Refference</label>
                         <input type="text" name="reff" id="reff" class="form-control" value="{{@$reff}}" readonly>
                     </div>
+
+                    <!-- <div class="col-12 form-group">
+                        <label>Transaksi Cheque?</label>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <div class="col-6">
+                                    <div class="col-6">
+                                        <input class="form-check-input" type="radio" name="isCheque" value="N" onclick="valCheque(this.value);" checked>
+                                        <label class="form-check-label">Tidak</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <input class="form-check-input" type="radio" name="isCheque" value="Y" onclick="valCheque(this.value);">
+                                        <label class="form-check-label">Ya</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
 
                     <div id="numbCheck">
                     </div>
@@ -102,7 +111,10 @@
                         <input type="text" name="narative4" id="narative4" class="form-control nar" maxlength="35" placeholder="Narative 4">
                     </div>
                     <div class="col-12 form-group">
-                        <label>Rekening Tujuan Bulk File<span style="color: red">*</span></label><br>
+                        @include('costCenter')
+                    </div>
+                    <div class="col-12 form-group">
+                        <label>Rekening Tujuan Bulk File <span style="color: red">*</span></label><br>
                         <input type="file" id="myfile" name="file">
                     </div>
                     <blockquote style="text-align: justify;text-justify: inter-word;hyphens: auto">
@@ -113,7 +125,9 @@
                             browser terlebih dahulu agar dipastikan selalu mendapat versi terbaru.
                         </p>
                     </blockquote>
-                    @include('addInfo')
+                    <div class="col-12 form-group">
+                        @include('addInfo')
+                    </div>
                 </div>
                 <div class="card-footer clearfix">
                     <div class="btn-group">

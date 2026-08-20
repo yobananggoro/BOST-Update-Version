@@ -38,12 +38,12 @@
             <td>{{$user->profile->unitKerja->nama}}</td>
         </tr>
         <tr>
-            <td>User Maker</td>
+            <td>Operator</td>
             <td>:</td>
             <td>{{$user->username}} | {{$user->profile->nip}} | {{$user->profile->nama}}</td>
         </tr>
         <tr>
-            <td>User Otorisasi</td>
+            <td>Penyelia</td>
             <td>:</td>
             <td>{{$useroto == null ? '':$useroto->username}} | {{$useroto == null ? '':$useroto->profile->nip}} | {{$useroto == null ? '':$useroto->profile->nama}} </td>
         </tr>
@@ -74,15 +74,15 @@
         <thead>
             <tr>
                 <th style="width:10px">No.</th>
-                <th style="width:40px">Trx Code</th>
-                <th style="width:70px">Cheque No</th>
-                <th style="width:50px">Account</th>
-                <th>Account Name</th>
-                <th>Account Status</th>
-                <th>Amount</th>
-                <th>Usercode</th>
-                <th>Posting Status</th>
-                <th>Posting Date</th>
+                <th style="width:40px">Kode Trx</th>
+                <th style="width:70px">No Warkat</th>
+                <th style="width:50px">Rekening</th>
+                <th>Nama Akun</th>
+                <th>Status Akun</th>
+                <th>Nominal</th>
+                <th>UserKode</th>
+                <th>Status Posting</th>
+                <th>Tanggal Posting</th>
             </tr>
         </thead>
         <tbody>

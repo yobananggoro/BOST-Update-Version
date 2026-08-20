@@ -40,12 +40,16 @@
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
                                     <div class="dropdown-menu" role="menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-1px, -165px, 0px);">
-                                        <a href="{{ route('list-bulkupload.listDetail', ['id' => $d['id'], 'page' => 0, 'rows' => $d['totalRecords'], 'amount' => $d['totalDebit']]) }}" rel="action" title="Detail {{ $d['reference'] }}" class="dropdown-item">Detail | <b>{{ $d['reference'] }}</b></a>
-                                        @if(in_array(auth()->user()->profile->rolename, ['Administrasi Dana Dan Jasa', 'Administrasi Kredit', 'Administrasi Operasional', 'SUPER ADMIN', 'Staf']))
-                                        @if($d['status'] == 'WAITING_VERIFY')
-                                        <a href="{{ route('list-bulkupload.verify', ['id' => $d['id'], 'action' => 'true']) }}" class="dropdown-item" rel="action" title="Verify {{ $d['reference'] }}">Verify | <b>{{ $d['reference'] }}</b></a>
-                                        <a href="{{ route('list-bulkupload.verify', ['id' => $d['id'], 'action' => 'false']) }}" class="dropdown-item" rel="action" title="Cancel {{ $d['reference'] }}">Cancel | <b>{{ $d['reference'] }}</b></a>
-                                        @endif
+                                        <a href="{{ route('list-bulkupload.listDetail', ['id' => $d['id'], 'page' => 0, 'rows' => $d['totalRecords'], 'amount' => $d['totalDebit'], 'reff' => $d['reference']]) }}" rel="action" title="Detail {{ $d['reference'] }}" class="dropdown-item">Detail | <b>{{ $d['reference'] }}</b></a>
+                                        @if(in_array(auth()->user()->profile->rolename, ['Operator']))
+                                            @if($d['status'] == 'WAITING_VERIFY')
+                                            <a href="{{ route('list-bulkupload.verify', ['id' => $d['id'], 'action' => 'true']) }}" class="dropdown-item" rel="action" title="Verify {{ $d['reference'] }}">Verify | <b>{{ $d['reference'] }}</b></a>
+                                            <a href="{{ route('list-bulkupload.verify', ['id' => $d['id'], 'action' => 'false']) }}" class="dropdown-item" rel="action" title="Cancel {{ $d['reference'] }}">Cancel | <b>{{ $d['reference'] }}</b></a>
+                                            @endif
+                                        @else
+                                            @if($d['status'] == 'VERIFIED_AND_WAITING_APPROVAL')
+                                            <a target="_blank" href="{{ route('list-bulkupload.excel', ['id' => $d['id'], 'usermaker' => $d['createdBy'], 'useroto' => $d['updatedBy'] == null ? '' : $d['updatedBy'], 'timecreate' => $d['createdAt'], 'timeoto' => $d['approvedAt'] == null ? '' : $d['approvedAt'], 'reff' => $d['reference'], 'trxType' => $d['bulkType'], 'amount' => $d['totalDebit']]) }}" class="dropdown-item">Export Excel | <b>{{ $d['reference'] }}</b></a>
+                                            @endif
                                         @endif
                                         @if($d['status'] == 'EXECUTED')
                                         <a target="_blank" href="{{ route('list-bulkupload.pdf', ['id' => $d['id'], 'usermaker' => $d['createdBy'], 'useroto' => $d['updatedBy'] == null ? '' : $d['updatedBy'], 'timecreate' => $d['createdAt'], 'timeoto' => $d['approvedAt'] == null ? '' : $d['approvedAt'], 'reff' => $d['reference'], 'trxType' => $d['bulkType'], 'amount' => $d['totalDebit']]) }}" class="dropdown-item">Export PDF | <b>{{ $d['reference'] }}</b></a>

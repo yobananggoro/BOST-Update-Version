@@ -35,6 +35,7 @@ class GIController extends \App\Http\Controllers\Controller
             if ($resp->status() == 200) {
                 if ($resp['responseCode'] == '00') {
                     $json_string            = json_decode($resp, true);
+                    // dd($json_string);
                     $status                 = $resp->status();
                     $code                   = $json_string['responseCode'];
                     $branch                 = $json_string['data'][0]['branch'];
@@ -42,9 +43,10 @@ class GIController extends \App\Http\Controllers\Controller
                     $suffix                 = $json_string['data'][0]['suffix'];
                     $accountShortName       = $json_string['data'][0]['accountShortName'];
                     $accountType            = $json_string['data'][0]['accountType'];
-                    $externalAccountNumber  = $json_string['data'][0]['accountNumberExt'];
+                    $externalAccountNumber  = isset($json_string['data'][0]['accountNumberExt']) ? $json_string['data'][0]['accountNumberExt'] : null;
                     $accountNumber          = $json_string['data'][0]['accountNumber'];
                     $currency               = $json_string['data'][0]['currency'];
+                    $costCenter             = $json_string['data'][0]['isNeedCostCentre'];
                     
                     if ($request->ajax())
                     return response()->json([
@@ -56,14 +58,14 @@ class GIController extends \App\Http\Controllers\Controller
                         'accountShortName'      => $accountShortName, 
                         'accountType'           => $accountType, 
                         'currency'              => $currency, 
-                        'externalAccountNumber' => $externalAccountNumber
+                        'externalAccountNumber' => $externalAccountNumber,
+                        'costCenter'            => $costCenter, 
                     ]);
                     
                     // return view('account::gi33.default', compact('accountShortName', 'accountType', 'externalAccountNumber', 'accountNumber', 'currency', 'accuse'));
                     
                 } else {
                     $json_string    = json_decode($resp, true);
-
                     $status         = $resp->status();
                     $code           = $json_string['responseCode'];
                     $desc           = $json_string['responseDesc'];

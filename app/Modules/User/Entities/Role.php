@@ -1,9 +1,10 @@
 <?php
 
-namespace Modules\User\Entities; 
+namespace Modules\User\Entities;
 
 use App\Concerns\TapActivity;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Role extends Model
 {
@@ -38,18 +39,14 @@ class Role extends Model
      *
      * @var array
      */
-    protected $hidden = [
-
-    ];
+    protected $hidden = [];
 
     /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $casts = [
-
-    ];
+    protected $casts = [];
 
     /**
      * @var bool

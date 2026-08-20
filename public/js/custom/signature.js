@@ -22,6 +22,25 @@ $(function () {
         $("#formAccount").attr("target", "_self").submit();
     });
 
+    $('.hex-image').each(function () {
+
+        let hex = $(this).data('hex');
+
+        if (!hex) return;
+
+        if (hex.startsWith('\\x')) {
+            hex = hex.substring(2);
+        }
+
+        const bytes = new Uint8Array(
+            hex.match(/.{1,2}/g).map(byte => parseInt(byte, 16))
+        );
+
+        const blob = new Blob([bytes], { type: 'image/png' });
+
+        $(this).attr('src', URL.createObjectURL(blob));
+    });
+
     makeZoom();
 });
 
@@ -74,13 +93,13 @@ function detail() {
         data:
             accuse == "internal"
                 ? {
-                      branch: branch,
-                      cif: cif,
-                      suffix: suffix,
-                  }
+                    branch: branch,
+                    cif: cif,
+                    suffix: suffix,
+                }
                 : {
-                      extAcctNumber: ext,
-                  },
+                    extAcctNumber: ext,
+                },
         success: function (data) {
             $(".loading-page").hide(); //show progress bar
             // console.log(data);
@@ -96,7 +115,7 @@ function detail() {
                     $("#ext").val(data.externalAccountNumber);
                     $("#cif_name").val(data.accountShortName);
                     $("#cif_type").val(data.accountType);
-                    
+
 
                     $(".toastrDefaultInfo").show(function () {
                         toastr.info("Data ditemukan!");

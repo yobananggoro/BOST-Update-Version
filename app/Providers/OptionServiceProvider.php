@@ -35,7 +35,7 @@ class OptionServiceProvider extends \Illuminate\Support\ServiceProvider
  
                 if ($results) {
                     foreach ($results as $result) {
-                        $options[$result->name] = $result->optionValues->sortBy('sequence')
+                        $options[$result->name] = $result->optionValues->where('visible', true)->sortBy('sequence')
                             ->mapWithKeys(function ($item, $key) {
                                 return [$item['key'] => $item['value']];
                             })

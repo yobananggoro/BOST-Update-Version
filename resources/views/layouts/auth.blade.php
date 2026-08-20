@@ -48,6 +48,7 @@
         </div>
 
         @include('layouts.partials.message') -->
+        @include('layouts.partials.message')
 
         <div class="card">
             <div class="card-body login-card-body">

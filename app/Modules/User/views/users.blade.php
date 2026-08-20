@@ -9,7 +9,7 @@
                 <thead>
                     <tr>
                         <th><input type="checkbox" onchange="checkAll(this)"></th>
-                        @if(in_array(auth()->user()->profile->rolename, ['SUPER ADMIN', 'Staf ITS ', 'Staf IT']))
+                        @if(in_array(trim(auth()->user()->profile->rolename), adminRoles()))
                         <th>Aksi</th>
                         @endif
                         <th>No.</th>
@@ -22,11 +22,11 @@
                         <th>Status</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody> 
                     @foreach ($data as $d)
                     <tr>
                         <td><input type="checkbox" name='id[]' id="checkItem" value="{{ $d->id }}"></td>
-                        @if(in_array(auth()->user()->profile->rolename, ['SUPER ADMIN', 'Staf ITS ', 'Staf IT']))
+                        @if(in_array(trim(auth()->user()->profile->rolename), adminRoles()))
                         <td><a href="{{ route('users.edit', $d->id) }}" type="button" class="btn btn-sm btn-default"><i class="fa fa-pencil-alt"></i></a></td>
                         @endif
                         <td>{{ $loop->iteration }}.</td>
@@ -43,10 +43,10 @@
                             @endif
                         </td>
                         <td>{{ $d->username }}</td>
-                        <td>{{ $d->profile->nama }}</td>
-                        <td>{{ $d->profile->nip }}</td>
-                        <td>{{ $d->profile->unitKerja->nama }}</td>
-                        <td>{{ $d->profile->rolename }}</td>
+                        <td>{{ $d->nama }}</td>
+                        <td>{{ $d->nip }}</td>
+                        <td>{{ $d->profile->unitKerja == null ? '#-'.$d->unit_kerja_kode : $d->profile->unitKerja->nama }}</td>
+                        <td>{{ $d->rolename }}</td>
                         <td>{{ $d->status == 1 ? 'Opened' : 'Locked' }}</td>
                     </tr>
                     @endforeach

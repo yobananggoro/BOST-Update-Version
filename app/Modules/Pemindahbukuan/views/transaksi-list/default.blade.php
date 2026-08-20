@@ -51,7 +51,7 @@
                                 <td></td>
                                 @endif
                                 @if(auth()->user()->profile->rolename == "SUPER ADMIN")
-                                <td>{{ $d->unitKerja->nama }}</td>
+                                <td>{{ $d->unitKerja == null ? '#-'.$d->branch : $d->unitKerja->nama }}</td>
                                 @endif
                             </tr>
                             @endforeach

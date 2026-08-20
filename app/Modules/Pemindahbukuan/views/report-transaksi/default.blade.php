@@ -37,13 +37,18 @@
 
                             @if($value['trxType'] != 'DC')
                             <td>{{ isset($value['addtInfo']['rc']) ? $value['addtInfo']['txCode'] : '-' }}</td>
-                            <td>{{ isset($value['addtInfo']['rc']) ? $value['addtInfo']['branch'].'-'.$value['addtInfo']['cif'].'-'.$value['addtInfo']['suffix'] : null }}</td>
+                            <td>{{ isset($value['addtInfo']['rc']) ? (isset($value['addtInfo']['accountNumber']) ? $value['addtInfo']['accountNumber'] : null).' | '.$value['addtInfo']['branch'].'-'.$value['addtInfo']['cif'].'-'.$value['addtInfo']['suffix'] : null }}</td>
                             <td>{{ isset($value['addtInfo']['rc']) ? $value['addtInfo']['accountName'] : null }}</td>
                             <td>{{ isset($value['addtInfo']['rc']) ? $value['addtInfo']['currency'] : null }}</td>
                             @else
                             @if($value['addtInfo']['responseCode'] == '00')
                             <td>{!! isset($value['addtInfo']['responseCode']) ? $value['addtInfo']['data']['drCode'].'<br>'.$value['addtInfo']['data']['crCode'] : '-' !!}</td>
-                            <td>{{ $value['trxSrcAcct'] }}<br>{{$value['trxDstAcct'] }}</td>
+                            <!-- <td>{{ $value['trxSrcAcct'] }}<br>{{$value['trxDstAcct'] }}</td> -->
+                            <td>
+                                {{ isset($value['addtInfo']['data']) ? (isset($value['addtInfo']['data']['sourceAccount']) ? $value['addtInfo']['data']['sourceAccount'] : null).' | '.$value['addtInfo']['data']['branchSrc'].'-'.$value['addtInfo']['data']['cifSrc'].'-'.$value['addtInfo']['data']['suffixSrc'] : null }}
+                                <br>
+                                {{ isset($value['addtInfo']['data']) ? (isset($value['addtInfo']['data']['destinationAccount']) ? $value['addtInfo']['data']['destinationAccount'] : null).' | '.$value['addtInfo']['data']['branchDst'].'-'.$value['addtInfo']['data']['cifDst'].'-'.$value['addtInfo']['data']['suffixDst'] : null }}
+                            </td>
                             <td>{!! isset($value['addtInfo']['responseCode']) ? to_camel($value['addtInfo']['data']['sourceAccountName']).'<br>'.to_camel($value['addtInfo']['data']['destinationAccountName']) : null !!}</td>
                             <td>{!! isset($value['addtInfo']['responseCode']) ? $value['addtInfo']['data']['sourceCurrency'].'<br>'.$value['addtInfo']['data']['destinationCurrency'] : null !!}</td>
                             @else

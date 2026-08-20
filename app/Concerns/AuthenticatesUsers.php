@@ -21,6 +21,7 @@ trait AuthenticatesUsers
      */
     protected function attemptLogin(Request $request)
     {
+        $this->message = null;
         $credentials = $this->credentials($request);
         // dd($request->header(), $credentials['username']);
 
@@ -37,9 +38,10 @@ trait AuthenticatesUsers
             $idle = $now->diffInMinutes($user->last_activity);
             // dd(auth()->user()->profile->rolename);
             // dd($user->profile->rolename);
+            // dd($idle, config('session.lifetime'), config('app.auto_logout'));
 
             if (!$user->hasAnyRole((\Modules\HakAkses\Entities\Role::all())->pluck('name')->toArray())) {
-                // dd('kesini');
+                // dd($request);
                 $this->guard()->logout();
                 $this->sendNotAllowedLoginResponse($request);
 
@@ -54,21 +56,26 @@ trait AuthenticatesUsers
                 $this->sendUnreleaseResponse($request);
 
                 return false;
-            } else if ($user->profile->rolename != 'SUPER ADMIN') {
-                if ($user->isLogin == true && $idle <= config('session.lifetime')) {
-                    $this->failAuth($request);
-                    $this->sendMultipleLoggedInNotAllowedResponse($request);
+            } 
+            // else if ($user->profile->rolename != 'SUPER ADMIN') {
+            //     if ($user->isLogin == true && $idle < config('app.auto_logout')) {
+            //         $this->failAuth($request);
+            //         $this->sendMultipleLoggedInNotAllowedResponse($request);
 
-                    return false;
-                }
+            //         return false;
+            //     }
 
-                return true;
-            }
-            
+            //     return true;
+            // }
+
             return true;
         } else {
-            
-            return false;
+            if (is_null($this->message)) {
+                return false;
+            } else {
+                $this->senduimMessage($this->message);
+                return false;
+            }
         }
     }
 
@@ -81,17 +88,33 @@ trait AuthenticatesUsers
      */
     protected function authenticated(Request $request, $user)
     {
-        // dd('kesini', $user);
         if (empty($user)) {
             $user = \Modules\User\Entities\User::findByUsername($request->username);
         }
 
-        $user->session_id = Session::getId();
+        $currentSessionId = Session::getId();
+        $alreadyActiveInCurrentSession = (bool) $user->isLogin && $user->session_id === $currentSessionId;
+
+        if ($alreadyActiveInCurrentSession) {
+            return;
+        }
+
+        $user->session_id = $currentSessionId;
         $user->isLogin = true;
         $user->last_activity = now();
-        $user->save();
 
-        $this->guard()->login($user);
+        try {
+            $this->guard()->login($user);
+            $request->session()->put('login_pending', true);
+            $request->session()->put('login_pending_user_id', $user->id);
+            
+        } catch (\Throwable $e) {
+            $user->session_id = null;
+            $user->isLogin = false;
+            $user->save();
+
+            throw $e;
+        }
     }
 
     /**
@@ -102,6 +125,16 @@ trait AuthenticatesUsers
     public function username()
     {
         return 'username';
+    }
+
+    /**
+     * @param Request $request
+     */
+    protected function senduimMessage($message)
+    {
+        throw \Illuminate\Validation\ValidationException::withMessages([
+            $this->username() => [$message],
+        ]);
     }
 
     /**
@@ -149,6 +182,7 @@ trait AuthenticatesUsers
      */
     protected function clearSessionId()
     {
+        // dd(auth()->check(), auth()->user());
         if (auth()->check()) {
             $user = auth()->user();
             $user->session_id = null;
@@ -159,8 +193,21 @@ trait AuthenticatesUsers
 
     protected function failAuth(Request $request)
     {
+        $this->clearSessionId();
         Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
         return $this->loggedOut($request) ?: redirect('/');
+    }
+
+    protected function authenticatedFailed(Request $request, $user)
+    {
+        if (!empty($user)) {
+            $user->session_id = null;
+            $user->isLogin = false;
+            $user->save();
+        }
     }
 
     /**

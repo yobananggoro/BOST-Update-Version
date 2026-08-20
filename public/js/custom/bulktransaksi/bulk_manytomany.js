@@ -43,6 +43,15 @@ function validateForm() {
         $("#myfile").css("background-color", "");
     }
 
+    if ($("#dbCode").val() == "" && $("#crCode").val() == "") {
+        $("#getTrxList").siblings(".select2-container").find(".select2-selection").css("background-color", "red");
+
+        result = "Jenis Transaksi harus di pilih!";
+        return result;
+    } else {
+        $("#getTrxList").siblings(".select2-container").find(".select2-selection").removeAttr("style");
+    }
+
     if ($("#nominal_").val() == "") {
         $("#nominal_").css("background-color", "red");
 

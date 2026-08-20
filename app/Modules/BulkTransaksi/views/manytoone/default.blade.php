@@ -19,8 +19,10 @@
                     <label>Rekening Tujuan <span style="color: red">*</span></label>
                     <div class="row">
                         <div class="col-sm-8">
-                            <div class="row col-sm-12">
-                                <input type="text" name="ext" id="extDst" class="form-control number rekTujuan" maxlength="13" placeholder="External Account">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input type="text" name="ext" id="extDst" class="form-control number rekTujuan" maxlength="13" placeholder="External Account">
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">

@@ -57,6 +57,16 @@ Route::group(['middleware' => ['auth', 'role:' . permitRolesByUri('list-bulkuplo
     Route::post('list-bulkupload/export', 'ListBulkUploadController@export');
 });
 
+Route::group(['middleware' => ['auth', 'role:' . permitRolesByUri('report-bulkupload')]], function () {
+    Route::resource('report-bulkupload', 'ReportBulkUploadController')->except('create','show','edit','destroy');
+    Route::post('report-bulkupload/filter', 'ReportBulkUploadController@listReport');
+    Route::get('report-bulkupload/verify', 'ReportBulkUploadController@verify');
+    Route::get('report-bulkupload/listDetail', 'ReportBulkUploadController@listDetail');
+    Route::post('report-bulkupload/pdf', 'ReportBulkUploadController@pdfDownload');
+    Route::get('report-bulkupload/excel', 'ReportBulkUploadController@excel');
+    Route::post('report-bulkupload/export', 'ReportBulkUploadController@export');
+});
+
 Route::group(['middleware' => ['auth', 'role:' . permitRolesByUri('remote-otorisasibulk')]], function () {
     Route::resource('remote-otorisasibulk', 'RemoteBulkUploadController')->except('create','show','edit','destroy');
     Route::post('remote-otorisasibulk/filter', 'RemoteBulkUploadController@listBulk');

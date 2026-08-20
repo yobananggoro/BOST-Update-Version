@@ -73,6 +73,15 @@ function validateForm() {
         return result;
     }
 
+    if ($("#dbCode").val() == "" && $("#crCode").val() == "") {
+        $("#getTrxList").siblings(".select2-container").find(".select2-selection").css("background-color", "red");
+
+        result = "Jenis Transaksi harus di pilih!";
+        return result;
+    } else {
+        $("#getTrxList").siblings(".select2-container").find(".select2-selection").removeAttr("style");
+    }
+
     if ($("#nominal_").val() == "") {
         $("#nominal_").css("background-color", "red");
 
@@ -89,6 +98,17 @@ function validateForm() {
         return result;
     } else {
         $("#nominal_").css("background-color", "");
+    }
+
+    if ($("#needCostCenter").val() == "true") {
+        if ($("#userCode1").val() == "" && $("#userCode2").val() == "") {
+            $("#getUserCodeList").siblings(".select2-container").find(".select2-selection").css("background-color", "red");
+
+            result = "Rekening membutuhkan Cost Center.";
+            return result;
+        } else {
+            $("#getUserCodeList").siblings(".select2-container").find(".select2-selection").removeAttr("style");
+        }
     }
 
     /* Start validasi additional info apuppt */
@@ -249,6 +269,7 @@ function detailTujuan() {
                     $("#tipeDst").val(data.accountType);
                     $("#namaDst").val(data.accountShortName);
                     $("#ccyDst").val(data.currency);
+                    $("#needCostCenter").val(data.costCenter);
 
                     $(".toastrDefaultInfo").show(function () {
                         if (accuse == "internal") {

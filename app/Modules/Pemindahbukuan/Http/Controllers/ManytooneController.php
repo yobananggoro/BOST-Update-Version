@@ -20,18 +20,23 @@ use Modules\Pemindahbukuan\Http\Requests\ASIValidasiRequest;
 use App\Http\Helper\Pemindahbukuan\AGIHelper;
 use App\Http\Helper\Transaksi\TransaksiSequence;
 
-
 class ManytooneController extends \App\Http\Controllers\Controller
 {
+    private function generateReff()
+    {
+        $TransaksiSequence = new TransaksiSequence();
+        return $TransaksiSequence::generateReff();
+    }
+
     public function index(Request $request)
     {
         $rek = to_dropdown(Rekening::get(), 'id', 'nama');
-        $TransaksiSequence = new TransaksiSequence();
-        $reff = $TransaksiSequence::generateReff();
+        $reff = $this->generateReff();
         $accuseSrc1 = "internal";
         $accuseDst = "internal";
 
         \Assets::addJs('custom/apuppt.js');
+        // \Assets::addJs('custom/costcenter.js');
         \Assets::addJs('custom/prompt/prompt_dynamic.js');
         \Assets::addJs('custom/pemindahbukuan/manytoone.js');
         return view('pemindahbukuan::manytoone.default', compact('rek', 'reff', 'accuseSrc1', 'accuseDst'));
@@ -134,7 +139,7 @@ class ManytooneController extends \App\Http\Controllers\Controller
                         'branchSrc'                 => $value['branch'],
                         'cifSrc'                    => $value['cif'],
                         'suffixSrc'                 => $value['suffix'],
-                        'extSrc'                    => $value['accountNumber'],
+                        'extSrc'                    => isset($value['accountNumber']) ? $value['accountNumber'] : null,
                         'sourceAccount'             => $accuseSrc == 'internal' ? $value['branch'] . " - " . $value['cif'] . " - " . $value['suffix'] : $value['accountNumber'],
                         'namaSrc'                   => $value['accountName'],
                         'ccySrc'                    => $value['currency'],
@@ -149,7 +154,7 @@ class ManytooneController extends \App\Http\Controllers\Controller
                         'branchSrc'                 => $value['branch'],
                         'cifSrc'                    => $value['cif'],
                         'suffixSrc'                 => $value['suffix'],
-                        'extSrc'                    => $value['accountNumber'],
+                        'extSrc'                    => isset($value['accountNumber']) ? $value['accountNumber'] : null,
                         'sourceAccount'             => $accuseSrc == 'internal' ? $value['branch'] . " - " . $value['cif'] . " - " . $value['suffix'] : $value['accountNumber'],
                         'dstExtNumber'              => "",
                         'namaSrc'                   => "",
@@ -166,7 +171,7 @@ class ManytooneController extends \App\Http\Controllers\Controller
                     'branchDst'             => $json_string['data'][$key]['branch'],
                     'cifDst'                => $json_string['data'][$key]['cif'],
                     'suffixDst'             => $json_string['data'][$key]['suffix'],
-                    'extDst'                => $json_string['data'][$key]['accountNumber'],
+                    'extDst'                => isset($json_string['data'][$key]['accountNumber']) ? $json_string['data'][$key]['accountNumber'] : null,
                     'destinationAccount'    => $request->accuseDst == 'internal' ? $json_string['data'][$key]['branch'] . " - " . $json_string['data'][$key]['cif'] . " - " . $json_string['data'][$key]['suffix'] : $json_string['data'][$key]['accountNumber'],
                     'namaDst'               => array_key_exists("accountName", $json_string['data'][$key]) ? $json_string['data'][$key]['accountName'] : "-",
                     'ccyDst'                => array_key_exists("currency", $json_string['data'][$key]) ? $json_string['data'][$key]['currency'] : "-",
@@ -274,21 +279,36 @@ class ManytooneController extends \App\Http\Controllers\Controller
         $response = trans('message.create_failed', $message);
 
         if (auth()->user()->profile->is_transactions == true) {
-            if ($data->save()) {
-                $TransaksiSequence = new TransaksiSequence();
-                $incrementSeq = $TransaksiSequence::increaseCounter();
+            DB::beginTransaction();
+            if ($request->reff == $this->generateReff()) {
+                if ($data->save()) {
+                    // Increase value sequence
+                    $TransaksiSequence = new TransaksiSequence();
+                    $incrementSeq = $TransaksiSequence::increaseCounter();
 
-                if ($incrementSeq == true) {
-                    $status = 'success';
-                    $response = trans('message.create_success', $message);
+                    if ($incrementSeq == true) {
+                        DB::commit();
+                        $status = 'success';
+                        $response = trans('message.create_success', $message);
+                    } else {
+                        DB::rollBack();
+                        $status = 'error';
+                        $response = 'Terjadi kesalahan pada saat proses generate refference. Silakan coba lagi.';
+                    }
                 } else {
+                    DB::rollBack();
                     $status = 'error';
-                    $response = 'Terjadi kesalahan pada saat proses generate refference.';
+                    $response = 'Gagal menyimpan transaksi. Silakan coba lagi.';
                 }
+            } else {
+                $status = 'warning';
+                $response = 'Nomor Refference tidak boleh sama.';
             }
         } else {
             $status = 'error';
             $response = 'Anda tidak punya akses untuk melakukan transaksi!';
+
+            return redirect('manytoone')->with($status, $response)->with('request', $request->all());
         }
 
         return redirect('manytoone')->with($status, $response)->with('request', $request->all());

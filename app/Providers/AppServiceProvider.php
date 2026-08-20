@@ -45,9 +45,5 @@ class AppServiceProvider extends ServiceProvider
                 config(['currency.default' => $default]);
             } //dd($list,$default);
         }
-
-        if (config('app.env') !== 'local') {
-            URL::forceScheme('https');
-        }
     }
 }

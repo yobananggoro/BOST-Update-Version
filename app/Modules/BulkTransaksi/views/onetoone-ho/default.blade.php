@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Upload File Data One To One HeadOffice')
+@section('title', 'Upload File Data One To One')
 @section('content')
 <div class="row toastrDefaultInfo"></div>
 <div class="row toastrDefaultError"></div>
@@ -11,12 +11,12 @@
             <div class="card-body">
                 <input type="hidden" name="trxtype" value="OTO">
                 <div class="col-12 form-group">
-                    <label>Bulk File<span style="color: red">*</span></label><br>
+                    <label>Bulk File <span style="color: red">*</span></label><br>
                     <input type="file" id="myfile" name="file">
                 </div>
 
                 <div class="col-12 form-group">
-                    <label>Jenis Transaksi</label>
+                    <label>Jenis Transaksi <span style="color: red">*</span></label>
                     <select id="getTrxList" name="trxName" class="form-control select2" style="width: 100%">
                     </select><br>
                     <div class="row">

@@ -22,16 +22,22 @@ use App\Http\Helper\Transaksi\TransaksiSequence;
 
 class OnetooneController extends \App\Http\Controllers\Controller
 {
+    private function generateReff()
+    {
+        $TransaksiSequence = new TransaksiSequence();
+        return $TransaksiSequence::generateReff();
+    }
+
     public function index(Request $request)
     {
         $rek = to_dropdown(Rekening::get(), 'id', 'nama');
-        $TransaksiSequence = new TransaksiSequence();
-        $reff = $TransaksiSequence::generateReff();
+        $reff = $this->generateReff();
         $accuseSrc = "internal";
         $accuseDst = "internal";
         // dd($reff);
 
         \Assets::addJs('custom/apuppt.js');
+        \Assets::addJs('custom/costcenter.js');
         \Assets::addJs('custom/prompt/prompt.js');
         \Assets::addJs('custom/pemindahbukuan/onetoone.js');
         return view('pemindahbukuan::onetoone.default', compact('rek', 'reff', 'accuseSrc', 'accuseDst'));
@@ -48,7 +54,7 @@ class OnetooneController extends \App\Http\Controllers\Controller
             if ($resp->status() == 200) {
                 if ($resp['responseCode'] == '00') {
                     $data = $this->val($request, $resp);
-                    // dd($data);
+                    // dd($data, $this->setreff);
 
                     return view('pemindahbukuan::onetoone.validate', compact('data'));
                 } else {
@@ -213,25 +219,36 @@ class OnetooneController extends \App\Http\Controllers\Controller
             'userCode2'             => $request->userCode2,
         ]);
 
-        // dd($data);
-
+        // dd($data, $this->generateReff());
         $message = ['key' => 'Pemindahbukuan One To One Dengan Nomor Refference', 'value' => $request->reff];
         $status = 'error';
         $response = trans('message.create_failed', $message);
 
         if (auth()->user()->profile->is_transactions == true) {
-            if ($data->save()) {
-                //Increase value sequence
-                $TransaksiSequence = new TransaksiSequence();
-                $incrementSeq = $TransaksiSequence::increaseCounter();
+            DB::beginTransaction();
+            if ($request->reff == $this->generateReff()) {
+                if ($data->save()) {
+                    // Increase value sequence
+                    $TransaksiSequence = new TransaksiSequence();
+                    $incrementSeq = $TransaksiSequence::increaseCounter();
 
-                if ($incrementSeq == true) {
-                    $status = 'success';
-                    $response = trans('message.create_success', $message);
+                    if ($incrementSeq == true) {
+                        DB::commit();
+                        $status = 'success';
+                        $response = trans('message.create_success', $message);
+                    } else {
+                        DB::rollBack();
+                        $status = 'error';
+                        $response = 'Terjadi kesalahan pada saat proses generate refference. Silakan coba lagi.';
+                    }
                 } else {
+                    DB::rollBack();
                     $status = 'error';
-                    $response = 'Terjadi kesalahan pada saat proses generate refference.';
+                    $response = 'Gagal menyimpan transaksi. Silakan coba lagi.';
                 }
+            } else {
+                $status = 'warning';
+                $response = 'Nomor Refference tidak boleh sama.';
             }
         } else {
             $status = 'error';

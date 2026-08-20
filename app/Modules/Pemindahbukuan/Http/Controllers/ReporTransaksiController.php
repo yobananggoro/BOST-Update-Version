@@ -76,7 +76,7 @@ class ReporTransaksiController extends \App\Http\Controllers\Controller
         try{
             $BackEndHelper = new BostHelper();
             $resp = $BackEndHelper->reportTrx($request);
-            dd($resp, json_decode($resp, true));
+            // dd($resp, json_decode($resp, true));
             
             if ($resp->status() == 200) {
                 if ($resp['responseCode'] == '00') {

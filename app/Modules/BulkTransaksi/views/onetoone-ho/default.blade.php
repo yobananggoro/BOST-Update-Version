@@ -16,20 +16,9 @@
                 </div>
 
                 <div class="col-12 form-group">
-                    <label>Jenis Transaksi <span style="color: red">*</span></label>
-                    <select id="getTrxList" name="trxName" class="form-control select2" style="width: 100%">
-                    </select><br>
-                    <div class="row">
-                        <div class="col-6">
-                            <label>Trx Debet</label>
-                            <input type="text" name="dbCode" id="dbCode" class="form-control" readonly>
-                        </div>
-                        <div class="col-6">
-                            <label>Trx Credit</label>
-                            <input type="text" name="crCode" id="crCode" class="form-control" readonly>
-                        </div>
-                    </div>
+                    @include('jenisTransaksi')
                 </div>
+
                 <div class="col-12 form-group">
                     <label>Refference</label>
                     <input type="text" name="reff" id="reff" class="form-control" value="{{@$reff}}" readonly>

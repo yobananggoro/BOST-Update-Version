@@ -40,6 +40,7 @@
                             <td>{{ isset($value['addtInfo']['rc']) ? (isset($value['addtInfo']['accountNumber']) ? $value['addtInfo']['accountNumber'] : null).' | '.$value['addtInfo']['branch'].'-'.$value['addtInfo']['cif'].'-'.$value['addtInfo']['suffix'] : null }}</td>
                             <td>{{ isset($value['addtInfo']['rc']) ? $value['addtInfo']['accountName'] : null }}</td>
                             <td>{{ isset($value['addtInfo']['rc']) ? $value['addtInfo']['currency'] : null }}</td>
+                            <td style="text-align: right">{{ number_format($value['trxAmount'],2) }} [<b>{{ $value['trxType'] }}</b>]</td>
                             @else
                             @if($value['addtInfo']['responseCode'] == '00')
                             <td>{!! isset($value['addtInfo']['responseCode']) ? $value['addtInfo']['data']['drCode'].'<br>'.$value['addtInfo']['data']['crCode'] : '-' !!}</td>
@@ -51,16 +52,18 @@
                             </td>
                             <td>{!! isset($value['addtInfo']['responseCode']) ? to_camel($value['addtInfo']['data']['sourceAccountName']).'<br>'.to_camel($value['addtInfo']['data']['destinationAccountName']) : null !!}</td>
                             <td>{!! isset($value['addtInfo']['responseCode']) ? $value['addtInfo']['data']['sourceCurrency'].'<br>'.$value['addtInfo']['data']['destinationCurrency'] : null !!}</td>
+                            <td style="text-align: right">{{ $value['addtInfo']['data']['drAmount'],2 }} [<b>D</b>]<br>{{ $value['addtInfo']['data']['crAmount'] }} [<b>C</b>]</td>
                             @else
                             <td>-</td>
                             <td>{{ $value['trxSrcAcct'] }}<br>{{$value['trxDstAcct'] }}</td>
                             </td>
                             <td>-</td>
                             <td>-</td>
+                            <td>-</td>
                             @endif
                             @endif
 
-                            <td style="text-align: right">{{ number_format($value['trxAmount']) }} [<b>{{ $value['trxType'] }}</b>]</td>
+                            <!-- <td style="text-align: right">{{ number_format($value['trxAmount'],2) }} [<b>{{ $value['trxType'] }}</b>]</td> -->
                             <td>{{ $value['createdBy'] }}</td>
                             <td>{{ $value['overrideBy'] }}</td>
                             <td>{{ $value['isSuccess'] == true ? 'Sukses' : 'Gagal' }}</td>

@@ -7,3 +7,4 @@ Route::group(['middleware' => ['auth', 'role:' . permitRolesByUri('jenis-transak
 });
 
 Route::get('jenis-transaksi-kode', 'JenisTrxController@listDropdown');
+Route::post('flag-jenistransaksi', 'JenisTrxController@flaging');

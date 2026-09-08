@@ -51,11 +51,10 @@ class JenisTrxController extends \App\Http\Controllers\Controller
     public function listDropdown(Request $request)
     {
         try {
-            $resp = Cache::remember('dropdown_items', 3600, function () use ($request) {
-
+            $cacheKey = 'dropdown_items';
+            $resp = Cache::remember($cacheKey, 3600, function () use ($request) {
                 $BackEndHelper = new BostHelper();
                 $response = $BackEndHelper->jenisTransaksi($request);
-
                 $data = $response->json();
 
                 if (!isset($data['responseCode']) || $data['responseCode'] !== '00') {
@@ -66,7 +65,6 @@ class JenisTrxController extends \App\Http\Controllers\Controller
             });
 
             if ($resp === false) {
-
                 Cache::forget($cacheKey);
 
                 $BackEndHelper = new BostHelper();
@@ -75,7 +73,7 @@ class JenisTrxController extends \App\Http\Controllers\Controller
             }
 
             $filtered = collect($resp['data'] ?? [])
-                // ->where('isActive', true)
+                ->where('active', true)
                 ->sortBy('trxName')
                 ->values()
                 ->all();
@@ -111,6 +109,36 @@ class JenisTrxController extends \App\Http\Controllers\Controller
                 }
 
                 return redirect('jenis-transaksi')->with($status, $response)->with('from_redirect', true);
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+            die;
+        }
+    }
+
+    public function flaging(Request $request)
+    {
+        // dd('a');
+        try {
+            $BackEndHelper = new BostHelper();
+            $resp = $BackEndHelper->flagingJenisTransaksi($request);
+            // dd($resp, json_decode($resp, true));
+
+            if ($resp->status() == 200) {
+                if ($resp['responseCode'] == '00') {
+                    $cacheKey = 'dropdown_items';
+                    Cache::forget($cacheKey);
+
+                    $status     = 'success';
+                    $response   = $resp['responseCode'] . ' | ' . $resp['responseDesc'];
+                    
+                } else {
+                    $status     = 'warning';
+                    $response   = $resp['responseCode'] . ' | ' . $resp['responseDesc'];
+                }
+
+                if ($request->ajax())
+                return response()->json(['response' => json_decode($response, true)]);
             }
         } catch (Exception $e) {
             return $e->getMessage();

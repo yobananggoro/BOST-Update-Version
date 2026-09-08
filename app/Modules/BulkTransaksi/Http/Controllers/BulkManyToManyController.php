@@ -30,7 +30,6 @@ class BulkManyToManyController extends \App\Http\Controllers\Controller
         \Assets::addJs('custom/apuppt.js');
         \Assets::addJs('custom/jenistrx.js');
         \Assets::addJs('custom/bulktransaksi/bulk_manytomany.js');
-        \Assets::addJs('custom/prompt/prompt.js');
         return view('bulktransaksi::manytomany.default', compact('reff', 'accuse'));
     }
 

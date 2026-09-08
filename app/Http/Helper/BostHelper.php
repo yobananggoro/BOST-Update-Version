@@ -401,7 +401,7 @@ class BostHelper extends Controller
 
 	public function checkSignatureSVS($request)
 	{
-		$account = $request->branch.$request->cif.$request->suffix;
+		$account = $request->branch . $request->cif . $request->suffix;
 		// dd($request,$account);
 		try {
 			$response = Http::withBasicAuth(config('auth.user_svs'), config('auth.pass_svs'))->get(config('app.url_svs') . $account);
@@ -453,6 +453,34 @@ class BostHelper extends Controller
 				Log::info("Reload Core Jenis Transaksi: " . json_encode(array_diff_key($respMsg, ['data' => ''])));
 			} else {
 				Log::info("Reload Core Jenis Transaksi: " . $response);
+			}
+
+			return $response;
+		} catch (\Exception $e) {
+			echo $e->getMessage();
+			die();
+		}
+	}
+
+	public function flagingJenisTransaksi($request)
+	{
+		$tokens = $this->setToken->accessToken;
+		$idJenis = (int) $request->id;
+
+		if ($request->flag === 'on') {
+			$url = config('app.backend_bo') . '/transactions/trx-codes/'.$idJenis.'/status?active=true';
+		} else {
+			$url = config('app.backend_bo') . '/transactions/trx-codes/'.$idJenis.'/status?active=false';
+		}
+
+		try {
+			$response = Http::withHeaders(['X-User-Id' => auth()->user()->username, 'Authorization' => 'Bearer ' . $tokens, 'Content-Type' => 'application/json',])->patch($url);
+			// dd($response, json_decode($response, true));
+
+			if ($response->status() == 200) {
+				Log::info("Flaging Jenis Transaksi: " . $response);
+			} else {
+				Log::info("Flaging Jenis Transaksi: " . $response);
 			}
 
 			return $response;
@@ -640,7 +668,7 @@ class BostHelper extends Controller
 			// dd($response, json_decode($response, true));
 			Log::info("Kodefikasi Delete Request: " . $request->groupCode . "|" . $request->keyCode);
 			Log::info("Kodefikasi Delete Response: " . $response);
-			
+
 			return $response;
 		} catch (\Exception $e) {
 			echo $e->getMessage();

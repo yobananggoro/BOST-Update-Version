@@ -1,6 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Jenis Transaksi List')
 @section('content')
+<div class="row toastrDefaultInfo"></div>
+<div class="row toastrDefaultError"></div>
 <div class="row">
     <div class="col-6">
         <div class="card card-default">
@@ -20,18 +22,32 @@
                             <th>Nama Transaksi</th>
                             <th>Kode Trx Debet</th>
                             <th>Kode Trx Credit</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         @if(isset($data))
-                        @foreach($data as $key => $d)
+                            @foreach($data as $key => $d)
                             <tr>
-                                <td>{{ $key+1 }}.</td>
+                                <td>{{ $d['id'] }}.</td>
                                 <td>{{ $d['trxName'] }}</td>
                                 <td>{{ $d['dbCode'] }}</td>
                                 <td>{{ $d['crCode'] }}</td>
+                                <td>
+                                    <p style="display: none;">{{ $d['active'] }}</p>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox"
+                                                class="custom-control-input"
+                                                id="customSwitch{{ $d['id'] }}"
+                                                onchange="handleSwitch(this, '{{ $d['id'] }}')"
+                                                {{ $d['active'] ? 'checked' : '' }}>
+                                            <label class="custom-control-label" for="customSwitch{{ $d['id'] }}"></label>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
-                        @endforeach
+                            @endforeach
                         @endif
                     </tbody>
                 </table>

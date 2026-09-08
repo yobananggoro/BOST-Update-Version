@@ -1,9 +1,12 @@
 $(function () {
-    userCodeList();
+    $("#getUserCodeList").select2({ placeholder: "- Pilih -", allowClear: true }).one("select2:open", userCodeList);
 });
 
 function userCodeList() {
-    // alert("aa");
+    let dropdown = $("#getUserCodeList");
+    dropdown.prop("disabled", true);
+    $("#userCodeOverlay").css("display", "flex");
+
     $.ajax({
         url: "user-code-list",
         type: "GET",
@@ -12,6 +15,10 @@ function userCodeList() {
             $(".loading-page").hide(); //show progress bar
             // console.log(data);
             if (data.status == 200) {
+                $(".toastrDefaultInfo").show(function () {
+                    toastr.info("Cost Center ready!");
+                });
+
                 let dropdown = $("#getUserCodeList");
                 dropdown.empty();
                 dropdown.append('<option value="">- Pilih -</option>');
@@ -30,15 +37,23 @@ function userCodeList() {
                     $('#userCode2').val(usrCodeSecond);
                 });
 
-                dropdown.trigger('change.select2');
+                dropdown.trigger("change.select2");
+                dropdown.prop("disabled", false).trigger("change");
+                $("#userCodeOverlay").hide();
+                setTimeout(function () {
+                    dropdown.select2("open");
+                }, 50);
             } else {
+                dropdown.prop("disabled", false);
+                $("#userCodeOverlay").hide();
                 $(".toastrDefaultError").show(function () {
                     toastr.error(data.message);
                 });
             }
         },
         error: function (error) {
-            $(".loading-page").hide();
+            dropdown.prop("disabled", false);
+            $("#userCodeOverlay").hide();
             $(".toastrDefaultError").show(function () {
                 toastr.error(error);
             });

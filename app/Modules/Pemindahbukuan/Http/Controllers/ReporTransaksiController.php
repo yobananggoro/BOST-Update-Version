@@ -3,7 +3,9 @@
 namespace Modules\Pemindahbukuan\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use App\Http\Helper\BostHelper;
+use Modules\Currency\Http\Controllers\CurrencyController;
 use Modules\User\Entities\User;
 use App\Entities\UnitKerja;
 use Carbon\Carbon;
@@ -20,31 +22,31 @@ class ReporTransaksiController extends \App\Http\Controllers\Controller
 
         \Assets::addJs('custom/pemindahbukuan/report.js');
         \Assets::addJs('dataTables.js');
-        return view('pemindahbukuan::report-transaksi.default', compact('data','data_list','branch','request'));
+        return view('pemindahbukuan::report-transaksi.default', compact('data', 'data_list', 'branch', 'request'));
     }
-    
-    public function getReport(Request $request) 
+
+    public function getReport(Request $request)
     {
         \Assets::addJs('custom/pemindahbukuan/report.js');
         \Assets::addJs('dataTables.js');
-        try{
+        try {
             $BackEndHelper = new BostHelper();
             $resp = $BackEndHelper->reportTrx($request);
             $branch = UnitKerja::GetAll();
-            
+
             if ($resp->status() == 200) {
                 if ($resp['responseCode'] == '00') {
                     $data = json_decode($resp, true)['data'];
                     // dd($data);
 
-                    return view('pemindahbukuan::report-transaksi.default', compact('data','request','branch'));
+                    return view('pemindahbukuan::report-transaksi.default', compact('data', 'request', 'branch'));
                 } else {
                     $json_string    = json_decode($resp, true);
                     $code           = $json_string['responseCode'];
                     $desc           = $json_string['responseDesc'];
                     $status         = 'error';
-                    $response       = $code.' | '.$desc;
-                    
+                    $response       = $code . ' | ' . $desc;
+
                     return redirect('report-transaksi')->with($status, $response);
                 }
             } else {
@@ -54,46 +56,47 @@ class ReporTransaksiController extends \App\Http\Controllers\Controller
                 $desc           = $json_string['responseDesc'];
                 $msgdesc        = isset($json_string['data'][0]['messageDesc']) ?  $json_string['data'][0]['messageDesc'] : $json_string['data'][0]['message'];
                 $msgid          = isset($json_string['data'][0]['messageId']) ? $json_string['data'][0]['messageId'] : "";
-                $response       = 'Data tidak ditemukan!<br>' . $msgdesc . ' | '.$code;
-                
+                $response       = 'Data tidak ditemukan!<br>' . $msgdesc . ' | ' . $code;
+
                 if ($request->ajax())
-                return response()->json(['status' => $status, 'code' => $code, 'desc' => $desc, 'msgdesc' => 'Data tidak ditemukan!<br>'.$msgdesc, 'msgid' => $msgid]);
+                    return response()->json(['status' => $status, 'code' => $code, 'desc' => $desc, 'msgdesc' => 'Data tidak ditemukan!<br>' . $msgdesc, 'msgid' => $msgid]);
             }
-            
         } catch (\Exception $e) {
             echo $e->getMessage();
             die();
-        } 
+        }
     }
-    
+
     public function pdf(Request $request)
     {
         \Assets::addJs('custom/pemindahbukuan/report.js');
         \Assets::addJs('dataTables.js');
-        $printDate = now(); 
+        $printDate = now();
         $user = User::where('username', $request->userid)->first();
-        
-        try{
+        $ccyList = app(CurrencyController::class)->getData()->original;
+        $currCodes = array_column($ccyList, 'currCode');
+
+        try {
             $BackEndHelper = new BostHelper();
             $resp = $BackEndHelper->reportTrx($request);
             // dd($resp, json_decode($resp, true));
-            
+
             if ($resp->status() == 200) {
                 if ($resp['responseCode'] == '00') {
                     $data = json_decode($resp, true)['data'];
 
                     // dd($data, $request);
-                    $pdf = PDF::loadview('pemindahbukuan::report-transaksi.pdf', ['printDate' => $printDate, 'user' => $user, 'request' => $request, 'data' => $data]);
+                    $pdf = PDF::loadview('pemindahbukuan::report-transaksi.pdf', ['printDate' => $printDate, 'user' => $user, 'request' => $request, 'data' => $data, 'currCodes' => $currCodes]);
                     $pdf->setPaper('A4', 'landscape');
-                    
+
                     return $pdf->stream('laporan-pdf.pdf');
                 } else {
                     $json_string    = json_decode($resp, true);
                     $code           = $json_string['responseCode'];
                     $desc           = $json_string['responseDesc'];
                     $status         = 'error';
-                    $response       = $code.' | '.$desc;
-                    
+                    $response       = $code . ' | ' . $desc;
+
                     return redirect('report-transaksi')->with($status, $response);
                 }
             } else {
@@ -103,17 +106,14 @@ class ReporTransaksiController extends \App\Http\Controllers\Controller
                 $desc           = $json_string['responseDesc'];
                 $msgdesc        = isset($json_string['data'][0]['messageDesc']) ?  $json_string['data'][0]['messageDesc'] : $json_string['data'][0]['message'];
                 $msgid          = isset($json_string['data'][0]['messageId']) ? $json_string['data'][0]['messageId'] : "";
-                $response       = 'Data tidak ditemukan!<br>' . $msgdesc . ' | '.$code;
-                
+                $response       = 'Data tidak ditemukan!<br>' . $msgdesc . ' | ' . $code;
+
                 if ($request->ajax())
-                return response()->json(['status' => $status, 'code' => $code, 'desc' => $desc, 'msgdesc' => 'Data tidak ditemukan!<br>'.$msgdesc, 'msgid' => $msgid]);
+                    return response()->json(['status' => $status, 'code' => $code, 'desc' => $desc, 'msgdesc' => 'Data tidak ditemukan!<br>' . $msgdesc, 'msgid' => $msgid]);
             }
-            
         } catch (\Exception $e) {
             echo $e->getMessage();
             die();
-        } 
-        
-        
+        }
     }
 }

@@ -28,7 +28,7 @@ class RemoteOtorisasiController extends \App\Http\Controllers\Controller
         $data = Transactions::findOrFail($id);
         $additional_info = json_decode($data->additional_info, true);
         // dd($data->response_message, json_decode($data->response_message, true)['data']['messageDesc']);
-        // dd($additional_info);
+        // dd($data, $additional_info);
 
         \Assets::addJs('custom/remoteOto.js');
         return view('pemindahbukuan::remote-otorisasi.detail', compact('data', 'additional_info'));

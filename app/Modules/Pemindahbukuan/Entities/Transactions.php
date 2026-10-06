@@ -37,6 +37,9 @@ class Transactions extends Model
     {
         if ($request->status_override) {
             $query->where('status_override', '=', $request->status_override);
+        }
+        if ($request->status_validasi_posting) {
+            $query->where('status_transaksi', '=', $request->status_validasi_posting);
         } 
         if ($request->tipe_transaksi) {
             $query->where('tipe_transaksi', '=', $request->tipe_transaksi);
@@ -56,14 +59,12 @@ class Transactions extends Model
             ->where('userid', auth()->user()->username)
             // ->where('tanggal', Carbon::now()->format('Y-m-d'))
             ->orderBy('updated_at', 'desc');
-
-        } else if(!in_array(auth()->user()->profile->rolename,["Operator"])){
+        } else if(!in_array(auth()->user()->profile->rolename,["Operator","SUPER ADMIN"])){
             // dd('a');
             $q = $query->select('*')
             ->where('branch', auth()->user()->profile->unit_kerja_kode)
             // ->where('tanggal', Carbon::now()->format('Y-m-d'))
             ->orderBy('updated_at', 'desc');
-            
         } else{
             // dd('b');
             $q = $query->select('*')

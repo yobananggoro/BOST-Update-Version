@@ -56,6 +56,7 @@
                     <input type="text" name="destinationCode" value="{{@$data[0]['destinationCode']}}" readonly>
                     <input type="text" name="destinationOther" value="{{@$data[0]['destinationOther']}}" readonly>
                     <input type="text" name="remark" value="{{@$data[0]['remark']}}" readonly>
+                    <input type="text" name="json_validate" value="{{@$data[0]['json_validate']}}" readonly>
                 </div>
                 <div class="row" style="font-size: 17px">
                     <div class="col-sm-12">

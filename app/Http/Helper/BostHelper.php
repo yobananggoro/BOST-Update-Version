@@ -744,4 +744,23 @@ class BostHelper extends Controller
 			die();
 		}
 	}
+
+	public function cekStatusTransaksi($request)
+	{
+		// dd($request);
+		$tokens = $this->setToken->accessToken;
+		$url = config('app.backend_bo') . '/transactions/check-status/' . $request->reff;
+
+		try {
+			Log::info("Cek Status Request: " . $request->reff);
+			$response = Http::withHeaders(['Authorization' => 'Bearer ' . $tokens, 'Content-Type' => 'application/json',])->get($url);
+			Log::info("Cek Status Response: " . $response);
+			// dd(json_decode($response, true));
+
+			return $response;
+		} catch (\Exception $e) {
+			echo $e->getMessage();
+			die();
+		}
+	}
 }

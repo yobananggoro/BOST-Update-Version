@@ -8,13 +8,26 @@
                 @csrf
                 <div class="card-body">
                     <div class="form-group col-12 row">
-                        <label class="col-sm-4 col-form-label">Status Override</label>
+                        <label class="col-sm-4 col-form-label">Status Otorisasi</label>
                         <div class="col-sm-8">
                             <div class="input-group">
                                 <select name="status_override" class="form-control" style="width: 100%;">
                                     <option value="">- Pilih -</option>
                                     @foreach($status_approval as $key => $value)
                                     <option value="{{$key}}" {{$key == $request->status_override ? 'selected':'' }}>{{$value}}</option>
+                                    @endforeach
+                                </select> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-12 row">
+                        <label class="col-sm-4 col-form-label">Status Posting</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <select name="status_validasi_posting" class="form-control" style="width: 100%;">
+                                    <option value="">- Pilih -</option>
+                                    @foreach($status_validasi_posting as $key => $value)
+                                    <option value="{{$key}}" {{$key == $request->status_validasi_posting ? 'selected':'' }}>{{$value}}</option>
                                     @endforeach
                                 </select> 
                             </div>

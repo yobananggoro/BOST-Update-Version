@@ -110,7 +110,7 @@
                             <tr>
                                 <td style="font-weight: bold">Terbilang</td>
                                 <td> :</td>
-                                <td><i>{{terbilang(@$data['nominal'], null, null, 'IDR')}}</i></td>
+                                <td><i>{{terbilang(@$data['nominal'], null, null, @$dbt['ccySrc'])}}</i></td>
                             </tr>
                             <tr>
                                 <td style="font-weight: bold">Keterangan</td>

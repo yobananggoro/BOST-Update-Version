@@ -133,7 +133,8 @@ class ITAHelper extends Controller
             'userCode1'             => $request->userCode1,
             'userCode2'             => $request->userCode2,
             'isValidate'            => "N",
-            'trxInfoReq'            => $addInfo
+            'trxInfoReq'            => $addInfo,
+            'validateResp'          => json_decode($request->response_validate, true)
         );
 
         // dd($message);

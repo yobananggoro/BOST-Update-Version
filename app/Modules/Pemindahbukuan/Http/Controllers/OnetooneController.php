@@ -54,7 +54,7 @@ class OnetooneController extends \App\Http\Controllers\Controller
             if ($resp->status() == 200) {
                 if ($resp['responseCode'] == '00') {
                     $data = $this->val($request, $resp);
-                    // dd($data, $this->setreff);
+                    // dd($data);
 
                     return view('pemindahbukuan::onetoone.validate', compact('data'));
                 } else {
@@ -146,8 +146,10 @@ class OnetooneController extends \App\Http\Controllers\Controller
             'destinationCode'           => $request->tujuantrx,
             'destinationOther'          => $request->tujuantrx == '9' ? $request->tujuanLainnya : null,
             'remark'                    => $request->beritaTrx,
+
             'userCode1'                 => $request->userCode1,
             'userCode2'                 => $request->userCode2,
+            'json_validate'             => json_encode($json_string)
         ]);
 
         // dd($data);
@@ -167,6 +169,7 @@ class OnetooneController extends \App\Http\Controllers\Controller
         $data->branch = auth()->user()->profile->unit_kerja_kode;
         $data->status_override = 1;
         $data->status_transaksi = 1;
+        $data->response_validate = $request->json_validate;
         $debit[] = array(
             'seq_debit'     => 0,
             'branchSrc'     => $request->branchSrc,
@@ -285,6 +288,8 @@ class OnetooneController extends \App\Http\Controllers\Controller
         $data->narative2            = $additional_info['narative2'];
         $data->narative3            = $additional_info['narative3'];
         $data->narative4            = $additional_info['narative4'];
+        $data->userCode1            = $additional_info['userCode1'];
+        $data->userCode2            = $additional_info['userCode2'];
 
         $data->instrumentCode       = $additional_info['instrumentCode'];
         $data->instrumentOther      = $additional_info['instrumentOther'];
@@ -297,10 +302,8 @@ class OnetooneController extends \App\Http\Controllers\Controller
         $data->destinationCode      = $additional_info['destinationCode'];
         $data->destinationOther     = $additional_info['destinationOther'];
         $data->remark               = $additional_info['remark'];
-        $data->userCode1            = $additional_info['userCode1'];
-        $data->userCode2            = $additional_info['userCode2'];
 
-        // dd($data);
+        // dd($data, json_decode($data->response_validate, true));
         // Call api posting ITA
         try {
             $reffToken = ReffToken::FindTokenReff(auth()->user()->username . "-" . $request->id)->first();  //cek reference token
@@ -378,7 +381,7 @@ class OnetooneController extends \App\Http\Controllers\Controller
                     return true;
                 } else {
                     $status     = 'warning';
-                    $response   =  $resp->status() . ' | ' . $resp['data']['0']['messageDesc'];
+                    $response   =  $resp->status() . ' | ' . $resp['data']['0']['message'];
 
                     $data->response_http = $resp->status();
                     $data->response_message = json_decode($resp, true);

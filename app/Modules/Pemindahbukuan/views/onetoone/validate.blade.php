@@ -39,11 +39,13 @@
                     <input type="text" name="userCode1" value="{{@$data[0]['userCode1']}}" readonly>
                     <input type="text" name="userCode2" value="{{@$data[0]['userCode2']}}" readonly>
 
-                    @if(($data[0]['ccySrc'] == 'IDR' && $data[0]['ccyDst'] != 'IDR') || ($data[0]['ccySrc'] != 'IDR' && $data[0]['ccyDst'] == 'IDR'))
+                    //Start L116 update oto limit valas
+                    @if(($data[0]['ccySrc'] == 'IDR' && $data[0]['ccyDst'] != 'IDR') || ($data[0]['ccySrc'] != 'IDR' && $data[0]['ccyDst'] == 'IDR') || ($data[0]['ccySrc'] != 'IDR' && $data[0]['ccyDst'] != 'IDR'))
                     <input type="text" name="nominalSrc" value="{{@$data[0]['amountSrc']}}" readonly>    
                     <input type="text" name="nominalDst" value="{{@$data[0]['amountDst']}}" readonly>
                     <input type="text" name="exchangeRate" value="{{@$data[0]['exchangeRate']}}" readonly>
                     @endif
+                    //End L116 update oto limit valas
 
                     <input type="text" name="instrumentCode" value="{{@$data[0]['instrumentCode']}}" readonly> 
                     <input type="text" name="instrumentOther" value="{{@$data[0]['instrumentOther']}}" readonly> 

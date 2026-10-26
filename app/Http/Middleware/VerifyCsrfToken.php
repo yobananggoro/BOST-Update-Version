@@ -19,6 +19,8 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        // Start L116 handling error csrf logout
+        '/logout',
+        // End L116 handling error csrf logout
     ];
 }

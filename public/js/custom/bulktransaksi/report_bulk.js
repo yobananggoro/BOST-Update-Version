@@ -1,16 +1,19 @@
 $(function () {
-    $("#btnPrintPDF").click(function () {
-        // alert('prnt');
+    // Tambahkan parameter 'e' untuk menangkap event klik
+    $("#btnPrintPDF").click(function (e) {
+        e.preventDefault(); 
+        
         var cek = validateForm();
         if (cek != "success") {
             alert(cek);
             return false;
-        } else {
-            exportData();
+        } 
+        
+        if (typeof unformatAllVal === "function") {
+            unformatAllVal();
         }
-        unformatAllVal();
-        // $("#formPdf").attr('target', '_self').submit();
 
+        exportData();
     });
 });
 
@@ -25,8 +28,7 @@ function exportData() {
     setTimeout(() => {
         form.action = mainUrl;
         form.target = "_self";
-    }, 100);
-    // alert(form.action);
+    }, 300);
 }
 
 function validateForm() {

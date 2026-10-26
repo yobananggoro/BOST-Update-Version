@@ -13,7 +13,10 @@
                         <input type="hidden" name="reff" value="{{@$data['reff']}}" readonly>
                         <input type="hidden" name="tipe_transaksi" value="{{@$data->tipe_transaksi}}" readonly>
                         <input type="hidden" name="total_nominal" value="{{@$data['nominal']}}" readonly>
-                        
+                        //Start L116 update oto limit valas
+                        <input type="hidden" name="rate_valas" value="{{@$additional_info['exchangeRate']}}" readonly>
+                        <input type="hidden" name="ccySrc" value="{{@$additional_info['rekening_sumber']['0']['ccySrc']}}" readonly>
+                        //End L116 update oto limit valas
                     </div>
                     <table cellspacing="0" cellpadding="1" style="width: 100%">
                         <tbody>

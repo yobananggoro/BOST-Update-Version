@@ -68,8 +68,12 @@ class RemoteOtorisasiController extends \App\Http\Controllers\Controller
     public function approval(Request $request)
     {
         $data = Transactions::findOrFail($request->id);
+        //Start L116 update oto limit valas
+        $ratevalas = (int) $request->rate_valas;
+        $totalNominal = $request->ccySrc != 'IDR' ? ($ratevalas * $request->total_nominal) : ($request->total_nominal);
+        // dd($request,$totalNominal);
 
-        if (auth()->user()->profile->limit_debet >= $request->total_nominal) {
+        if (auth()->user()->profile->limit_debet >= $totalNominal) {
             if ($request->subject == 'approve') { //transaksi diapprove
 
                 if (auth()->user()->profile->isFinger == true) {
@@ -109,6 +113,7 @@ class RemoteOtorisasiController extends \App\Http\Controllers\Controller
             $status = 'error';
             $response = 'Nomor Refference <b>' . $data->reff . '</b> tidak dapat diproses.<br>Limit Otorisiasi anda kurang dari jumlah nominal yang akan ditransaksikan.<br>  ';
         }
+        //End L116 update oto limit valas
 
         \Assets::addJs('custom/remoteOto.js');
         return redirect('remote-otorisasi')->with($status, $response);

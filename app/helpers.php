@@ -107,7 +107,7 @@ if (!function_exists('format_date')) {
      * @return string
      * @throws Exception
      */
-    function format_date(string $date, string $format = '%A, %e %B %Y', string $locale = null)
+    function format_date(string $date, string $format = '%A, %e %B %Y', ?string $locale = null)
     {
         if (!is_null($date)) {
             $locale = !is_null($locale) ? $locale : config('app.locale');
@@ -132,7 +132,7 @@ if (!function_exists('format_date_short')) {
      * @return string
      * @throws Exception
      */
-    function format_date_short(string $date, string $format = '%d %B %Y', string $locale = null)
+    function format_date_short(string $date, string $format = '%d %B %Y', ?string $locale = null)
     {
         if (!is_null($date)) {
             $locale = !is_null($locale) ? $locale : config('app.locale');
@@ -280,8 +280,8 @@ if (!function_exists('hasModulePermission')) {
     {
 
         $i = 0;
-        $permissions = auth()->user()->permissions->map(function ($item) use ($module) {
-            return \Str::contains($item, $module) ? $item : null;
+        $permissions = auth()->guard()->user()->permissions->map(function ($item) use ($module) {
+            return \Illuminate\Support\Str::contains($item, $module) ? $item : null;
         });
 
         // dd($permissions);
@@ -316,7 +316,7 @@ if (!function_exists('monthName')) {
      * @param string|null $locale
      * @return string
      */
-    function monthName(int $month, string $format = '%B', string $locale = null)
+    function monthName(int $month, string $format = '%B', ?string $locale = null)
     {
         $locale = !is_null($locale) ? $locale : config('app.locale');
         setlocale(LC_TIME, $locale);
@@ -359,7 +359,7 @@ if (!function_exists('terbilang')) {
      * @param string|null $currencyCode
      * @return string
      */
-    function terbilang($number, string $prefix = null, string $suffix = null, string $currencyCode = null)
+    function terbilang($number, ?string $prefix = null, ?string $suffix = null, ?string $currencyCode = null)
     {
         // Pastikan angka dalam format float
         $number = (float) $number;
@@ -392,11 +392,6 @@ if (!function_exists('terbilang')) {
 
 
 if (!function_exists('mask_string')) {
-    /**
-     * @param string $value
-     * @param integer $slice
-     * @return string
-     */
     function mask_string($value, $slice = 4): string
     {
         $len = strlen($value) - $slice;
@@ -407,11 +402,6 @@ if (!function_exists('mask_string')) {
 }
 
 if (!function_exists('excludeKeys')) {
-    /**
-     * @param string $value
-     * @param integer $slice
-     * @return string
-     */
     function excludeKeys(array $array, array $keysToExclude): array
     {
         return array_diff_key($array, array_flip($keysToExclude));
@@ -419,14 +409,9 @@ if (!function_exists('excludeKeys')) {
 }
 
 if (!function_exists('adminRoles')) {
-    /**
-     * @param string $value
-     * @param integer $slice
-     * @return string
-     */
     function adminRoles()
     {
-        return Cache::remember('admin_roles', 3600, function () {
+        return \Illuminate\Support\Facades\Cache::remember('admin_roles', 3600, function () {
             return Modules\User\Entities\Role::where('is_admin', true)
                 ->pluck('name')
                 ->toArray();
@@ -435,14 +420,9 @@ if (!function_exists('adminRoles')) {
 }
 
 if (!function_exists('transactionRoles')) {
-    /**
-     * @param string $value
-     * @param integer $slice
-     * @return string
-     */
     function transactionRoles()
     {
-        return Cache::remember('transaction_roles', 3600, function () {
+        return \Illuminate\Support\Facades\Cache::remember('transaction_roles', 3600, function () {
             return Modules\User\Entities\Role::where('is_transactions', true)
                 ->pluck('name')
                 ->toArray();

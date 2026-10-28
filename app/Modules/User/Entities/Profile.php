@@ -4,10 +4,18 @@ namespace Modules\User\Entities;
 
 use App\Concerns\TapActivity;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
 
 class Profile extends Model
 {
     use TapActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logAll()
+            ->logOnlyDirty();
+    }
 
     /**
      * @var string

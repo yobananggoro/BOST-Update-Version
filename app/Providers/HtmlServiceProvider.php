@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Collective\Html\FormFacade;
 use Collective\Html\HtmlFacade;
+use Collective\Html\HtmlBuilder;
+use Collective\Html\FormBuilder;
 
 class HtmlServiceProvider extends \Collective\Html\HtmlServiceProvider
 {
@@ -24,7 +26,7 @@ class HtmlServiceProvider extends \Collective\Html\HtmlServiceProvider
         FormFacade::component('fgFormButton4', 'components.form.button_save_only', ['uri', 'action' => null, 'parameter' => null]);
         FormFacade::component('fgFilterButton', 'components.form.filter', []);
         FormFacade::component('fgFilterButton2', 'components.form.filter2', []);
-        
+
         HtmlFacade::component('cardCollapse', 'components.html.card-collapse', []);
     }
 
@@ -36,7 +38,7 @@ class HtmlServiceProvider extends \Collective\Html\HtmlServiceProvider
     protected function registerHtmlBuilder()
     {
         $this->app->singleton('html', function ($app) {
-            return new \App\Services\HtmlBuilder($app['url'], $app['view']);
+            return new HtmlBuilder($app['view'], $app['url']);
         });
     }
 }

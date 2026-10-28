@@ -60,5 +60,17 @@
     <script src="{{ asset('js/app.js', request()->isSecure()) }}"></script>
     {!! Assets::js(); !!}
 </body>
+<script>
+    window.addEventListener('pageshow', function(event) {
+        var isBackNavigation = event.persisted ||
+            (typeof window.performance != 'undefined' &&
+                window.performance.navigation.type === 2);
+
+        if (isBackNavigation) {
+            // Paksa browser meminta dokumen/halaman baru ke server
+            window.location.reload();
+        }
+    });
+</script>
 
 </html>

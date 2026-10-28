@@ -6,6 +6,7 @@ use App\Concerns\TapActivity;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\DB;
+use Spatie\Activitylog\LogOptions;
 
 class Role extends \Spatie\Permission\Models\Role
 {
@@ -28,6 +29,14 @@ class Role extends \Spatie\Permission\Models\Role
     public function getDescriptionForEvent(string $eventName): string
     {
         return get_class() . ' ' . json_encode($this->attributesToArray()) . ' ' . $eventName . '.';
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable() // Mencatat log untuk semua kolom di $fillable
+            ->logOnlyDirty() // Hanya mencatat jika ada perubahan data
+            ->dontSubmitEmptyLogs(); // Menghindari log kosong
     }
 
     /**
@@ -54,7 +63,8 @@ class Role extends \Spatie\Permission\Models\Role
      */
     public function scopeFetch($query, $perPage)
     {
-        if (!auth()->user()->hasRole('SUPER ADMIN')) {
+        $user = auth()->user();
+        if (!$user || !method_exists($user, 'hasRole') || !call_user_func([$user, 'hasRole'], 'SUPER ADMIN')) {
             $query->where('id', '<>', 99);
         }
 

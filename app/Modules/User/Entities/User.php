@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\User\Entities; 
+namespace Modules\User\Entities;
 
 use App\Concerns\TapActivity;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -8,10 +8,20 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Activitylog\LogOptions;
+
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use CanResetPassword, HasRoles, Notifiable, TapActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable() // Mencatat log untuk semua kolom yang ada di $fillable
+            ->logOnlyDirty() // Hanya mencatat log jika ada data yang benar-benar berubah
+            ->dontSubmitEmptyLogs(); // Mencegah log kosong jika tidak ada perubahan data
+    }
 
     /**
      * @var string
@@ -21,7 +31,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * @var string
      */
-    protected $keyType = 'string'; 
+    protected $keyType = 'string';
 
     /**
      * @var bool
@@ -34,7 +44,11 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'username', 'password', 'email', 'status', 'isLogin'
+        'username',
+        'password',
+        'email',
+        'status',
+        'isLogin'
     ];
 
     /**
@@ -43,7 +57,8 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
@@ -78,30 +93,30 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         // dd(auth()->user()->profile->idrole, auth()->user());exit;
         // if (!in_array(trim(auth()->user()->profile->rolename), ['SUPER ADMIN', 'Divisi IT Security', 'Divisi Teknologi Informasi'])) {
-        if (in_array(trim(auth()->user()->profile->rolename), transactionRoles())) {
-            $q = $query->select('app_user.*','app_profile.*')
-            ->join('app_profile', 'app_user.id', '=', 'app_profile.user_id')
-            ->where('app_profile.unit_kerja_kode', '=', auth()->user()->profile->unit_kerja_kode)
-            ->where('app_user.username', '!=', auth()->user()->username)
-            ->whereIn('app_profile.rolename', ['Operator'])
-            ->orderby('app_user.status', 'desc');
+        if (in_array(trim(auth()->user()->profile->rolename), (array) transactionRoles(), true)) {
+            $q = $query->select('app_user.*', 'app_profile.*')
+                ->join('app_profile', 'app_user.id', '=', 'app_profile.user_id')
+                ->where('app_profile.unit_kerja_kode', '=', auth()->user()->profile->unit_kerja_kode)
+                ->where('app_user.username', '!=', auth()->user()->username)
+                ->whereIn('app_profile.rolename', ['Operator'])
+                ->orderby('app_user.status', 'desc');
         } else {
-            $q = $query->select('app_user.*','app_profile.*')
-            ->join('app_profile', 'app_user.id', '=', 'app_profile.user_id')
-            ->where('app_user.username', '!=', auth()->user()->username)
-            ->where('app_profile.rolename', '!=', 'SUPER ADMIN')
-            ->orderby('app_user.status', 'desc');
+            $q = $query->select('app_user.*', 'app_profile.*')
+                ->join('app_profile', 'app_user.id', '=', 'app_profile.user_id')
+                ->where('app_user.username', '!=', auth()->user()->username)
+                ->where('app_profile.rolename', '!=', 'SUPER ADMIN')
+                ->orderby('app_user.status', 'desc');
         }
         // dd($q->get());
         return $q->get();
     }
-    
+
     public function scopeRetrive($query)
     {
-        $q = $query->select('app_user.*','app_profile.*')
-        ->join('app_profile', 'app_user.id', '=', 'app_profile.user_id')
-        ->orderby('status', 'desc');
-        
+        $q = $query->select('app_user.*', 'app_profile.*')
+            ->join('app_profile', 'app_user.id', '=', 'app_profile.user_id')
+            ->orderby('status', 'desc');
+
         return $q->get();
     }
 
@@ -110,17 +125,17 @@ class User extends Authenticatable implements MustVerifyEmail
         if ($request->userID) {
             $query->where('username', 'ilike', '%' . $request->userID . '%');
         }
-        
-        $q = $query->select('app_user.*','mst_model_has_role.role_id','mst_role.name')
-        ->join('mst_model_has_role', 'app_user.id', '=', 'mst_model_has_role.model_uuid')
-        ->join('mst_role', 'mst_model_has_role.role_id', '=', 'mst_role.id')
-        ->orderBy('username');
-        
+
+        $q = $query->select('app_user.*', 'mst_model_has_role.role_id', 'mst_role.name')
+            ->join('mst_model_has_role', 'app_user.id', '=', 'mst_model_has_role.model_uuid')
+            ->join('mst_role', 'mst_model_has_role.role_id', '=', 'mst_role.id')
+            ->orderBy('username');
+
         if ($request->has('per_page')) {
             return $request->per_page === 'All' ? $q->get() : $q->paginate($request->per_page);
         }
 
-        return $q->paginate(config('app.display_per_page')); 
+        return $q->paginate(config('app.display_per_page'));
     }
 
     /**
@@ -146,8 +161,8 @@ class User extends Authenticatable implements MustVerifyEmail
     public function profile()
     {
         return $this->hasOne(Profile::class)
-        ->select(['app_profile.*', 'mst_role.is_transactions'])
-        ->join('mst_role', 'mst_role.id', '=', 'app_profile.idrole');
+            ->select(['app_profile.*', 'mst_role.is_transactions'])
+            ->join('mst_role', 'mst_role.id', '=', 'app_profile.idrole');
     }
 
     /**
@@ -171,7 +186,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $q = $query->select(['app_user.*', 'app_profile.*'])
             ->join('app_profile', 'app_user.id', '=', 'app_profile.user_id')
             ->join('mst_model_has_role', 'app_user.id', '=', 'mst_model_has_role.model_uuid');
-        
+
         if (is_array($request)) {
             return $q->whereIn('mst_model_has_role.role_id', $request)->get();
         } else {
